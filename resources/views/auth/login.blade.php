@@ -8,72 +8,100 @@
     <link rel="shortcut icon" type="svg" href="{{ asset('image/layer-group-solid.svg') }}" style="color: #4a88eb">
 
     {{-- Styles --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&amp;display=swap" rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&amp;display=swap" rel="stylesheet"> --}}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.0/r-2.2.9/rr-1.2.8/datatables.min.css"/>
+
+    <!-- Font Awesome -->
+      <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+      />
+      <!-- Google Fonts -->
+      <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+      />
+      <!-- MDB -->
+      <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.css"
+      rel="stylesheet"
+      />
+
+    <style>
+        .divider:after,
+        .divider:before {
+        content: "";
+        flex: 1;
+        height: 1px;
+        }
+        .h-custom {
+        height: calc(100% - 73px);
+        }
+        @media (min-width: 400px) {
+          .h-custom {
+          height: 100%;
+          }
+        }
+    </style>
 </head>
 <body>
     <div class="main d-flex justify-content-center w-100">
-        {{-- <nav class="navbar navbar-expand-md shadow-sm" style="background-color: #293042">
-            <div class="container">
-                <a class="sidebar-brand" href="{{ url('/') }}">
-                    <span class="align-middle mr-3" style="font-size: .999rem;"></span>
-                </a>
+      <section class="vh-100">
+        <div class="container-fluid h-custom">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+              <img src="image/logo1.PNG"
+                class="img-fluid" alt="Sample image">
             </div>
-        </nav> --}}
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1" style="margin: 0">
+              <form method="POST" action="{{route('login.autenticacao')}}">
+                    @csrf
+                    @method('POST')
+                    @include('errors.alerts')
+                    @include('errors.errors')
+                    <div class="form-outline mb-4">
+                        <input type="email" id="form3Example3" class="form-control form-control-lg"
+                            placeholder="Insira um email válido" name="email"/>
+                        <label class="form-label" for="form3Example3">Email</label>
+                    </div>
 
-        <main class="authentication-content">
-            <div class="container">
-              <div class="mt-4">
-                <div class="card rounded-0 overflow-hidden shadow-none border mb-5 mb-lg-0">
-                  <div class="row g-0">
-                    <div class="col-12 order-1 col-xl-8 d-flex align-items-center justify-content-center border-end">
-                      <img src="assets/images/error/auth-img-7.png" class="img-fluid" alt="">
+                    <div class="form-outline mb-3">
+                        <input type="password" id="form3Example4" class="form-control form-control-lg"
+                            placeholder="Insira a senha" name="password"/>
+                        <label class="form-label" for="form3Example4">Senha</label>
                     </div>
-                    <div class="col-12 col-xl-4 order-xl-2">
-                      <div class="card-body p-4 p-sm-5">
-                        <h5 class="card-title">Entrar</h5>
-                         <form class="form-body" action="{{route('login.autenticacao')}}" method="POST">
-                            @csrf
-                            @method('POST')
-                            <div class="row g-3">
-                              <div class="col-12">
-                                <label for="inputEmailAddress" class="form-label">Email</label>
-                                <div class="ms-auto position-relative">
-                                  <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-envelope-fill"></i></div>
-                                  <input type="email" class="form-control radius-30 ps-5" id="inputEmailAddress" placeholder="Email">
-                                </div>
-                              </div>
-                              <div class="col-12">
-                                <label for="inputChoosePassword" class="form-label">Senha</label>
-                                <div class="ms-auto position-relative">
-                                  <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-lock-fill"></i></div>
-                                  <input type="password" class="form-control radius-30 ps-5" id="inputChoosePassword" placeholder="Senha">
-                                </div>
-                              </div>
-                              <div class="col-6 text-end">	<a href="authentication-forgot-password.html">Esqueci a senha?</a>
-                              </div>
-                              <div class="col-12">
-                                <div class="d-grid">
-                                  <button type="submit" class="btn btn-primary radius-30">Entrar</button>
-                                </div>
-                              </div>
-                            </div>
-                        </form>
-                     </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="#!" classasdsdfd="text-body">Esqueci a senha?</a>
                     </div>
-                  </div>
-                </div>
-              </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                            Login
+                        </button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Não tem uma conta? <a href="#!"class="link-danger">
+                            Registrar
+                        </a></p>
+                    </div>
+              </form>
             </div>
-           </main>
+          </div>
+        </div>
+      </section>
     </div>
 
 {{-- Scripts --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ url('js/bootstrap.js') }}"></script>
+
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"
+></script>
 
 </body>
 </html>
