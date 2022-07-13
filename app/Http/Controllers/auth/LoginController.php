@@ -20,7 +20,7 @@ class LoginController extends Controller
             return redirect()->back()->withErrors('Email de usuário ou Senha com dados incorretos');
         };
 
-        // return redirect('/home');
+        // return view('welcome');
         return view('teste');
 
     }
