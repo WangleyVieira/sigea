@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCursosTable extends Migration
+class CreateAtividadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateCursosTable extends Migration
      */
     public function up()
     {
-        Schema::create('cursos', function (Blueprint $table) {
+        Schema::create('atividades', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codigo')->nullable();
-            $table->text('nome')->nullable();
+            $table->integer('qtd_questao')->nullable();
+            $table->text('descricao')->nullable();
+            $table->text('professor')->nullable();
+            $table->date('data')->nullable();
             $table->bigInteger('cadastradoPorUsuario')->unsigned();
             $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
             $table->bigInteger('alteradoPorUsuario')->unsigned();
@@ -25,7 +27,7 @@ class CreateCursosTable extends Migration
             $table->foreign('inativadoPorUsuario')->references('id')->on('users');
             $table->date('dataInativado')->nullable();
             $table->text('motivoInativado')->nullable();
-            $table->boolean('ativo')->nullable();
+            $table->boolean('ativo');
             $table->timestamps();
         });
     }
@@ -37,6 +39,6 @@ class CreateCursosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cursos');
+        Schema::dropIfExists('atividades');
     }
 }
