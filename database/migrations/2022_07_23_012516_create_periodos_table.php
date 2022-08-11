@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDisciplinasTable extends Migration
+class CreatePeriodosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateDisciplinasTable extends Migration
      */
     public function up()
     {
-        Schema::create('disciplinas', function (Blueprint $table) {
+        Schema::create('periodos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('nome')->nullable();
-            $table->text('codigo')->nullable();
-            $table->bigInteger('id_periodo')->unsigned()->nullable();
-            $table->foreign('id_periodo')->references('id')->on('periodos');
+            $table->text('descricao')->nullable();
             $table->bigInteger('cadastradoPorUsuario')->unsigned();
             $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
             $table->bigInteger('alteradoPorUsuario')->unsigned()->nullable();
@@ -39,6 +36,6 @@ class CreateDisciplinasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('disciplinas');
+        Schema::dropIfExists('periodo');
     }
 }

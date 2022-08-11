@@ -8,9 +8,23 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Questao extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    protected $fillable = ['codigo_questao', 'descricao', 'nivel_dificuldade','cadastradoPorUsuario', 'alteradoPorUsuario', 'inativadoPorUsuario', 'dataInativado', 'motivoInativado', 'ativo'];
+    protected $fillable = [
+        'codigo_questao',
+        'descricao',
+        'nivel_dificuldade',
+        'cadastradoPorUsuario',
+        'alteradoPorUsuario',
+        'inativadoPorUsuario',
+        'dataInativado',
+        'motivoInativado',
+        'ativo'
+    ];
 
-    protected $guarded = ['id', 'created_at', 'update_at'];
+    protected $guarded = [
+        'id',
+        'created_at',
+        'update_at'
+    ];
 
     protected $table = 'questaos';
 
