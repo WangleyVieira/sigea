@@ -4,31 +4,27 @@
 
 @section('content')
 
-
-        <h1 class="mt-4">Listagem de disciplinas cadastradas</h1>
-        <div class="card mb-4">
-            <div class="card-body">
-                <table id="datatablesSimple">
-                    <thead>
+<h1 class="mt-4">Disciplinas cadastradas</h1>
+    <div class="card mb-2">
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Código</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($disciplinas as $d)
                         <tr>
-                            <th>Nome</th>
-                            <th>Código</th>
+                            <td> {{ $d->nome }}</td>
+                            <td> {{ $d->codigo }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($disciplinas as $d)
-                            <tr>
-                                <td> {{ $d->nome }}</td>
-                                <td> {{ $d->codigo }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-
-<script src="js/app.js"></script>
-
+    </div>
 @yield('scripts')
 
 @endsection

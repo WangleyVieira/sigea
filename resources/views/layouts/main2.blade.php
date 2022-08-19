@@ -25,7 +25,7 @@
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar"><a class="sidebar-brand" href="index.html">
                 <span class="align-middle">SIGEA</span></a>
-				<ul class="sidebar-nav">
+				<ul class="sidebar-nav"">
 					<li class="sidebar-header">
 						Páginas
 					</li>
@@ -34,8 +34,8 @@
 						<a class="sidebar-link" href="#"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span></a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-profile.html"><i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span></a>
+					<li class="sidebar-item {{ Route::current()->uri == 'perfil' ? 'active' : null }}">
+						<a class="sidebar-link" href="{{ route('perfil') }}"><i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span></a>
 					</li>
 
 					<li class="sidebar-item {{ Route::current()->uri == 'disciplinas' ? 'active' : null }}" >

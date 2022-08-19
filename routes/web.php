@@ -22,7 +22,10 @@ Route::get('/', 'Auth\LoginController@index')->name('login');
 Route::post('/home', 'Auth\LoginController@autenticacao')->name('login.autenticacao');
 Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
 
+//perfil
+Route::get('/perfil', 'PerfilController@index')->name('perfil');
 
+//Disciplinas
 Route::group(['prefix' => '/disciplinas', 'as' => 'disciplinas.', 'middleware' => 'auth'], function(){
     Route::get('', 'DisciplinaController@index')->name('index');
 });

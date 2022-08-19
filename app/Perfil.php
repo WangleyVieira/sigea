@@ -20,4 +20,5 @@ class Perfil extends Model implements Auditable
     ];
 
     protected $table = 'perfils';
+
 }

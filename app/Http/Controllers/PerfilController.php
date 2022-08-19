@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Perfil;
+use App\User;
 use Illuminate\Http\Request;
 
 class PerfilController extends Controller
@@ -14,7 +15,18 @@ class PerfilController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $user = User::where('id', '=', auth()->user()->id)
+                ->select('id', 'name', 'email', 'id_perfil')
+                ->first();
+            // dd($user);
+
+            return view('perfil.index', compact('user'));
+
+        } catch (\Exception $ex) {
+            $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro ao listas as disciplinas');
+        }
     }
 
     /**
