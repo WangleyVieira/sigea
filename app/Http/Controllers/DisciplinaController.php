@@ -14,7 +14,14 @@ class DisciplinaController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+
+            return view('disciplinas.index', compact('disciplinas'));
+        } catch (\Exception $ex) {
+            $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro ao listas as disciplinas');
+        }
     }
 
     /**
