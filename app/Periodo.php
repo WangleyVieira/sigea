@@ -4,15 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use PeriodoTableSeeder;
 
-class Disciplina extends Model implements Auditable
+class Periodo extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     protected $fillable = [
-        'nome',
-        'codigo',
-        'id_periodo',
+        'descricao',
         'cadastradoPorUsuario',
         'alteradoPorUsuario',
         'inativadoPorUsuario',
@@ -27,16 +24,6 @@ class Disciplina extends Model implements Auditable
         'update_at'
     ];
 
-    protected $table = 'disciplinas';
+    protected $table = 'periodos';
 
-    public function cadastradoPorUsuario()
-    {
-        return $this->belongsTo(User::class, 'cadastradoPorUsuario');
-    }
-
-    public function periodo()
-    {
-        return $this->belongsTo(Periodo::class, 'id_periodo');
-    }
 }
-

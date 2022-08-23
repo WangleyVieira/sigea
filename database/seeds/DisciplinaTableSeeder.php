@@ -57,7 +57,10 @@ class DisciplinaTableSeeder extends Seeder
             ['nome' => 'Gerência e Configuração de Serviços de Internet', 'codigo' => 'SI45E', 'id_periodo' => 5, 'cadastradoPorUsuario' => 1, 'ativo' => 1],
             ['nome' => 'Linguagem de Programação IV', 'codigo' => 'SI45F', 'id_periodo' => 5, 'cadastradoPorUsuario' => 1, 'ativo' => 1],
             ['nome' => 'WebServices e XML', 'codigo' => 'SI45G', 'id_periodo' => 5, 'cadastradoPorUsuario' => 1, 'ativo' => 1],
-            ['nome' => 'Projeto Integrador II', 'codigo' => 'SI45I', 'id_periodo' => 5, 'cadastradoPorUsuario' => 1, 'ativo' => 1]
+            ['nome' => 'Projeto Integrador II', 'codigo' => 'SI45I', 'id_periodo' => 5, 'cadastradoPorUsuario' => 1, 'ativo' => 1],
+            //Curricular eletiva
+            ['nome' => 'Libras', 'codigo' => 'SI45I', 'id_periodo' => 5, 'cadastradoPorUsuario' => 1, 'ativo' => 1],
+            ['nome' => 'Projeto de Redes', 'codigo' => 'SI45I', 'id_periodo' => 5, 'cadastradoPorUsuario' => 1, 'ativo' => 1],
 
         ]);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CurricularEletiva;
 use App\Disciplina;
 use Illuminate\Http\Request;
 
