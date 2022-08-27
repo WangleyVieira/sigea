@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cadastro de Endereco</title>
+    <title>STIECSA</title>
     <link rel="shortcut icon" type="svg" href="{{ asset('image/layer-group-solid.svg') }}" style="color: #4a88eb">
 
     {{-- Styles --}}
@@ -25,38 +25,41 @@
         <nav class="navbar navbar-expand-md shadow-sm" style="background-color: #293042">
             <div class="container">
                 <a class="sidebar-brand" href="{{ url('/') }}">
-                    <span class="align-middle mr-3" style="font-size: .999rem;">Cadastro de endereço</span>
+                    <span class="align-middle mr-3" style="font-size: .999rem;">Solução Tecnológica Integrada de Armazenamento de Dados Cadastrais</span>
                 </a>
             </div>
         </nav>
         <main class="content d-flex p-0">
             <div class="container d-flex flex-column">
+
                 <div class="row h-100">
                     <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
                         <div class="d-table-cell align-middle">
                             <div class="text-center mt-4">
                                 <h1 class="h2">
-                                    Faça login em sua conta para continuar
+                                    Recuperar senha
                                 </h1>
+                                <p class="lead">
+									Insira seu email para recuperar a senha
+								</p>
+                                <p class="lead">
+									(Por favor! Cheque sua caixa de spam!)
+								</p>
                             </div>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="m-sm-4">
-                                        <form action="{{ route('login.autenticacao') }}" method="POST">
+                                        <form action="{{route('passwordReset2')}}" method="POST">
                                             @csrf
                                             @method('POST')
-                                            @include('errors.alerts')
-                                            @include('errors.errors')
                                             <div class="mb-3">
+                                                @include('errors.alerts')
+                                                @include('errors.errors')
                                                 <label for="email">Email</label>
-                                                <input type="email" name="email" id="email" class="form-control form-control-lg" placeholder="Digite seu email">
+                                                <input type="email" name="email" id="email" class="form-control form-control-lg" placeholder="Digite seu email" >
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="password">Senha</label>
-                                                <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="Digite sua senha">
-                                            </div>
-                                            <div class="mt-3">
-                                                <button type="submit" class="btn btn-lg btn-primary" style="width: 100%; margin-bottom: 0.7rem">Entrar</button>
+                                            <div class="text-center mt-3">
+                                                <button type="submit" class="btn btn-lg btn-primary">Recuperar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -67,28 +70,11 @@
                 </div>
             </div>
         </main>
-
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row text-muted">
-                    <div class="col-12 text-right">
-                        <p class="mb-0">
-                            &copy; 2022 - <a href="http://agile.inf.br" class="text-muted">Agile Tecnologia</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
 
 {{-- Scripts --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ url('js/bootstrap.js') }}"></script>
-<script src="{{asset('jquery-mask/src/jquery.mask.js')}}"></script>
-<script>
-    $('#cpf').mask('000.000.000-00');
-</script>
-
 </body>
 </html>
 

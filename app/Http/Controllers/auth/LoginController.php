@@ -11,7 +11,12 @@ class LoginController extends Controller
 
     public function index() {
 
-        return view('auth.login');
+        try {
+            return view('auth.login');
+        } catch (\Exception $ex) {
+            // $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro ao logar no sistema.');
+        }
     }
 
     public function autenticacao(Request $request) {

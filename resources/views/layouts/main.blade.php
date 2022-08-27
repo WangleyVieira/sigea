@@ -1,83 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>@yield('title')</title>
-        <link href="css/styles.css" rel="stylesheet"/>
-        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">SIGEA</a>
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    {{-- <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button> --}}
-                </div>
-            </form>
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="{{ route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </li>
-                    </ul>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <title>@yield('title')</title>
+    <link rel="shortcut icon" type="svg" href="{{ asset('image/layer-group-solid.svg') }}" style="color: #4a88eb">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.0/r-2.2.9/rr-1.2.8/datatables.min.css"/>
+    <link href="{{asset('select2-4.1.0/dist/css/select2.min.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{asset('select2-bootstrap/dist/select2-bootstrap.css')}}"/>
+    <script src="{{ asset('js/jquery.js') }}"></script>
+
+</head>
+
+<div class="wrapper">
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-content js-simplebar">
+            <a class="sidebar-brand" href="">
+                {{-- <i class="fas fa-layer-group pt-2"></i> --}}
+                <span class="align-middle mr-3" style="font-size: .999rem;">SIGEA - Sistema de Geração de Atividades</span>
+            </a>
+            <hr>
+
+            <ul class="sidebar-nav">
+                {{-- <li class="sidebar-header">
+                    Páginas
+                </li> --}}
+
+                <li class="sidebar-item {{ Route::current()->uri == 'dashboard' ? 'active' : null }}">
+                    <a href="{{ route('dashboard') }}" class="sidebar-link">
+                        <i class="fas fa-desktop"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ Route::current()->uri == 'perfil' ? 'active' : null }}">
+                    <a href="{{ route('perfil') }}" class="sidebar-link">
+                        <i class="fas fa-user"></i>
+                        Perfil do usuário
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ Route::current()->uri == 'adm/disciplinas' ? 'active' : null }}">
+                    <a href="{{ route('adm.disciplinas.index') }}" class="sidebar-link">
+                        <i class="fas fa-bookmark"></i>
+                        Disciplinas
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes' ? 'active' : null }}">
+                    <a href="{{ route('adm.questoes.index') }}" class="sidebar-link">
+                        <i class="fas fa-bars"></i>
+                        Questões
+                    </a>
                 </li>
             </ul>
-        </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="{{route('pagina_inicial')}}">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            <a class="nav-link" href="{{ route('disciplinas.index') }}">
-                                <div class="sb-nav-link-icon {{ Route::current()->uri == 'disciplinas' ? 'active' : null }}"><i class="fas fa-book"></i></div>
-                                Disciplinas
-                            </a>
-                        </div>
-                    </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logado como: </div>
-                        {{-- <strong>{{auth()->user()->name }}</strong> --}}
-                    </div>
-                </nav>
-            </div>
-            <div id="layoutSidenav_content">
-
-                <main>
-                    @yield('content')
-                </main>
-
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; SIGEA - Sistema de Geração de Atividades 2022</div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        @yield('scripts')
-    </body>
+    </nav>
+
+    <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            @if (Auth::check())
+                <a class="sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+            @endif
+
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav navbar-align">
+
+                    <a href="#">
+                        <span class="glyphicon glyphicon-log-out"></span>
+                    </a>
+                    @if (Auth::guest())
+                        <li>
+                            <a class="btn btn-primary" style="color: white" href="{{ route('login') }}"
+                                id="messagesDropdown" data-bs-toggle="dropdown">
+                                <span>Login</span>
+                            </a>
+                        </li>
+                    @else
+                        <li class="nav-item dropdown">
+                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#"
+                                data-toggle="dropdown">
+                                <i class="fas fa-cog"></i>
+                                <span class="text-dark"></span>
+                            </a>
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
+                                data-toggle="dropdown">
+                                <span class="avatar"> {{ auth()->user()->name }} - {{  auth()->user()->email }}</span>
+                                <span class="text-dark"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Sair
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </nav>
+
+
+        <main class="content">
+            @yield('content')
+        </main>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row text-muted">
+                    <div class="col-6 text-left">
+                    </div>
+                    <div class="col-6 text-right">
+                        <p class="mb-0">
+                            &copy; 2022 - SIGEA - Sistema de Geração de Atividades
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{asset('jquery-mask/dist/jquery.mask.min.js')}}"></script>
+<script src="{{ url('js/fontawesome.js') }}"></script>
+<script src="{{ url('js/bootstrap.js') }}"></script>
+<script src="{{ url('js/functions.js') }}"></script>
+<script src="{{ url('js/prevent_multiple_submits.js') }}"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.0/r-2.2.9/rr-1.2.8/datatables.min.js"></script>
+<script src="{{asset('select2-4.1.0/dist/js/select2.min.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $('#datatable-responsive').dataTable({
+            "order": [[ 0, "asc" ]],
+            "columnDefs": [
+                {
+                    "targets": [ 0 ],
+                    "searchable": false,
+                    "visible": false
+                }
+            ],
+            "oLanguage": {
+                "sLengthMenu": "Mostrar _MENU_ registros por página",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+                "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
+                "sInfoFiltered": "(filtrado de _MAX_ registros)",
+                "sSearch": "Pesquisar: ",
+                "oPaginate": {
+                    "sFirst": "Início",
+                    "sPrevious": "Anterior",
+                    "sNext": "Próximo",
+                    "sLast": "Último"
+                }
+            },
+        });
+    });
+</script>
+@yield('scripts')
 </html>

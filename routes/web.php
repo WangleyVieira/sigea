@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QuestaoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +25,30 @@ Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
 
 //perfil
 Route::get('/perfil', 'PerfilController@index')->name('perfil');
+Route::get('/dashboard', 'PerfilController@show')->name('dashboard');
 
-//Disciplinas
-Route::group(['prefix' => '/disciplinas', 'as' => 'disciplinas.', 'middleware' => 'auth'], function(){
-    Route::get('', 'DisciplinaController@index')->name('index');
+// //Disciplinas
+// Route::group(['prefix' => '/disciplinas', 'as' => 'disciplinas.', 'middleware' => 'auth'], function(){
+//     Route::get('', 'DisciplinaController@index')->name('index');
+// });
+
+// //Questão
+// Route::group(['prefix' => '/questoes', 'as' => 'questoes.', 'middleware' => 'auth'], function(){
+//     Route::get('', 'QuestaoController@index')->name('index');
+// });
+
+//Acesso ADM
+Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], function(){
+
+        //Disciplinas
+    Route::group(['prefix' => '/disciplinas', 'as' => 'disciplinas.', 'middleware' => 'auth'], function(){
+        Route::get('', 'DisciplinaController@index')->name('index');
+    });
+
+    //Questão
+    Route::group(['prefix' => '/questoes', 'as' => 'questoes.', 'middleware' => 'auth'], function(){
+        Route::get('', 'QuestaoController@index')->name('index');
+    });
+
 });
+

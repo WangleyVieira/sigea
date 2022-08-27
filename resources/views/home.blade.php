@@ -1,4 +1,4 @@
-@extends('layouts.main2')
+@extends('layouts.main')
 
 @section('title', 'SIGEA')
 
@@ -27,7 +27,7 @@
                                 <div class="mb-0">
                                     {{-- <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span> --}}
                                     {{-- <span class="text-muted"><a>Ver detalhes</a></span> --}}
-                                    <button class="btn btn-info"><i class="fas fa-info"></i> Ver detalhes</button>
+                                    <button class="btn btn-info"><i class="fas fa-info"><a href=""></a></i> Ver detalhes</button>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                 <h1 class="mt-1 mb-3">14.212</h1>
                                 <div class="mb-0">
                                     {{-- <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span> --}}
-                                    <span class="text-muted"><a>Ver detalhes</a></span>
+                                    <button class="btn btn-info"><i class="fas fa-info"></i><span class="text-muted"><a>Ver detalhes</a></span></button>
                                 </div>
                             </div>
                         </div>
@@ -68,8 +68,7 @@
                                 </div>
                                 <h1 class="mt-1 mb-3">$21.300</h1>
                                 <div class="mb-0">
-                                    {{-- <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span> --}}
-                                    <span class="text-muted"><a>Ver detalhes</a></span>
+                                    <button class="btn btn-info"><i class="fas fa-info"><a href="{{ route('adm.disciplinas.index') }}"></a></i> Ver detalhes</button>
                                 </div>
                             </div>
                         </div>
@@ -86,18 +85,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h1 class="mt-1 mb-3">64</h1>
+                                <h1 class="mt-1 mb-3">2.382</h1>
                                 <div class="mb-0">
-                                    {{-- <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span> --}}
-                                    <span class="text-muted"><a>Ver detalhes</a></span>
+                                    <button class="btn btn-info"><i class="fas fa-info"><a href=""></a></i> Ver detalhes</button>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="col-xl-6 col-xxl-7">
             <div class="card flex-fill w-100">
                 <div class="card-header">

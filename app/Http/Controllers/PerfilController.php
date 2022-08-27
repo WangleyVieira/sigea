@@ -56,9 +56,15 @@ class PerfilController extends Controller
      * @param  \App\Perfil  $perfil
      * @return \Illuminate\Http\Response
      */
-    public function show(Perfil $perfil)
+    public function show()
     {
-        //
+        try {
+            return view('home');
+
+        } catch (\Exception $ex) {
+            $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro ao listas as disciplinas');
+        }
     }
 
     /**
