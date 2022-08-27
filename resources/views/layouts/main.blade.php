@@ -48,11 +48,27 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ Route::current()->uri == 'adm/disciplinas' ? 'active' : null }}">
-                    <a href="{{ route('adm.disciplinas.index') }}" class="sidebar-link">
+                <li class="sidebar-item">
+                    <a href="#adm_disciplinas" data-toggle="collapse" class="sidebar-link collapsed">
                         <i class="fas fa-bookmark"></i>
                         Disciplinas
                     </a>
+                    <ul id="adm_disciplinas" class="sidebar-dropdown list-unstyled {{
+                        Route::current()->uri == 'adm/disciplinas' ||
+                        Route::current()->uri == 'adm/disciplinas/create' ? 'active' : 'collapse'
+                        }}">
+                       <li class="sidebar-item {{ Route::current()->uri == 'adm/disciplinas' ? 'active' : null }}">
+                            <a class="sidebar-link" href="{{ route('adm.disciplinas.index') }}">
+                                Listar
+                            </a>
+                        </li>
+                       <li class="sidebar-item {{ Route::current()->uri == 'adm/disciplinas/create' ? 'active' : null }}">
+                            <a class="sidebar-link" href="{{ route('adm.disciplinas.create') }}">
+                                Cadastrar
+                            </a>
+                        </li>
+
+                    </ul>
                 </li>
 
                 <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes' ? 'active' : null }}">

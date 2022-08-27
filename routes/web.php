@@ -43,6 +43,9 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         //Disciplinas
     Route::group(['prefix' => '/disciplinas', 'as' => 'disciplinas.', 'middleware' => 'auth'], function(){
         Route::get('', 'DisciplinaController@index')->name('index');
+        Route::post('/destroy/{id}', 'DisciplinaController@destroy')->name('destroy');
+        Route::post('/update/{id}', 'DisciplinaController@update')->name('update');
+        Route::get('/create', 'DisciplinaController@create')->name('create');
     });
 
     //Questão
