@@ -75,7 +75,6 @@
                             <td> {{ $top->updated_at != null && $top->updated_at != "" ? $top->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
                         </tr>
 
-
                         <div class="modal fade" id="dangerModal{{ $top->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -104,10 +103,10 @@
                             </div>
                         </div>
 
-                        {{-- <div class="modal fade" id="updateModal{{ $d->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                        <div class="modal fade" id="updateModal{{ $top->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form action="{{ route('adm.topicos.update', $d->id) }}" method="POST" id="alterar_form">
+                                    <form action="{{ route('adm.topicos.update', $top->id) }}" method="POST" id="alterar_form">
                                         @csrf
                                         @method('POST')
                                         <div class="modal-header" style="background-color: rgb(241, 187, 125)">
@@ -118,7 +117,7 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <label for="topico">Tópico</label>
-                                                    <input type="text" name="topico" id="topico" class="form-control" value="{{ $d->descricao}}" required>
+                                                    <input type="text" name="topico" id="topico" class="form-control" value="{{ $top->descricao}}" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -129,7 +128,7 @@
                                     </form>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                         @endforeach
                     @endforeach
                 </tbody>

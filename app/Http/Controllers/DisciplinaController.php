@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CurricularEletiva;
 use App\Disciplina;
 use App\Periodo;
+use App\Topico;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -136,12 +137,23 @@ class DisciplinaController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
+            //disciplina
             $d = Disciplina::find($id);
             $d->dataInativado = Carbon::now();
             $d->inativadoPorUsuario = auth()->user()->id;
             $d->motivoInativado = $request->motivo;
             $d->ativo = 0;
             $d->save();
+
+            //tópicos
+            foreach ($d->topicos as $top) {
+                $top->dataInativado = Carbon::now();
+                $top->inativadoPorUsuario = auth()->user()->id;
+                $top->ativo = 0;
+                $top->save();
+            }
+
+            // dd($d);
 
             return redirect()->back()->with('success', 'Disciplina excluído com sucesso.');
 
