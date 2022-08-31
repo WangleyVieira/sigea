@@ -10,6 +10,7 @@ class Topico extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     protected $fillable = [
         'descricao',
+        'id_disciplina',
         'cadastradoPorUsuario',
         'alteradoPorUsuario',
         'inativadoPorUsuario',
@@ -30,4 +31,10 @@ class Topico extends Model implements Auditable
     {
         return $this->belongsTo(User::class, 'cadastradoPorUsuario');
     }
+
+    public function disciplina()
+    {
+        return $this->belongsTo(Disciplina::class, 'id_disciplina', 'id');
+    }
+
 }

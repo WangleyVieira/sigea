@@ -13,7 +13,7 @@
 
 <div class="card">
     <div class="card-body">
-       <form action="" method="POST">
+       <form action="{{ route('adm.disciplinas.store') }}" id="form" method="POST" class="form_prevent_multiple_submits">
             @csrf
             @method('POST')
             <div class="row">
@@ -35,14 +35,13 @@
                     </select>
                 </div>
             </div>
+
+            <div class="container-fluid">
+                <button type="submit" class="button_prevent_multiple_submits btn btn-primary">Cadastrar</button>
+            </div>
+
        </form>
     </div>
-
-    <div class="col-12">
-        <button class="btn btn-primary"><a href=""></a> Cadastrar </button>
-    </div>
-    <br>
-
 </div>
 
 @endsection

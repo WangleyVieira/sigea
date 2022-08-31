@@ -18,8 +18,10 @@ class DisciplinaController extends Controller
     public function index()
     {
         try {
-            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            // $disciplinas = Disciplina::where('ativo', '=', 1)->get();
             $periodos = Periodo::where('ativo', '=', 1)->get();
+
+            $disciplinas = Disciplina::where('ativo', '=', 1)->with('topicos')->get();
 
             return view('disciplinas.index', compact('disciplinas', 'periodos'));
         } catch (\Exception $ex) {
@@ -59,15 +61,14 @@ class DisciplinaController extends Controller
             }
 
             $novaDisciplina = new Disciplina();
-            $novaDisciplina->disciplina = $request->disciplina;
+            $novaDisciplina->nome = $request->disciplina;
             $novaDisciplina->codigo = $request->codigo;
             $novaDisciplina->id_periodo = $request->id_periodo;
             $novaDisciplina->cadastradoPorUsuario = auth()->user()->id;
             $novaDisciplina->ativo = 1;
             $novaDisciplina->save();
 
-            dd($novaDisciplina);
-
+            return redirect()->route('adm.disciplinas.index')->with('success', 'Disciplina cadastrado com sucesso.');
 
         } catch (\Exception $ex) {
             return $ex->getMessage();
@@ -135,7 +136,6 @@ class DisciplinaController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-
             $d = Disciplina::find($id);
             $d->dataInativado = Carbon::now();
             $d->inativadoPorUsuario = auth()->user()->id;
@@ -143,7 +143,7 @@ class DisciplinaController extends Controller
             $d->ativo = 0;
             $d->save();
 
-            return redirect()->back()->with('success', 'Disciplinar excluído com sucesso.');
+            return redirect()->back()->with('success', 'Disciplina excluído com sucesso.');
 
         } catch (\Exception $ex) {
             // $ex->getMessage();

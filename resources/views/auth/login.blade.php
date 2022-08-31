@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cadastro de Endereco</title>
+    <title>SIGEA</title>
     <link rel="shortcut icon" type="svg" href="{{ asset('image/layer-group-solid.svg') }}" style="color: #4a88eb">
 
     {{-- Styles --}}
@@ -18,17 +18,13 @@
         .error{
               color:red
         }
+        #footer{
+            background-color: rgb(148, 206, 148);
+        }
     </style>
 </head>
 <body>
     <div class="main d-flex justify-content-center w-100">
-        <nav class="navbar navbar-expand-md shadow-sm" style="background-color: #293042">
-            <div class="container">
-                <a class="sidebar-brand" href="{{ url('/') }}">
-                    <span class="align-middle mr-3" style="font-size: .999rem;">Cadastro de endereço</span>
-                </a>
-            </div>
-        </nav>
         <main class="content d-flex p-0">
             <div class="container d-flex flex-column">
                 <div class="row h-100">
@@ -42,21 +38,30 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="m-sm-4">
-                                        <form action="{{ route('login.autenticacao') }}" method="POST">
+
+                                        {{-- <div class="text-center">
+											<img src="img/avatars/logo-sistema.JPG" class="img-fluid" width="60%" height="132">
+										</div> --}}
+
+                                        <form action="{{route('login.autenticacao')}}" method="POST">
                                             @csrf
                                             @method('POST')
                                             @include('errors.alerts')
                                             @include('errors.errors')
                                             <div class="mb-3">
-                                                <label for="email">Email</label>
-                                                <input type="email" name="email" id="email" class="form-control form-control-lg" placeholder="Digite seu email">
+                                                <label for="email">E-mail</label>
+                                                <input type="text" name="email" id="email" class="form-control form-control-lg" placeholder="Digite seu e-mail">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="password">Senha</label>
                                                 <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="Digite sua senha">
                                             </div>
                                             <div class="mt-3">
-                                                <button type="submit" class="btn btn-lg btn-primary" style="width: 100%; margin-bottom: 0.7rem">Entrar</button>
+                                                <button type="submit" class="btn btn-lg btn-outline-success" style="width: 100%">Entrar</button>
+                                            </div>
+                                            <div class="mt-3">
+                                                {{-- <button type="submit" class="btn btn-lg btn-primary" style="width: 100%; margin-bottom: 0.7rem">Registrar-se</button> --}}
+                                                <a href="{{ route('registrar_usuario') }}" class="btn btn-lg btn-outline-primary" style="width: 100%; margin-bottom: 0.7rem">Registrar-se</a>
                                             </div>
                                         </form>
                                     </div>
@@ -64,16 +69,22 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </main>
 
-        <footer class="footer">
+        <footer class="footer" id="footer">
             <div class="container-fluid">
                 <div class="row text-muted">
-                    <div class="col-12 text-right">
+                    <div class="col-6 text-left">
                         <p class="mb-0">
-                            &copy; 2022 - <a href="http://agile.inf.br" class="text-muted">Agile Tecnologia</a>
+                            &copy; <b>2022 - SIGEA - Sistema de Geração de Atividades</b>
+                        </p>
+                    </div>
+                    <div class="col-6 text-right">
+                        <p class="mb-0">
+                            <a href="https://adminkit.io/" target="_blank" class="text-muted"><strong> &copy; AdminKit - Free & Premium Bootstrap 5 Admin Template</strong></a>
                         </p>
                     </div>
                 </div>

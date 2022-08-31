@@ -38,5 +38,11 @@ class Disciplina extends Model implements Auditable
     {
         return $this->belongsTo(Periodo::class, 'id_periodo');
     }
+
+    public function topicos()
+    {
+        return $this->hasMany(Topico::class, 'id_disciplina', 'id');
+    }
+
 }
 

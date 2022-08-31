@@ -18,9 +18,10 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
+                        <th scope="col">Código</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Período</th>
-                        <th scope="col">Código</th>
+                        <th scope="col">Tópicos</th>
                         <th scope="col">Gerar questão</th>
                         <th scope="col">Cadastrar Tópico</th>
                         <th scope="col">Deletar</th>
@@ -31,14 +32,30 @@
                     @foreach ($disciplinas as $d)
                         <tr>
                             <td>{{ $d->id }}</td>
+                            <td> {{ $d->codigo }}</td>
                             <td> {{ $d->nome }}</td>
                             <td> {{ $d->periodo->descricao}}</td>
-                            <td> {{ $d->codigo }}</td>
+                            <td>
+                                @if (Count($d->topicos) != 0)
+                                    <ol>
+                                        @foreach ($d->topicos as $top)
+                                            <li style="text-align: left">
+                                                {{ $top->descricao }}
+                                            </li>
+                                        @endforeach
+                                    </ol>
+                                @else
+                                    <ol>
+                                        <li>Sem tópico cadastrado</li>
+                                    </ol>
+                                @endif
+                            </td>
                             <td>
                                 <a href="" class="btn btn-outline-primary"><i class="fas fa-file"></i></a>
                             </td>
                             <td>
-                                <a href="" class="btn btn-outline-secondary"><i class="fas fa-tag"></i></a>
+                                {{-- <a href="{{ route('adm.topicos.index', $d->id) }}" class="btn btn-outline-secondary"><i class="fas fa-tag"></i></a> --}}
+                                <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#createTopico{{ $d->id }}"><i class="fas fa-tag"></i></a>
                             </td>
                             <td>
                                 <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $d->id }}"><i class="fas fa-trash"></i></a>
@@ -48,7 +65,7 @@
                             </td>
                         </tr>
 
-                        {{-- modal de delete --}}
+                        {{-- modal de excluir --}}
                         <div class="modal fade" id="dangerModal{{ $d->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -82,7 +99,7 @@
                         <div class="modal fade" id="updateModal{{ $d->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form action="{{ route('adm.disciplinas.update', $d->id) }}" method="POST" id="delete_form">
+                                    <form action="{{ route('adm.disciplinas.update', $d->id) }}" method="POST" id="alterar_form">
                                         @csrf
                                         @method('POST')
                                         <div class="modal-header" style="background-color: rgb(241, 187, 125)">
@@ -127,6 +144,35 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- cadastrar tópico --}}
+                        <div class="modal fade" id="createTopico{{ $d->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <form action="{{ route('adm.topicos.store', $d->id) }}" method="POST" id="cad_topico_form">
+                                        @csrf
+                                        @method('POST')
+                                        <div class="modal-header" style="background-color: rgb(113, 166, 235)">
+                                            <h5 class="modal-title">Vincular tópica a discipina <b> {{ $d->nome}} </b></h5>
+                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="descricao">Descricao*</label>
+                                                    <input type="text" name="descricao" id="descricao" class="form-control" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                                            <button type="submit" class="btn btn-success">Cadastrar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                     @endforeach
                 </tbody>
             </table>
@@ -134,7 +180,7 @@
     </div>
 
     <div class="col-12">
-        <button class="btn btn-primary"><a href=""></a> Cadastrar</button>
+        <a href="{{ route('adm.disciplinas.create') }}" class="btn btn-primary"> Cadastrar</a>
     </div>
     <br>
 

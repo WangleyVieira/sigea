@@ -20,9 +20,9 @@ class CreateQuestaosTable extends Migration
             $table->text('nivel_dificuldade')->nullable();
             $table->bigInteger('cadastradoPorUsuario')->unsigned();
             $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
-            $table->bigInteger('alteradoPorUsuario')->unsigned();
+            $table->bigInteger('alteradoPorUsuario')->unsigned()->nullable();
             $table->foreign('alteradoPorUsuario')->references('id')->on('users');
-            $table->bigInteger('inativadoPorUsuario')->unsigned();
+            $table->bigInteger('inativadoPorUsuario')->unsigned()->nullable();
             $table->foreign('inativadoPorUsuario')->references('id')->on('users');
             $table->date('dataInativado')->nullable();
             $table->text('motivoInativado')->nullable();

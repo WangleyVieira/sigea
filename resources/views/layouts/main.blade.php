@@ -19,7 +19,18 @@
     <script src="{{ asset('js/jquery.js') }}"></script>
 
 </head>
-
+<style>
+    .sidebar, .sidebar-nav, .sidebar-content{
+        /* background-color: rgb(12, 71, 12); */
+        background-color: rgb(9, 58, 9);
+    }
+    .navbar{
+        background-color: rgb(148, 206, 148);
+    }
+    #footer{
+        background-color: rgb(148, 206, 148);
+    }
+</style>
 <div class="wrapper">
     <nav id="sidebar" class="sidebar">
         <div class="sidebar-content js-simplebar">
@@ -67,7 +78,11 @@
                                 Cadastrar
                             </a>
                         </li>
-
+                       {{-- <li class="sidebar-item {{ Route::current()->uri == 'adm/topicos' ? 'active' : null }}">
+                            <a class="sidebar-link" href="{{ route('adm.topicos.index', $d->id) }}">
+                                Tópicos
+                            </a>
+                        </li> --}}
                     </ul>
                 </li>
 
@@ -77,6 +92,14 @@
                         Questões
                     </a>
                 </li>
+
+                <li class="sidebar-item {{ Route::current()->uri == 'adm/topicos' ? 'active' : null }}">
+                    <a href="{{ route('adm.topicos.index') }}" class="sidebar-link">
+                        <i class="fas fa-tag"></i>
+                        Tópicos
+                    </a>
+                </li>
+
             </ul>
         </div>
     </nav>
@@ -111,7 +134,7 @@
                             </a>
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                 data-toggle="dropdown">
-                                <span class="avatar"> {{ auth()->user()->name }} - {{  auth()->user()->email }}</span>
+                                <span class="avatar"><b>{{ auth()->user()->name }} - {{  auth()->user()->email }}</b></span>
                                 <span class="text-dark"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
@@ -135,14 +158,17 @@
             @yield('content')
         </main>
 
-        <footer class="footer">
+        <footer class="footer" id="footer">
             <div class="container-fluid">
                 <div class="row text-muted">
                     <div class="col-6 text-left">
+                        <p class="mb-0">
+                            &copy; <b>2022 - SIGEA - Sistema de Geração de Atividades</b>
+                        </p>
                     </div>
                     <div class="col-6 text-right">
                         <p class="mb-0">
-                            &copy; 2022 - SIGEA - Sistema de Geração de Atividades
+                            <a href="https://adminkit.io/" target="_blank" class="text-muted"><strong> &copy; AdminKit - Free & Premium Bootstrap 5 Admin Template</strong></a>
                         </p>
                     </div>
                 </div>

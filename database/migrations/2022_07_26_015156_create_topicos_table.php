@@ -16,11 +16,15 @@ class CreateTopicosTable extends Migration
         Schema::create('topicos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('descricao')->nullable();
+
+            $table->bigInteger('id_disciplina')->unsigned()->nullable();
+            $table->foreign('id_disciplina')->references('id')->on('disciplinas');
+
             $table->bigInteger('cadastradoPorUsuario')->unsigned();
             $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
-            $table->bigInteger('alteradoPorUsuario')->unsigned();
+            $table->bigInteger('alteradoPorUsuario')->unsigned()->nullable();
             $table->foreign('alteradoPorUsuario')->references('id')->on('users');
-            $table->bigInteger('inativadoPorUsuario')->unsigned();
+            $table->bigInteger('inativadoPorUsuario')->unsigned()->nullable();
             $table->foreign('inativadoPorUsuario')->references('id')->on('users');
             $table->date('dataInativado')->nullable();
             $table->text('motivoInativado')->nullable();
