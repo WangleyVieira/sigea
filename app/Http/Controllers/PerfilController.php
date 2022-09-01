@@ -58,13 +58,7 @@ class PerfilController extends Controller
      */
     public function show()
     {
-        try {
-            return view('home');
-
-        } catch (\Exception $ex) {
-            $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro ao listas as disciplinas');
-        }
+        //
     }
 
     /**

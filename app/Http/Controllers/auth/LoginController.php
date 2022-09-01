@@ -26,7 +26,8 @@ class LoginController extends Controller
             return redirect()->back()->withErrors('Email de usuário ou Senha com dados incorretos');
         };
 
-        return view('home');
+        // return view('home');
+        return redirect()->route('dashboard');
 
     }
 

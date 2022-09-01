@@ -31,7 +31,7 @@ Route::post('/store', 'UserController@store')->name('salvar_usuario');
 Route::get('/perfil', ['middlware' => 'auth', 'uses' => 'PerfilController@index'])->name('perfil');
 
 //Dashboard
-Route::get('/dashboard', ['middleware' => 'auth', 'uses' => 'PerfilController@show'])->name('dashboard');
+Route::get('/dashboard', ['middleware' => 'auth', 'uses' => 'DashboardController@index'])->name('dashboard');
 
 //Usuário
 Route::group(['prefix' => '/usuario', 'as' => 'usuario.', 'middleware' => 'auth'], function(){

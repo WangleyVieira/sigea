@@ -36,7 +36,7 @@
                             <td> {{ $d->nome }}</td>
                             <td> {{ $d->periodo->descricao}}</td>
                             <td>
-                                @if (Count($d->topicos) != 0)
+                                {{-- @if (Count($d->topicos) != 0)
                                     <ol>
                                         @foreach ($d->topicos as $top)
                                             <li style="text-align: left">
@@ -48,7 +48,8 @@
                                     <ol>
                                         <li>Sem tópico cadastrado</li>
                                     </ol>
-                                @endif
+                                @endif --}}
+                                <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#listTopico{{ $d->id }}"><i class="fas fa-list"></i></a>
                             </td>
                             <td>
                                 <a href="" class="btn btn-outline-primary"><i class="fas fa-file"></i></a>
@@ -176,6 +177,41 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- listagem de tópicos --}}
+                        <div class="modal fade" id="listTopico{{ $d->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: rgb(151, 160, 170)">
+                                        <h5 class="modal-title">Listagem de Tópicos da Disciplina <b> {{ $d->nome}} </b></h5>
+                                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            @if (Count($d->topicos) != 0)
+                                            <ul>
+                                                @foreach ($d->topicos as $top)
+                                                    <li style="text-align: left">
+                                                        {{ $top->descricao }}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                            @else
+                                                <ul style="text-align: center">
+                                                    <li>Sem tópico cadastrado</li>
+                                                </ul>
+                                            @endif
+
+                                        </div>
+                                    {{-- <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Gerar questão --}}
+
                     @endforeach
                 </tbody>
             </table>

@@ -88,7 +88,7 @@
 
                 <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes' ? 'active' : null }}">
                     <a href="{{ route('adm.questoes.index') }}" class="sidebar-link">
-                        <i class="fas fa-bars"></i>
+                        <i class="fas fa-book"></i>
                         Questões
                     </a>
                 </li>
