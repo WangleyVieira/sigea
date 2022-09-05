@@ -24,8 +24,8 @@ class TopicoController extends Controller
             return view('topico.index', compact('disciplinas'));
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 
@@ -51,6 +51,14 @@ class TopicoController extends Controller
             if($request->descricao == null){
                 return redirect()->back()->with('erro', 'Campo descrição obrigatório.');
             }
+
+            //verifica se existe um topico cadastrado
+            $verificarTopico = Topico::where('descricao', '=', $request->descricao)->with('disciplina')->first();
+
+            if($verificarTopico){
+                return redirect()->back()->with('erro', 'Existe um tópico cadastrado ao informado.');
+            }
+
             $novoTopico = new Topico();
             $novoTopico->descricao = $request->descricao;
             $novoTopico->id_disciplina = $request->id;
@@ -62,8 +70,8 @@ class TopicoController extends Controller
             return redirect()->back()->with('success', 'Tópico cadastrado com sucesso.');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 
@@ -96,9 +104,20 @@ class TopicoController extends Controller
      * @param  \App\Topico  $topico
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Topico $topico)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $top = Topico::find($id);
+            $top->descricao = $request->topico;
+            $top->alteradoPorUsuario = auth()->user()->id;
+            $top->save();
+
+            return redirect()->back()->with('success', 'Tópico alterado com sucesso.');
+
+        } catch (\Exception $ex) {
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+        }
     }
 
     /**
@@ -120,8 +139,8 @@ class TopicoController extends Controller
             return redirect()->back()->with('success', 'Tópico excluído com sucesso');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro ao excluir o tópico.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro ao excluir o tópico.');
         }
     }
 }

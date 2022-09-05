@@ -36,6 +36,7 @@ Route::get('/dashboard', ['middleware' => 'auth', 'uses' => 'DashboardController
 //Usuário
 Route::group(['prefix' => '/usuario', 'as' => 'usuario.', 'middleware' => 'auth'], function(){
     Route::get('', 'UserController@index')->name('index');
+    Route::get('/usuarios-ativos', 'UserController@listagemUsuarios')->name('listagem_usuarios');
 });
 
 //Acesso ADM

@@ -36,7 +36,7 @@
         <div class="sidebar-content js-simplebar">
             <a class="sidebar-brand" href="">
                 {{-- <i class="fas fa-layer-group pt-2"></i> --}}
-                <span class="align-middle mr-3" style="font-size: .999rem;">SIGEA - Sistema de Geração de Atividades</span>
+                <span class="align-middle mr-3" style="font-size: .999rem;">SIGEA</span>
             </a>
             <hr>
 
@@ -190,14 +190,14 @@
 <script>
     $(document).ready(function() {
         $('#datatable-responsive').dataTable({
-            "order": [[ 0, "asc" ]],
-            "columnDefs": [
-                {
-                    "targets": [ 0 ],
-                    "searchable": false,
-                    "visible": false
-                }
-            ],
+            // "order": [[ 0, "asc" ]],
+            // "columnDefs": [
+            //     {
+            //         "targets": [ 0 ],
+            //         "searchable": false,
+            //         "visible": false
+            //     }
+            // ],
             "oLanguage": {
                 "sLengthMenu": "Mostrar _MENU_ registros por página",
                 "sZeroRecords": "Nenhum registro encontrado",

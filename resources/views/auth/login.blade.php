@@ -32,7 +32,7 @@
                         <div class="d-table-cell align-middle">
                             <div class="text-center mt-4">
                                 <h1 class="h2">
-                                    Faça login em sua conta para continuar
+                                    SIGEA - Sistema de Geração de Atividades
                                 </h1>
                             </div>
                             <div class="card">

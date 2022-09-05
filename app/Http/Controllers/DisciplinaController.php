@@ -61,6 +61,13 @@ class DisciplinaController extends Controller
                 return redirect()->back()->with('erro', 'Campos disciplina, código e período são obrigatórios.');
             }
 
+            //verifica se existe uma disciplina cadastrada
+            $verificarDisciplina = Disciplina::where('nome', '=', $request->disciplina)->first();
+
+            if($verificarDisciplina){
+                return redirect()->back()->with('erro', 'Existe uma disciplina cadastrado ao informado.');
+            }
+
             $novaDisciplina = new Disciplina();
             $novaDisciplina->nome = $request->disciplina;
             $novaDisciplina->codigo = $request->codigo;

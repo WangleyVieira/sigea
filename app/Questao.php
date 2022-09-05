@@ -31,5 +31,6 @@ class Questao extends Model implements Auditable
     public function cadastradoPorUsuario()
     {
         return $this->belongsTo(User::class, 'cadastradoPorUsuario');
+
     }
 }
