@@ -65,7 +65,7 @@
         });
 
         /*
-         realiza a requisicao no controlador e realiza
+         realiza a requisicao no controlador questao e realiza
          uma busca dos topicos vinculados a disciplina
         */
         $('#id_disciplina').on('change', function() {
