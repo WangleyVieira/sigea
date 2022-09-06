@@ -17,6 +17,7 @@ class CreateTopicosTable extends Migration
             $table->bigIncrements('id');
             $table->text('descricao')->nullable();
 
+            //referências
             $table->bigInteger('id_disciplina')->unsigned()->nullable();
             $table->foreign('id_disciplina')->references('id')->on('disciplinas');
 

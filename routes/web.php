@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pagina-inicial');
-});
 
 //Login
 Route::get('/', 'Auth\LoginController@index')->name('login');
@@ -54,6 +51,8 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     //Questão
     Route::group(['prefix' => '/questoes', 'as' => 'questoes.', 'middleware' => 'auth'], function(){
         Route::get('', 'QuestaoController@index')->name('index');
+        Route::get('/busca-topicos/{id}', 'QuestaoController@buscaTopico')->name('busca_topico');
+        Route::post('store', 'QuestaoController@store')->name('store');
     });
 
     //Tópicos

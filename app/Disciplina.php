@@ -44,5 +44,10 @@ class Disciplina extends Model implements Auditable
         return $this->hasMany(Topico::class, 'id_disciplina', 'id')->where('ativo', '=', 1);
     }
 
+    public function questoes()
+    {
+        return $this->hasMany(Questao::class, 'id_disciplina', 'id')->where('ativo', '=', 1);
+    }
+
 }
 

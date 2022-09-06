@@ -17,15 +17,15 @@
             @csrf
             @method('POST')
             <div class="row">
-                <div class="col-4">
+                <div class="form-group col-md-4">
                     <label for="disciplina">Nome disciplina</label>
                     <input type="text" name="disciplina" id="disciplina" class="form-control" required>
                 </div>
-                <div class="col-4">
+                <div class="form-group col-md-4">
                     <label for="codigo">Código</label>
                     <input type="text" name="codigo" id="codigo" class="form-control" required>
                 </div>
-                <div class="col-4">
+                <div class="form-group col-md-4">
                     <label for="id_periodo">Selecione o período</label>
                     <select class="form-control mb-3" name="id_periodo" required>
                         <option value="" selected disabled> -- selecione -- </option>
@@ -36,8 +36,10 @@
                 </div>
             </div>
 
-            <div class="container-fluid">
-                <button type="submit" class="button_prevent_multiple_submits btn btn-primary">Cadastrar</button>
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="button_prevent_multiple_submits btn btn-primary">Cadastrar</button>
+                </div>
             </div>
 
        </form>

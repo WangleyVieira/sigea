@@ -12,6 +12,9 @@ class Questao extends Model implements Auditable
         'codigo_questao',
         'descricao',
         'nivel_dificuldade',
+        'id_topico',
+        'id_disciplina',
+        'id_atividade', //falta relacao, depois
         'cadastradoPorUsuario',
         'alteradoPorUsuario',
         'inativadoPorUsuario',
@@ -31,6 +34,15 @@ class Questao extends Model implements Auditable
     public function cadastradoPorUsuario()
     {
         return $this->belongsTo(User::class, 'cadastradoPorUsuario');
+    }
 
+    public function topico()
+    {
+        return $this->belongsTo(Topico::class, 'id_topico', 'id');
+    }
+
+    public function disciplina()
+    {
+        return $this->belongsTo(Disciplina::class, 'id_disciplina', 'id');
     }
 }

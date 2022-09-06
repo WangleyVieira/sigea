@@ -19,15 +19,16 @@ class DisciplinaController extends Controller
     public function index()
     {
         try {
-            // $disciplinas = Disciplina::where('ativo', '=', 1)->get();
             $periodos = Periodo::where('ativo', '=', 1)->get();
 
-            $disciplinas = Disciplina::where('ativo', '=', 1)->with('topicos')->get();
+            $disciplinas = Disciplina::where('ativo', '=', 1)
+                            ->with('topicos')->get();
+            // dd($disciplinas);
 
             return view('disciplinas.index', compact('disciplinas', 'periodos'));
         } catch (\Exception $ex) {
-            $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro ao listas as disciplinas');
+            // $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro ao listas as disciplinas');
         }
     }
 

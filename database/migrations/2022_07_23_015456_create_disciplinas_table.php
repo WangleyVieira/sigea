@@ -17,8 +17,11 @@ class CreateDisciplinasTable extends Migration
             $table->bigIncrements('id');
             $table->text('nome')->nullable();
             $table->text('codigo')->nullable();
+
+            //referências
             $table->bigInteger('id_periodo')->unsigned()->nullable();
             $table->foreign('id_periodo')->references('id')->on('periodos');
+
             $table->bigInteger('cadastradoPorUsuario')->unsigned();
             $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
             $table->bigInteger('alteradoPorUsuario')->unsigned()->nullable();

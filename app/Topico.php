@@ -42,4 +42,9 @@ class Topico extends Model implements Auditable
         return $this->belongsTo(Disciplina::class, 'id_disciplina', 'id');
     }
 
+    public function questoes()
+    {
+        return $this->hasMany(Questao::class, 'id_topico', 'id')->where('ativo', '=', 1);
+    }
+
 }

@@ -18,6 +18,15 @@ class CreateQuestaosTable extends Migration
             $table->string('codigo_questao')->unique();
             $table->text('descricao')->nullable();
             $table->text('nivel_dificuldade')->nullable();
+
+            //referências
+            $table->bigInteger('id_topico')->unsigned()->nullable();
+            $table->foreign('id_topico')->references('id')->on('topicos');
+            $table->bigInteger('id_disciplina')->unsigned()->nullable();
+            $table->foreign('id_disciplina')->references('id')->on('disciplinas');
+            $table->bigInteger('id_atividade')->unsigned()->nullable();
+            $table->foreign('id_atividade')->references('id')->on('atividades');
+
             $table->bigInteger('cadastradoPorUsuario')->unsigned();
             $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
             $table->bigInteger('alteradoPorUsuario')->unsigned()->nullable();

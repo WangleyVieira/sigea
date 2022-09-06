@@ -22,7 +22,7 @@
                         <th scope="col">Nome</th>
                         <th scope="col">Período</th>
                         <th scope="col">Tópicos</th>
-                        <th scope="col">Gerar questão</th>
+                        {{-- <th scope="col">Gerar questão</th> --}}
                         <th scope="col">Cadastrar Tópico</th>
                         <th scope="col">Deletar</th>
                         <th scope="col">Alterar</th>
@@ -51,9 +51,9 @@
                                 @endif --}}
                                 <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#listTopico{{ $d->id }}"><i class="fas fa-list"></i></a>
                             </td>
-                            <td>
-                                <a href="" class="btn btn-outline-primary"><i class="fas fa-file"></i></a>
-                            </td>
+                            {{-- <td>
+                                <a href="{{ route('adm.questoes.index') }}" class="btn btn-outline-primary"><i class="fas fa-file"></i></a>
+                            </td> --}}
                             <td>
                                 {{-- <a href="{{ route('adm.topicos.index', $d->id) }}" class="btn btn-outline-secondary"><i class="fas fa-tag"></i></a> --}}
                                 <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#createTopico{{ $d->id }}"><i class="fas fa-tag"></i></a>
@@ -217,7 +217,7 @@
             </table>
         </div>
     </div>
-
+    <hr>
     <div class="col-12">
         <a href="{{ route('adm.disciplinas.create') }}" class="btn btn-primary"> Cadastrar</a>
     </div>
