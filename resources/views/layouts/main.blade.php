@@ -110,6 +110,28 @@
                     </a>
                 </li>
 
+                <li class="sidebar-item">
+                    <a href="#atividades" data-toggle="collapse" class="sidebar-link collapsed">
+                        <i class="fas fa-folder"></i>
+                        Atividades
+                    </a>
+                    <ul id="atividades" class="sidebar-dropdown list-unstyled {{
+                        Route::current()->uri == 'adm/atividades' ||
+                        Route::current()->uri == 'adm/atividades' ? 'active' : 'collapse'
+                        }}">
+                       <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades' ? 'active' : null }}">
+                            <a class="sidebar-link" href="{{ route('adm.atividades.index') }}">
+                                Listar
+                            </a>
+                        </li>
+                       {{-- <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades/cadastrar-questao' ? 'active' : null }}">
+                            <a class="sidebar-link" href="{{ route('adm.questoes.create') }}">
+                                Cadastrar
+                            </a>
+                        </li> --}}
+                    </ul>
+                </li>
+
             </ul>
         </div>
     </nav>

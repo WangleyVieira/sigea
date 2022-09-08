@@ -21,7 +21,7 @@ class PerfilController extends Controller
                 ->first();
             // dd($user);
 
-            return view('perfil.index', compact('user'));
+            return view('adm.perfil.index', compact('user'));
 
         } catch (\Exception $ex) {
             $ex->getMessage();

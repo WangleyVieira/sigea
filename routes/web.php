@@ -64,5 +64,10 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::post('/store/{id}', 'TopicoController@store')->name('store');
     });
 
+    //Atividade
+    Route::group(['prefix' => '/atividades', 'as' => 'atividades.', 'middleware' => 'auth'], function(){
+        Route::get('', 'AtividadeController@index')->name('index');
+    });
+
 });
 

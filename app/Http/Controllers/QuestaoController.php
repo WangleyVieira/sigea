@@ -19,12 +19,9 @@ class QuestaoController extends Controller
     public function index()
     {
         try {
-            $questoes = Disciplina::where('ativo', '=', 1)
-                                    ->with('topicos')
-                                    ->with('questoes')
-                                    ->get();
-
-            return view('questao.index', compact('questoes'));
+            $questoes = Questao::where('ativo', '=', 1)->get();
+            // dd($questoes);
+            return view('adm.questao.index', compact('questoes'));
 
         } catch (\Exception $ex) {
             return $ex->getMessage();
@@ -59,7 +56,7 @@ class QuestaoController extends Controller
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
             $topicos = Topico::where('ativo', '=', 1)->get();
 
-            return view('questao.create', compact('disciplinas', 'topicos'));
+            return view('adm.questao.create', compact('disciplinas', 'topicos'));
 
         } catch (\Exception $ex) {
             return $ex->getMessage();

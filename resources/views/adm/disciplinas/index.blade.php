@@ -216,8 +216,8 @@
                 </tbody>
             </table>
         </div>
+        <hr>
     </div>
-    <hr>
     <div class="col-12">
         <a href="{{ route('adm.disciplinas.create') }}" class="btn btn-primary"> Cadastrar</a>
     </div>
