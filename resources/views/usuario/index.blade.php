@@ -17,7 +17,6 @@
     <link href="{{asset('select2-4.1.0/dist/css/select2.min.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('select2-bootstrap/dist/select2-bootstrap.css')}}"/>
     <script src="{{ asset('js/jquery.js') }}"></script>
-    <script src="{{ asset('js/html5-qrcode.min.js') }}"></script>
 
     <style>
         .error{

@@ -4,6 +4,8 @@
 
 @section('content')
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <div class="header">
     <h1 class="mt-4">Cadastrar Disciplina</h1>
 </div>
@@ -38,7 +40,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <button type="submit" class="button_prevent_multiple_submits btn btn-primary">Cadastrar</button>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </div>
             </div>
 

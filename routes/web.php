@@ -25,7 +25,7 @@ Route::get('/cadastrar', 'UserController@index')->name('registrar_usuario');
 Route::post('/store', 'UserController@store')->name('salvar_usuario');
 
 //perfil
-Route::get('/perfil', ['middlware' => 'auth', 'uses' => 'PerfilController@index'])->name('perfil');
+Route::get('/perfil', ['middleware' => 'auth', 'uses' => 'PerfilController@index'])->name('perfil');
 
 //Dashboard
 Route::get('/dashboard', ['middleware' => 'auth', 'uses' => 'DashboardController@index'])->name('dashboard');
@@ -51,6 +51,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     //Questão
     Route::group(['prefix' => '/questoes', 'as' => 'questoes.', 'middleware' => 'auth'], function(){
         Route::get('', 'QuestaoController@index')->name('index');
+        Route::get('/cadastrar-questao', 'QuestaoController@create')->name('create');
         Route::get('/busca-topicos/{id}', 'QuestaoController@buscaTopico')->name('busca_topico');
         Route::post('store', 'QuestaoController@store')->name('store');
     });

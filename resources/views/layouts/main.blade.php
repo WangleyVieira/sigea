@@ -78,19 +78,29 @@
                                 Cadastrar
                             </a>
                         </li>
-                       {{-- <li class="sidebar-item {{ Route::current()->uri == 'adm/topicos' ? 'active' : null }}">
-                            <a class="sidebar-link" href="{{ route('adm.topicos.index', $d->id) }}">
-                                Tópicos
-                            </a>
-                        </li> --}}
                     </ul>
                 </li>
 
-                <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes' ? 'active' : null }}">
-                    <a href="{{ route('adm.questoes.index') }}" class="sidebar-link">
+                <li class="sidebar-item">
+                    <a href="#questoes" data-toggle="collapse" class="sidebar-link collapsed">
                         <i class="fas fa-book"></i>
                         Questões
                     </a>
+                    <ul id="questoes" class="sidebar-dropdown list-unstyled {{
+                        Route::current()->uri == 'adm/questoes' ||
+                        Route::current()->uri == 'adm/questoes/cadastrar-questao' ? 'active' : 'collapse'
+                        }}">
+                       <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes' ? 'active' : null }}">
+                            <a class="sidebar-link" href="{{ route('adm.questoes.index') }}">
+                                Listar
+                            </a>
+                        </li>
+                       <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes/cadastrar-questao' ? 'active' : null }}">
+                            <a class="sidebar-link" href="{{ route('adm.questoes.create') }}">
+                                Cadastrar
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="sidebar-item {{ Route::current()->uri == 'adm/topicos' ? 'active' : null }}">

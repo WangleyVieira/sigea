@@ -209,7 +209,7 @@
                             <h3 class="mb-2">{{ $questoes }}</h3>
                             <p class="mb-2">Questões cadastradas (ativos)</p>
                             <div class="mb-0">
-                                <span class="text-muted"><a href="">Ver detalhes</a></span>
+                                <span class="text-muted"><a href="{{ route('adm.questoes.index') }}">Ver detalhes</a></span>
                             </div>
                         </div>
                         <div class="col-auto">
