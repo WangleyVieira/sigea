@@ -14,6 +14,7 @@ class Questao extends Model implements Auditable
         'nivel_dificuldade',
         'id_topico',
         'id_disciplina',
+        'titulo_questao',
         'id_atividade', //falta relacao, depois
         'cadastradoPorUsuario',
         'alteradoPorUsuario',

@@ -54,6 +54,9 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::get('/cadastrar-questao', 'QuestaoController@create')->name('create');
         Route::get('/busca-topicos/{id}', 'QuestaoController@buscaTopico')->name('busca_topico');
         Route::post('store', 'QuestaoController@store')->name('store');
+        Route::post('/destroy/{id}', 'QuestaoController@destroy')->name('destroy');
+        Route::post('/update/{id}', 'QuestaoController@update')->name('update');
+        Route::get('/edit/{id}', 'QuestaoController@edit')->name('edit');
     });
 
     //Tópicos

@@ -24,6 +24,7 @@
                         <th scope="col">ID</th>
                         <th scope="col">Código questão</th>
                         <th scope="col">Descrição</th>
+                        <th scope="col">Título da questão</th>
                         <th scope="col">Tópico</th>
                         <th scope="col">Disciplina</th>
                         {{-- <th scope="col">Cadastrado por</th> --}}
@@ -40,17 +41,48 @@
                             <td> {{ $questao->codigo_questao }}</td>
                             <td> {{ $questao->descricao }}</td>
                             <td> {{ $questao->topico->descricao }}</td>
+                            <td> {{ $questao->titulo_questao }}</td>
                             <td> {{ $questao->disciplina->nome }}</td>
                             <td>
-                                <a href="" class="btn btn-outline-warning" data-toggle="modal" data-target="#updateModal"><i class="fas fa-pen"></i></a>
+                                <a href="{{route('adm.questoes.edit', $questao->id)}}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
                             </td>
                             <td>
-                                <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal"><i class="fas fa-trash"></i></a>
+                                <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $questao->id }}"><i class="fas fa-trash"></i></a>
                             </td>
                             {{-- <td> {{ $questao->cadastradoPorUsuario->name }}</td> --}}
                             <td> {{ $questao->created_at != null && $questao->created_at != "" ? $questao->created_at->format('d/m/Y H:i:s') : '-' }} </td>
                             <td> {{ $questao->updated_at != null && $questao->updated_at != "" ? $questao->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
                         </tr>
+
+                        {{-- modal de excluir --}}
+                        <div class="modal fade" id="dangerModal{{ $questao->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+
+                                    <form action="{{ route('adm.questoes.destroy', $questao->id) }}" method="POST" id="delete_form">
+                                        @csrf
+                                        @method('POST')
+                                        <div class="modal-header" style="background-color: rgb(218, 105, 105)">
+                                            <h5 class="modal-title">Tem certeza que deseja excluir a questão?</b></h5>
+                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label for="motivo" class="form-label">Motivo</label>
+                                                    <input type="text" class="form-control" name="motivo" id="" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                                            <button type="submit" class="btn btn-danger">Excluir</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>

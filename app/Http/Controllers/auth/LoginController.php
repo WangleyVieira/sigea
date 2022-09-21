@@ -13,6 +13,7 @@ class LoginController extends Controller
 
         try {
             return view('auth.login');
+            // return view('auth.login2');
         } catch (\Exception $ex) {
             // $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro ao logar no sistema.');

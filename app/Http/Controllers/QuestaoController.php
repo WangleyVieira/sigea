@@ -6,6 +6,7 @@ use App\Disciplina;
 use App\Periodo;
 use App\Questao;
 use App\Topico;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -97,7 +98,6 @@ class QuestaoController extends Controller
                 'codigo_questao.required' => 'Código questão é obrigatório.',
                 'codigo_questao.max' => 'Máximo 255 caracteres'
             ];
-            // dd($request->all());
 
             $validaCampos = Validator::make($input, $rules, $messages);
             $validaCampos->validate();
@@ -107,9 +107,9 @@ class QuestaoController extends Controller
            $novaQuestao->id_topico = $request->id_topico;
            $novaQuestao->codigo_questao = strtoupper($request->codigo_questao);
            $novaQuestao->id_disciplina = $request->id_disciplina;
+           $novaQuestao->titulo_questao = $request->titulo_questao;
            $novaQuestao->cadastradoPorUsuario = auth()->user()->id;
            $novaQuestao->ativo = 1;
-        //    dd($request->all());
            $novaQuestao->save();
 
             return redirect()->route('adm.questoes.index')->with('success', 'Questão cadastrado com sucesso.');
@@ -137,9 +137,19 @@ class QuestaoController extends Controller
      * @param  \App\Questao  $questao
      * @return \Illuminate\Http\Response
      */
-    public function edit(Questao $questao)
+    public function edit($id)
     {
-        //
+        try {
+            $questao = Questao::find($id);
+            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            $topicos = Topico::where('ativo', '=', 1)->get();
+
+            return view('adm.questao.editar', compact('disciplinas', 'topicos', 'questao'));
+
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
     }
 
     /**
@@ -160,8 +170,22 @@ class QuestaoController extends Controller
      * @param  \App\Questao  $questao
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Questao $questao)
+    public function destroy(Request $request, $id)
     {
-        //
+        try {
+            $questao = Questao::find($id);
+            $questao->dataInativado = Carbon::now();
+            $questao->inativadoPorUsuario = auth()->user()->id;
+            $questao->motivoInativado = $request->motivo;
+            $questao->ativo = 0;
+            // dd($questao);
+            $questao->save();
+
+            return redirect()->back()->with('success', 'Questão excluído com sucesso.');
+
+        } catch (\Exception $ex) {
+            // $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu ao excluir a questão.');
+        }
     }
 }

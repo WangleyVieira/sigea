@@ -19,13 +19,13 @@
 @include('errors.errors')
 
 <div class="header">
-    <h1 class="mt-4">Cadastrar Questão</h1>
+    <h1 class="mt-4">Alterar Questão</h1>
 </div>
 
 <div class="card">
     <div class="card-body">
         <div class="container-fluid">
-            <form action="{{ route('adm.questoes.store') }}" id="formQuestao" method="POST" class="form_prevent_multiple_submits">
+            <form action="" id="formQuestao" method="POST" class="form_prevent_multiple_submits">
                 @csrf
                 @method('POST')
                 <div class="row">
@@ -34,34 +34,36 @@
                         <select name="id_disciplina"  id="id_disciplina" class="form-control select2">
                             <option value="" selected disabled>-- Selecione a disciplina --</option>
                             @foreach ($disciplinas as $disciplina)
-                                <option value="{{ $disciplina->id }}">{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option>
+                                <option value="{{ $disciplina->id }}" {{ $disciplina->id == $questao->id_disciplina ? 'selected' : '' }}> {{ $disciplina->nome }} - {{ $disciplina->codigo }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="id_topico">Selecione o Tópico</label>
                         <select name="id_topico" id="id_topico" class="form-control select2">
-
+                            @foreach ($topicos as $topico)
+                                <option value="{{ $topico->id }}" {{ $topico->id == $questao->id_topico ? 'selected' : '' }}> {{ $topico->descricao }} </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="codigo_questao">Código da Questão (Letras e Números)</label>
-                        <input type="text" name="codigo_questao" id="codigo_questao" class="form-control">
+                        <input type="text" name="codigo_questao" id="codigo_questao" value="{{ $questao->codigo_questao }}" class="form-control">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="titulo_questao">Título da questão</label>
-                        <input type="text" name="titulo_questao" id="titulo_questao" class="form-control">
+                        <input type="text" name="titulo_questao" id="titulo_questao" value="{{ $questao->titulo_questao }}" class="form-control">
                     </div>
                 </div>
                 <div class="mb-2 row">
                     <div class="col-sm-12">
-                        <textarea class="form-control" name="descricao" rows="2"></textarea>
+                        <textarea class="form-control" name="descricao" rows="2" > {{ $questao->descricao }} </textarea>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
                 </div>
             </form>

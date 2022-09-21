@@ -167,7 +167,7 @@ class DisciplinaController extends Controller
 
         } catch (\Exception $ex) {
             // $ex->getMessage();
-            return redirect()->back()->with('erro', 'Ocorreu um erro ao listas as disciplinas');
+            return redirect()->back()->with('erro', 'Ocorreu ao excluir ao excluir a disciplina.');
         }
     }
 }

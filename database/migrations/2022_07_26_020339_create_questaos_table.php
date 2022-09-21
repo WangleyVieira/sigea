@@ -18,6 +18,7 @@ class CreateQuestaosTable extends Migration
             $table->string('codigo_questao')->unique();
             $table->text('descricao')->nullable();
             $table->text('nivel_dificuldade')->nullable();
+            $table->text('titulo_questao')->nullable();
 
             //referências
             $table->bigInteger('id_topico')->unsigned()->nullable();
