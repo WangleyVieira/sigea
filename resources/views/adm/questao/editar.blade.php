@@ -25,7 +25,7 @@
 <div class="card">
     <div class="card-body">
         <div class="container-fluid">
-            <form action="" id="formQuestao" method="POST" class="form_prevent_multiple_submits">
+            <form action="{{ route('adm.questoes.update', $questao->id) }}" id="formQuestao" method="POST" class="form_prevent_multiple_submits">
                 @csrf
                 @method('POST')
                 <div class="row">
@@ -63,7 +63,9 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        {{-- <button type="submit" class="btn btn-primary">Salvar</button> --}}
+                        <input type="submit" class="btn btn-primary" name="Salvar" value="Salvar">
+                        <a href="{{ route('adm.questoes.index') }}" class="btn btn-danger">Cancelar</a>
                     </div>
                 </div>
             </form>
@@ -143,13 +145,5 @@
 
     });
 </script>
-
-{{-- <script>
-    tinymce.init({
-        selector: 'textarea',
-        menubar: false
-    });
-</script> --}}
-
 
 @endsection

@@ -61,7 +61,9 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        {{-- <button type="submit" class="btn btn-primary">Cadastrar</button> --}}
+                        <input type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar">
+                        <a href="{{ route('adm.questoes.index') }}" class="btn btn-danger">Cancelar</a>
                     </div>
                 </div>
             </form>

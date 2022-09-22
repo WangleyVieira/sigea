@@ -26,8 +26,9 @@
                         <th scope="col">Disciplina</th>
                         <th scope="col">Período</th>
                         <th scope="col">Código Disciplina</th>
-                        <th scope="col">Deletar</th>
                         <th scope="col">Alterar</th>
+                        <th scope="col">Deletar</th>
+                        <th scope="col">Cadastrado por</th>
                         <th scope="col">Cadastrado em</th>
                         <th scope="col">Atualizado em</th>
                     </tr>
@@ -42,11 +43,12 @@
                                 <td> {{ $d->periodo->descricao}}</td>
                                 <td> {{ $top->disciplina->codigo }}</td>
                                 <td>
-                                    <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $top->id }}"><i class="fas fa-trash"></i></a>
-                                </td>
-                                <td>
                                     <a href="" class="btn btn-outline-warning" data-toggle="modal" data-target="#updateModal{{ $top->id }}"><i class="fas fa-pen"></i></a>
                                 </td>
+                                <td>
+                                    <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $top->id }}"><i class="fas fa-trash"></i></a>
+                                </td>
+                                <td> {{ isset($questao->cadastradoPorUsuario) ? $questao->cad_usuario->name : 'nativo do sistema' }} </td>
                                 <td> {{ $top->created_at != null && $top->created_at != "" ? $top->created_at->format('d/m/Y H:i:s') : '-' }} </td>
                                 <td> {{ $top->updated_at != null && $top->updated_at != "" ? $top->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
                             </tr>

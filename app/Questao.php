@@ -32,9 +32,14 @@ class Questao extends Model implements Auditable
 
     protected $table = 'questaos';
 
-    public function cadastradoPorUsuario()
+    public function cad_usuario()
     {
         return $this->belongsTo(User::class, 'cadastradoPorUsuario');
+    }
+
+    public function alteradoPorUsuario()
+    {
+        return $this->belongsTo(User::class, 'alteradoPorUsuario');
     }
 
     public function topico()

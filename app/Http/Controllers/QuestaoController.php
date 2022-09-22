@@ -21,12 +21,11 @@ class QuestaoController extends Controller
     {
         try {
             $questoes = Questao::where('ativo', '=', 1)->get();
-            // dd($questoes);
             return view('adm.questao.index', compact('questoes'));
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -40,8 +39,8 @@ class QuestaoController extends Controller
             }
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -60,8 +59,8 @@ class QuestaoController extends Controller
             return view('adm.questao.create', compact('disciplinas', 'topicos'));
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -115,8 +114,8 @@ class QuestaoController extends Controller
             return redirect()->route('adm.questoes.index')->with('success', 'Questão cadastrado com sucesso.');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -141,14 +140,15 @@ class QuestaoController extends Controller
     {
         try {
             $questao = Questao::find($id);
-            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $topicos = Topico::where('ativo', '=', 1)->get();
+            // $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            $disciplinas = Disciplina::get();
+            $topicos = Topico::get();
 
             return view('adm.questao.editar', compact('disciplinas', 'topicos', 'questao'));
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -159,9 +159,52 @@ class QuestaoController extends Controller
      * @param  \App\Questao  $questao
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Questao $questao)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            if($request->id_disciplina == null || $request->id_topico == null){
+                 return redirect()->back()->with('erro', ' Selecione uma Disciplina e um Tópico vinculado.');
+            }
+            if($request->descricao == null){
+                 return redirect()->back()->with('erro', 'Campo Descrição é obrigatório.');
+            }
+             //  validacao dos campos
+              $input = [
+                 'descricao' => $request->descricao,
+                 'codigo_questao' => $request->codigo_questao
+             ];
+
+             $rules = [
+                 'descricao' => 'required|max:255',
+                 'codigo_questao' => 'required|max:255'
+             ];
+
+             $messages = [
+                 'descricao.required' => 'descricao é obrigatório.',
+                 'descricao.max' => 'Máximo 255 caracteres.',
+
+                 'codigo_questao.required' => 'Código questão é obrigatório.',
+                 'codigo_questao.max' => 'Máximo 255 caracteres'
+             ];
+
+             $validaCampos = Validator::make($input, $rules, $messages);
+             $validaCampos->validate();
+
+            $questao = Questao::find($id);
+            $questao->descricao = $request->descricao;
+            $questao->id_topico = $request->id_topico;
+            $questao->codigo_questao = strtoupper($request->codigo_questao);
+            $questao->id_disciplina = $request->id_disciplina;
+            $questao->titulo_questao = $request->titulo_questao;
+            $questao->alteradoPorUsuario = auth()->user()->id;
+            $questao->save();
+
+             return redirect()->route('adm.questoes.index')->with('success', 'Questão alterado com sucesso.');
+
+         } catch (\Exception $ex) {
+            //  return $ex->getMessage();
+             return redirect()->back()->with('erro', 'Ocorreu um erro ao alterar a questão, entre em contato com Adm.');
+         }
     }
 
     /**
@@ -173,12 +216,11 @@ class QuestaoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            $questao = Questao::find($id);
+            $questao = Questao::find($request->id);
             $questao->dataInativado = Carbon::now();
             $questao->inativadoPorUsuario = auth()->user()->id;
             $questao->motivoInativado = $request->motivo;
             $questao->ativo = 0;
-            // dd($questao);
             $questao->save();
 
             return redirect()->back()->with('success', 'Questão excluído com sucesso.');

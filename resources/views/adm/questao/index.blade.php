@@ -27,9 +27,9 @@
                         <th scope="col">Título da questão</th>
                         <th scope="col">Tópico</th>
                         <th scope="col">Disciplina</th>
-                        {{-- <th scope="col">Cadastrado por</th> --}}
                         <th scope="col">Alterar</th>
                         <th scope="col">Deletar</th>
+                        <th scope="col">Cadastrado por</th>
                         <th scope="col">Cadastrado em</th>
                         <th scope="col">Atualizado em</th>
                     </tr>
@@ -49,7 +49,7 @@
                             <td>
                                 <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $questao->id }}"><i class="fas fa-trash"></i></a>
                             </td>
-                            {{-- <td> {{ $questao->cadastradoPorUsuario->name }}</td> --}}
+                            <td> {{ isset($questao->cadastradoPorUsuario) ? $questao->cad_usuario->name : 'nativo do sistema' }} </td>
                             <td> {{ $questao->created_at != null && $questao->created_at != "" ? $questao->created_at->format('d/m/Y H:i:s') : '-' }} </td>
                             <td> {{ $questao->updated_at != null && $questao->updated_at != "" ? $questao->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
                         </tr>
