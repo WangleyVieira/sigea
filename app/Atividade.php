@@ -29,8 +29,12 @@ class Atividade extends Model implements Auditable
 
     protected $table = 'atividades';
 
-    public function cadastradoPorUsuario()
+    public function cad_usuario()
     {
         return $this->belongsTo(User::class, 'cadastradoPorUsuario');
+    }
+    public function questoes()
+    {
+        return $this->belongsTo(Questao::class, 'id_topico', 'id');
     }
 }

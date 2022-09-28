@@ -117,6 +117,7 @@
                     </a>
                     <ul id="atividades" class="sidebar-dropdown list-unstyled {{
                         Route::current()->uri == 'adm/atividades' ||
+                        Route::current()->uri == 'adm/atividades/cadastrar-atividade' ||
                         Route::current()->uri == 'adm/atividades' ? 'active' : 'collapse'
                         }}">
                        <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades' ? 'active' : null }}">
@@ -124,11 +125,11 @@
                                 Listar
                             </a>
                         </li>
-                       {{-- <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades/cadastrar-questao' ? 'active' : null }}">
-                            <a class="sidebar-link" href="{{ route('adm.questoes.create') }}">
+                       <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades/cadastrar-atividade' ? 'active' : null }}">
+                            <a class="sidebar-link" href="{{ route('adm.atividades.create') }}">
                                 Cadastrar
                             </a>
-                        </li> --}}
+                        </li>
                     </ul>
                 </li>
 

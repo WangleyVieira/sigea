@@ -27,7 +27,7 @@ class Curso extends Model implements Auditable
 
     protected $table = 'cursos';
 
-    public function cadastradoPorUsuario()
+    public function cad_usuario()
     {
         return $this->belongsTo(User::class, 'cadastradoPorUsuario');
     }

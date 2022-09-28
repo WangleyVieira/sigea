@@ -70,6 +70,11 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     //Atividade
     Route::group(['prefix' => '/atividades', 'as' => 'atividades.', 'middleware' => 'auth'], function(){
         Route::get('', 'AtividadeController@index')->name('index');
+        Route::get('/cadastrar-atividade', 'AtividadeController@create')->name('create');
+        Route::post('/store', 'AtividadeController@store')->name('store');
+        Route::post('/destroy/{id}', 'AtividadeController@destroy')->name('destroy');
+        Route::post('/edit/{id}', 'AtividadeController@edit')->name('edit');
+        Route::get('/busca-questao/{id}', 'AtividadeController@buscaQuestao')->name('busca_questao');
     });
 
 });

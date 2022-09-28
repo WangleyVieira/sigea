@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Atividade;
+use App\Disciplina;
+use App\Questao;
+use App\Topico;
 use Illuminate\Http\Request;
 
 class AtividadeController extends Controller
@@ -29,7 +32,31 @@ class AtividadeController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            $topicos = Topico::where('ativo', '=', 1)->get();
+
+            return view('adm.atividade.create', compact('disciplinas', 'topicos'));
+
+        } catch (\Exception $ex) {
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
+    }
+
+    public function buscaQuestao(Request $request, $id)
+    {
+        try {
+            if($request->ajax()){
+                $questoes = Questao::where('id_topico', '=', $id)->where('ativo', '=', 1)->get();
+
+                return response()->json($questoes);
+            }
+
+        } catch (\Exception $ex) {
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
     }
 
     /**
