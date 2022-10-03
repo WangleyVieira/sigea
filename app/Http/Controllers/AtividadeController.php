@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Atividade;
+use App\AtividadeQuestao;
 use App\Disciplina;
 use App\Questao;
 use App\Topico;
@@ -34,13 +35,12 @@ class AtividadeController extends Controller
     {
         try {
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $topicos = Topico::where('ativo', '=', 1)->get();
 
-            return view('adm.atividade.create', compact('disciplinas', 'topicos'));
+            return view('adm.atividade.create', compact('disciplinas'));
 
         } catch (\Exception $ex) {
-            // return $ex->getMessage();
-            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -65,9 +65,21 @@ class AtividadeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeAtividade(Request $request, $id)
     {
-        //
+        try {
+            $novaAtividade = new AtividadeQuestao();
+            $novaAtividade->descricao_atividade = $request->descricao_atividade;
+            $novaAtividade->titulo_atividade = $request->titulo_atividade;
+            $novaAtividade->id_atividade = $id;
+            dd($novaAtividade);
+
+            return redirect('/selecionar-questoes')->with('success', 'Atividade cadastrado com sucesso.');
+
+        } catch (\Exception $ex) {
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
     }
 
     /**

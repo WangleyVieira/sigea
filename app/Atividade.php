@@ -12,7 +12,7 @@ class Atividade extends Model implements Auditable
         'qtd_questao',
         'descricao',
         'professor',
-        'data',
+        // 'data',
         'cadastradoPorUsuario',
         'alteradoPorUsuario',
         'inativadoPorUsuario',
@@ -36,5 +36,10 @@ class Atividade extends Model implements Auditable
     public function questoes()
     {
         return $this->belongsTo(Questao::class, 'id_topico', 'id');
+    }
+
+    public function questaoAtividades()
+    {
+        return $this->belongsToMany(Questao::class, 'id_atividade', 'id')->where('ativo', '=', 1);
     }
 }

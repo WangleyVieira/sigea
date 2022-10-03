@@ -79,7 +79,7 @@
         rules: {
             descricao:{
                 required:true,
-                maxlength:255,
+                maxlength:1200,
             },
             codigo_questao:{
                 required:true,

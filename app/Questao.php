@@ -15,7 +15,7 @@ class Questao extends Model implements Auditable
         'id_topico',
         'id_disciplina',
         'titulo_questao',
-        'id_atividade', //falta relacao, depois
+        'id_atividade',
         'cadastradoPorUsuario',
         'alteradoPorUsuario',
         'inativadoPorUsuario',
@@ -50,5 +50,10 @@ class Questao extends Model implements Auditable
     public function disciplina()
     {
         return $this->belongsTo(Disciplina::class, 'id_disciplina', 'id');
+    }
+
+    public function atividades()
+    {
+        return $this->belongsToMany(Atividade::class, 'id_atividade', 'id')->where('ativo', '=', 1);
     }
 }

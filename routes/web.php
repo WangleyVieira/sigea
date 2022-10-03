@@ -53,10 +53,11 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::get('', 'QuestaoController@index')->name('index');
         Route::get('/cadastrar-questao', 'QuestaoController@create')->name('create');
         Route::get('/busca-topicos/{id}', 'QuestaoController@buscaTopico')->name('busca_topico');
-        Route::post('store', 'QuestaoController@store')->name('store');
+        Route::post('/store', 'QuestaoController@store')->name('store');
         Route::post('/destroy/{id}', 'QuestaoController@destroy')->name('destroy');
         Route::post('/update/{id}', 'QuestaoController@update')->name('update');
         Route::get('/edit/{id}', 'QuestaoController@edit')->name('edit');
+        Route::get('/selecionar-questoes', 'QuestaoController@selectQuestao')->name('select_questao');
     });
 
     //Tópicos
@@ -71,7 +72,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     Route::group(['prefix' => '/atividades', 'as' => 'atividades.', 'middleware' => 'auth'], function(){
         Route::get('', 'AtividadeController@index')->name('index');
         Route::get('/cadastrar-atividade', 'AtividadeController@create')->name('create');
-        Route::post('/store', 'AtividadeController@store')->name('store');
+        Route::post('/store', 'AtividadeController@storeAtividade')->name('store_atividade');
         Route::post('/destroy/{id}', 'AtividadeController@destroy')->name('destroy');
         Route::post('/edit/{id}', 'AtividadeController@edit')->name('edit');
         Route::get('/busca-questao/{id}', 'AtividadeController@buscaQuestao')->name('busca_questao');

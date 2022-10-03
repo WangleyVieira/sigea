@@ -18,7 +18,7 @@ class CreateAtividadesTable extends Migration
             $table->integer('qtd_questao')->nullable();
             $table->text('descricao')->nullable();
             $table->text('professor')->nullable();
-            $table->date('data')->nullable();
+            // $table->date('data')->nullable();
             $table->bigInteger('cadastradoPorUsuario')->unsigned();
             $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
             $table->bigInteger('alteradoPorUsuario')->unsigned();

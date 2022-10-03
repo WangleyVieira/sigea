@@ -64,6 +64,18 @@ class QuestaoController extends Controller
         }
     }
 
+    public function selectQuestao()
+    {
+        try {
+           $questoes = Questao::where('ativo', '=', 1)->get();
+           return view('adm.atividade.listar-questoes', compact('questoes'));
+
+        } catch (\Exception $ex) {
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -86,7 +98,7 @@ class QuestaoController extends Controller
             ];
 
             $rules = [
-                'descricao' => 'required|max:255',
+                'descricao' => 'required|max:1200',
                 'codigo_questao' => 'required|max:255'
             ];
 
