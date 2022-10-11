@@ -9,10 +9,9 @@ class Atividade extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     protected $fillable = [
-        'qtd_questao',
         'descricao',
-        'professor',
-        // 'data',
+        'titulo_atividade',
+        'id_disciplina',
         'cadastradoPorUsuario',
         'alteradoPorUsuario',
         'inativadoPorUsuario',
@@ -40,6 +39,11 @@ class Atividade extends Model implements Auditable
 
     public function questaoAtividades()
     {
-        return $this->belongsToMany(Questao::class, 'id_atividade', 'id')->where('ativo', '=', 1);
+        return $this->belongsToMany(Questao::class);
+    }
+
+    public function disciplinas()
+    {
+        return $this->hasMany(Disciplina::class, 'id_disciplina', 'id')->where('ativo', '=', 1);
     }
 }

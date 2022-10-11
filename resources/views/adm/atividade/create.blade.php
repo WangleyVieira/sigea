@@ -16,8 +16,7 @@
 <div class="card">
     <div class="card-body">
         <div class="container-fluid">
-            <form action="{{ route('adm.atividades.store_atividade') }}" id="formQuestao" method="POST" class="form_prevent_multiple_submits">
-                {{-- <input type="hidden" name="id_atividade"> --}}
+            <form action="{{ route('adm.atividades.store') }}" id="formQuestao" method="POST" class="form_prevent_multiple_submits">
                 @csrf
                 @method('POST')
                 <div class="row">

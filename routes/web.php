@@ -57,7 +57,6 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::post('/destroy/{id}', 'QuestaoController@destroy')->name('destroy');
         Route::post('/update/{id}', 'QuestaoController@update')->name('update');
         Route::get('/edit/{id}', 'QuestaoController@edit')->name('edit');
-        Route::get('/selecionar-questoes', 'QuestaoController@selectQuestao')->name('select_questao');
     });
 
     //Tópicos
@@ -72,10 +71,16 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     Route::group(['prefix' => '/atividades', 'as' => 'atividades.', 'middleware' => 'auth'], function(){
         Route::get('', 'AtividadeController@index')->name('index');
         Route::get('/cadastrar-atividade', 'AtividadeController@create')->name('create');
-        Route::post('/store', 'AtividadeController@storeAtividade')->name('store_atividade');
         Route::post('/destroy/{id}', 'AtividadeController@destroy')->name('destroy');
         Route::post('/edit/{id}', 'AtividadeController@edit')->name('edit');
         Route::get('/busca-questao/{id}', 'AtividadeController@buscaQuestao')->name('busca_questao');
+        Route::post('/store', 'AtividadeController@storeAtividade')->name('store');
+    });
+
+    //Atividade-Questão
+    Route::group(['prefix' => '/atividade-questao', 'as' => 'atividade_questao.', 'middleware' => 'auth'], function(){
+        Route::post('/store', 'AtividadeQuestaoController@storeAtividade')->name('atividade_questao');
+        Route::get('/selecionar-questoes', 'AtividadeQuestaoController@selectQuestao')->name('select_questao');
     });
 
 });

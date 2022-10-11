@@ -34,9 +34,10 @@ class AtividadeController extends Controller
     public function create()
     {
         try {
+            $questoes = Questao::where('ativo', '=', 1)->get();
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
 
-            return view('adm.atividade.create', compact('disciplinas'));
+            return view('adm.atividade.create', compact('disciplinas', 'questoes'));
 
         } catch (\Exception $ex) {
             return $ex->getMessage();
@@ -65,20 +66,25 @@ class AtividadeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeAtividade(Request $request, $id)
+    public function storeAtividade(Request $request)
     {
         try {
-            $novaAtividade = new AtividadeQuestao();
-            $novaAtividade->descricao_atividade = $request->descricao_atividade;
-            $novaAtividade->titulo_atividade = $request->titulo_atividade;
-            $novaAtividade->id_atividade = $id;
-            dd($novaAtividade);
+            if($request->id_disciplina == null){
+                return redirect()->back()->with('erro', 'Selecione a disciplina para cadastrar a atividade.');
+            }
+            $atividadeCadastrada = new Atividade();
+            $atividadeCadastrada->id_disciplina = $request->id_disciplina;
+            $atividadeCadastrada->descricao = $request->descricao_atividade;
+            $atividadeCadastrada->titulo_atividade = $request->titulo_atividade;
+            $atividadeCadastrada->cadastradoPorUsuario = auth()->user()->id;
+            $atividadeCadastrada->ativo = 1;
+            // $atividadeCadastrada->save();
 
-            return redirect('/selecionar-questoes')->with('success', 'Atividade cadastrado com sucesso.');
+            return redirect('/adm/atividade-questao/selecionar-questoes');
 
         } catch (\Exception $ex) {
-            // return $ex->getMessage();
-            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 

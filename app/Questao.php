@@ -54,6 +54,6 @@ class Questao extends Model implements Auditable
 
     public function atividades()
     {
-        return $this->belongsToMany(Atividade::class, 'id_atividade', 'id')->where('ativo', '=', 1);
+        return $this->belongsToMany(Atividade::class);
     }
 }

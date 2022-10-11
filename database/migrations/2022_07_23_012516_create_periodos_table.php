@@ -16,7 +16,7 @@ class CreatePeriodosTable extends Migration
         Schema::create('periodos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('descricao')->nullable();
-            $table->bigInteger('cadastradoPorUsuario')->unsigned();
+            $table->bigInteger('cadastradoPorUsuario')->unsigned()->nullable();
             $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
             $table->bigInteger('alteradoPorUsuario')->unsigned()->nullable();
             $table->foreign('alteradoPorUsuario')->references('id')->on('users');

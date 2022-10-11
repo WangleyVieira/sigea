@@ -15,15 +15,18 @@ class CreateAtividadesTable extends Migration
     {
         Schema::create('atividades', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('qtd_questao')->nullable();
             $table->text('descricao')->nullable();
-            $table->text('professor')->nullable();
-            // $table->date('data')->nullable();
+            $table->text('titulo_atividade')->nullable();
+
+            //referência da disciplina
+            $table->bigInteger('id_disciplina')->unsigned()->nullable();
+            $table->foreign('id_disciplina')->references('id')->on('disciplinas');
+
             $table->bigInteger('cadastradoPorUsuario')->unsigned();
             $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
-            $table->bigInteger('alteradoPorUsuario')->unsigned();
+            $table->bigInteger('alteradoPorUsuario')->unsigned()->nullable();
             $table->foreign('alteradoPorUsuario')->references('id')->on('users');
-            $table->bigInteger('inativadoPorUsuario')->unsigned();
+            $table->bigInteger('inativadoPorUsuario')->unsigned()->nullable();
             $table->foreign('inativadoPorUsuario')->references('id')->on('users');
             $table->date('dataInativado')->nullable();
             $table->text('motivoInativado')->nullable();
