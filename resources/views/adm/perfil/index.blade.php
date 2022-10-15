@@ -3,12 +3,11 @@
 @section('title', 'SIGEA')
 
 @section('content')
-
-    <div>
-        <h3>Informações de Perfil de Usuário</h3>
-    </div>
     <div class="col-12 col-lg-12">
         <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">Informações de Perfil de Usuário</h3>
+            </div>
             <div class="card-body">
                 <div class="form-group col-md-6">
                     <label class="form-label">Nome</label>

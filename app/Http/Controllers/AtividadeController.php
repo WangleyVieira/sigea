@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Atividade;
-use App\AtividadeQuestao;
 use App\Disciplina;
 use App\Questao;
-use App\Topico;
 use Illuminate\Http\Request;
 
 class AtividadeController extends Controller
@@ -72,6 +70,7 @@ class AtividadeController extends Controller
             if($request->id_disciplina == null){
                 return redirect()->back()->with('erro', 'Selecione a disciplina para cadastrar a atividade.');
             }
+
             $atividadeCadastrada = new Atividade();
             $atividadeCadastrada->id_disciplina = $request->id_disciplina;
             $atividadeCadastrada->descricao = $request->descricao_atividade;
