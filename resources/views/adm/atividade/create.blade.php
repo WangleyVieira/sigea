@@ -37,35 +37,6 @@
                         <label for="titulo_atividade">Titulo</label>
                         <input type="text" name="titulo_atividade" id="titulo_atividade" class="form-control">
                     </div>
-                    {{-- <div class="form-group col-md-6">
-                        <label for="id_questao">Selecione a Questão</label>
-                        <select name="id_questao" id="id_questao" class="form-control select2">
-
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <button type="button" class="btn btn-light" id="add" title="Adicionar atividade">Adicionar</button>
-                    </div>
-                </div>
-                <div class="table-responsive col-md-12">
-                    <table class="table table-bordered text-center">
-                        <thead>
-                            <tr>
-                                <th scope="col">Disciplina</th>
-                                <th scope="col">Tópico</th>
-                                <th scope="col">Questão</th>
-                                <th scope="col">Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody id="lista">
-                            <tr>
-                                <td colspan="4" id="nenhum">Nenhuma questão selecionada</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> --}}
                 <div class="col-12">
                     <input type="submit" class="btn btn-primary" name="avancar" value="Avançar">
                     <a href="{{ route('adm.questoes.index') }}" class="btn btn-danger">Cancelar</a>
@@ -110,7 +81,6 @@
             },
         }
     });
-
 
     $(document).ready(function() {
 
@@ -182,29 +152,6 @@
         // });
     });
 
-    // $('#add').on('click', function(){
-    //     var selectDisciplina = $("#id_disciplina option:selected")[0].getAttribute('name');
-    //     var selectTopico = $("#id_topico option:selected")[0].getAttribute('descricao');
-    //     // var selectTopico = $("#id_topico option:selected").val();
-    //     var selectQuestao = $("#id_questao option:selected")[0].getAttribute('descricao');
-    //     console.log(selectTopico);
-    //     var id = $('#id_questao').val();
-
-    //     if(id != null && id != ''){
-    //         $('#nenhum').addClass('d-none');
-    //         var novaLinha = $("<tr>");
-    //         var cols = "";
-
-    //         cols += '<td style="display: none;"><input type="hidden" style="text-align: center" name="id_questao[]" class="form-control" value=' + id + ' readonly></td><td>' + selectDisciplina + '</td>';
-    //         cols += '<td style="display: none;"><input type="hidden" style="text-align: center" name="id_questao[]" class="form-control" value=' + id + ' readonly></td><td>' + selectTopico + '</td>';
-    //         cols += '<td style="display: none;"><input type="hidden" style="text-align: center" name="id_questao[]" class="form-control" value=' + id + ' readonly></td><td>' + selectQuestao + '</td>';
-
-    //         cols += '<td><button class="btn btn-danger" type="button" onclick="remove(this)">Remover linha</button></td>';
-
-    //         novaLinha.append(cols);
-    //         $('#lista').append(novaLinha);
-    //     }
-    // });
 </script>
 
 

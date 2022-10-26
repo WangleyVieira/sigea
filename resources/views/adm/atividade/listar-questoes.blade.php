@@ -66,46 +66,52 @@
 
 <div class="card">
     <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped" id="datatable-responsive">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Selecionar</th>
-                        <th scope="col">Descrição</th>
-                        <th scope="col">Título da questão</th>
-                        <th scope="col">Cadastrado por</th>
-                        <th scope="col">Cadastrado em</th>
-                        <th scope="col">Atualizado em</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($questoesCadastradas as $qc)
-                        @foreach ($qc->questoes as $qcListagem)
-                            <tr>
-                                <td style="text-align: center">
-                                    <label>
-                                        <input type="checkbox" name="selecao[]"/>
-                                    </label>
-                                </td>
-                                <td> {{ $qcListagem->descricao }}</td>
-                                <td> {{ $qcListagem->titulo_questao }}</td>
-                                <td> {{ isset($qc->cadastradoPorUsuario) ? $qcListagem->cad_usuario->name : 'nativo do sistema' }} </td>
-                                <td> {{ $qcListagem->created_at != null && $qcListagem->created_at != "" ? $qcListagem->created_at->format('d/m/Y H:i:s') : '-' }} </td>
-                                <td> {{ $qcListagem->updated_at != null && $qcListagem->updated_at != "" ? $qcListagem->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
-                            </tr>
+        <form action="{{ route('adm.atividade_questao.atividade_questao') }}" id="formQuestao" method="POST" class="form_prevent_multiple_submits">
+            @csrf
+            @method('POST')
+            <div class="table-responsive">
+                <table class="table table-striped" id="datatable-responsive">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Selecionar</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Título da questão</th>
+                            <th scope="col">Tópico</th>
+                            <th scope="col">Cadastrado por</th>
+                            <th scope="col">Cadastrado em</th>
+                            <th scope="col">Atualizado em</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($questoesCadastradas as $qc)
+                            @foreach ($qc->questoes as $qcListagem)
+                                <tr>
+                                    <td style="text-align: center">
+                                        <label>
+                                            <input type="checkbox" name="id_questao[]"/>
+                                        </label>
+                                    </td>
+                                    <td> {{ $qcListagem->descricao }}</td>
+                                    <td> {{ $qcListagem->titulo_questao }}</td>
+                                    <td> {{ $qcListagem->topico->descricao }}</td>
+                                    <td> {{ isset($qc->cadastradoPorUsuario) ? $qcListagem->cad_usuario->name : 'nativo do sistema' }} </td>
+                                    <td> {{ $qcListagem->created_at != null && $qcListagem->created_at != "" ? $qcListagem->created_at->format('d/m/Y H:i:s') : '-' }} </td>
+                                    <td> {{ $qcListagem->updated_at != null && $qcListagem->updated_at != "" ? $qcListagem->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
+                                </tr>
+                            @endforeach
                         @endforeach
-                    @endforeach
-                </tbody>
-            </table>
-
-        </div>
-    <hr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <input type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar">
+                    <a href="{{ route('dashboard') }}" class="btn btn-danger">Cancelar</a>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="col-12">
-        <a href="" class="btn btn-primary"> Salvar</a>
-    </div>
-    <br>
-
 </div>
 
 <script>

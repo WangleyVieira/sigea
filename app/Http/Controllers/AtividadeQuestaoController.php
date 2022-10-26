@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class AtividadeQuestaoController extends Controller
 {
-
-    public function storeAtividade(Request $request, $id)
+    public function storeAtividade(Request $request)
     {
         try {
+            dd($request->all());
             $atividadeCadastrada = new Atividade();
             $atividadeCadastrada->descricao = $request->descricao_atividade;
             $atividadeCadastrada->descricao = $request->titulo_atividade;
@@ -40,4 +40,5 @@ class AtividadeQuestaoController extends Controller
             // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
+
 }

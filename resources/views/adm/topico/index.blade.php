@@ -118,14 +118,14 @@
 <script>
     $(document).ready(function() {
         $('#datatable-responsive').dataTable({
-            "order": [[ 0, "asc" ]],
-            "columnDefs": [
-                {
-                    "targets": [ 0 ],
-                    "searchable": false,
-                    "visible": false
-                }
-            ],
+            // "order": [[ 0, "asc" ]],
+            // "columnDefs": [
+            //     {
+            //         "targets": [ 0 ],
+            //         "searchable": false,
+            //         "visible": false
+            //     }
+            // ],
             "oLanguage": {
                 "sLengthMenu": "Mostrar _MENU_ registros por página",
                 "sZeroRecords": "Nenhum registro encontrado",

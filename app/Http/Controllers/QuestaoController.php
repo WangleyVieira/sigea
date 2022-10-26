@@ -20,8 +20,11 @@ class QuestaoController extends Controller
     public function index()
     {
         try {
+            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            $topicos = Topico::where('ativo', '=', 1)->get();
             $questoes = Questao::where('ativo', '=', 1)->get();
-            return view('adm.questao.index', compact('questoes'));
+
+            return view('adm.questao.index', compact('questoes', 'disciplinas', 'topicos'));
 
         } catch (\Exception $ex) {
             // return $ex->getMessage();
