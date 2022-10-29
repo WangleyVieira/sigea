@@ -32,6 +32,10 @@ class Atividade extends Model implements Auditable
     {
         return $this->belongsTo(User::class, 'cadastradoPorUsuario');
     }
+    public function alt_usuario()
+    {
+        return $this->belongsTo(User::class, 'alteradoPorUsuario');
+    }
     public function questoes()
     {
         return $this->belongsTo(Questao::class, 'id_topico', 'id');

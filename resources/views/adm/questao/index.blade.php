@@ -91,7 +91,7 @@
                     <table class="table table-striped" id="datatable-responsive">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">ID</th>
+                                <th scope="col">ID Questão</th>
                                 <th scope="col">Código questão</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Título da questão</th>
@@ -107,7 +107,7 @@
                         <tbody>
                             @foreach ($questoes as $questao)
                                 <tr>
-                                    <td>{{ $questao->id }}</td>
+                                    <td style="text-align: center"> {{ $questao->id }} </td>
                                     <td> {{ $questao->codigo_questao }}</td>
                                     <td> {{ $questao->descricao }}</td>
                                     <td> {{ $questao->topico->descricao }}</td>

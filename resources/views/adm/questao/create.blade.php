@@ -5,7 +5,6 @@
 @section('content')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
-{{-- <script src="https://cdn.tiny.cloud/1/gtdwd51t47mdkyks6pppuhqf941qu0bqu4sxkjz9qzirr20j/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> --}}
 <style>
     .error{
             color:red
@@ -143,13 +142,5 @@
 
     });
 </script>
-
-{{-- <script>
-    tinymce.init({
-        selector: 'textarea',
-        menubar: false
-    });
-</script> --}}
-
 
 @endsection

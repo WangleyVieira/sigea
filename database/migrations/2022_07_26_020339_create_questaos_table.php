@@ -20,11 +20,15 @@ class CreateQuestaosTable extends Migration
             $table->text('nivel_dificuldade')->nullable();
             $table->text('titulo_questao')->nullable();
 
-            //referências
+            //Tópicos
             $table->bigInteger('id_topico')->unsigned()->nullable();
             $table->foreign('id_topico')->references('id')->on('topicos');
+
+            //Disciplina
             $table->bigInteger('id_disciplina')->unsigned()->nullable();
             $table->foreign('id_disciplina')->references('id')->on('disciplinas');
+
+            //Atividade
             $table->bigInteger('id_atividade')->unsigned()->nullable();
             $table->foreign('id_atividade')->references('id')->on('atividades');
 

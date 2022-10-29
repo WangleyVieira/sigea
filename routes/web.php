@@ -64,7 +64,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::get('/topicos', 'TopicoController@index')->name('index');
         Route::post('/destroy/{id}', 'TopicoController@destroy')->name('destroy');
         Route::post('/update/{id}', 'TopicoController@update')->name('update');
-        Route::post('/store/{id}', 'TopicoController@store')->name('store');
+        Route::post('/store', 'TopicoController@store')->name('store');
     });
 
     //Atividade
@@ -72,15 +72,17 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::get('', 'AtividadeController@index')->name('index');
         Route::get('/cadastrar-atividade', 'AtividadeController@create')->name('create');
         Route::post('/destroy/{id}', 'AtividadeController@destroy')->name('destroy');
-        Route::post('/edit/{id}', 'AtividadeController@edit')->name('edit');
+        Route::get('/edit/{id}', 'AtividadeController@edit')->name('edit');
+        Route::post('/update/{id}', 'AtividadeController@update')->name('update');
         Route::get('/busca-questao/{id}', 'AtividadeController@buscaQuestao')->name('busca_questao');
         Route::post('/store', 'AtividadeController@storeAtividade')->name('store');
     });
 
     //Atividade-Questão
     Route::group(['prefix' => '/atividade-questao', 'as' => 'atividade_questao.', 'middleware' => 'auth'], function(){
-        Route::post('/store', 'AtividadeQuestaoController@storeAtividade')->name('atividade_questao');
+        Route::post('/store', 'AtividadeQuestaoController@store')->name('atividade_questao');
         Route::get('/selecionar-questoes', 'AtividadeQuestaoController@selectQuestao')->name('select_questao');
+        Route::get('/busca-questao-atividade/{id}', 'AtividadeQuestaoController@buscaQuestaoDisciplina')->name('busca_questao_disciplina');
     });
 
 });

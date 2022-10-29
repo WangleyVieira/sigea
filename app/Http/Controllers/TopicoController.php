@@ -61,10 +61,9 @@ class TopicoController extends Controller
 
             $novoTopico = new Topico();
             $novoTopico->descricao = $request->descricao;
-            $novoTopico->id_disciplina = $request->id;
+            $novoTopico->id_disciplina = $request->id_disciplina;
             $novoTopico->cadastradoPorUsuario = auth()->user()->id;
             $novoTopico->ativo = 1;
-            // dd($novoTopico);
             $novoTopico->save();
 
             return redirect()->back()->with('success', 'Tópico cadastrado com sucesso.');

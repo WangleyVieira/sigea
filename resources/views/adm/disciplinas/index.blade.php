@@ -66,6 +66,7 @@
     </div>
 </div>
 
+
 <div id="accordion2">
     <div class="card">
         <div class="card-header" id="headingTwo">
@@ -82,46 +83,30 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Código</th>
-                                <th scope="col">Nome</th>
+                                <th scope="col">Descricao</th>
                                 <th scope="col">Período</th>
+                                <th scope="col">Código Disciplina</th>
                                 <th scope="col">Tópicos</th>
-                                {{-- <th scope="col">Gerar questão</th> --}}
-                                <th scope="col">Cadastrar Tópico</th>
-                                <th scope="col">Deletar</th>
                                 <th scope="col">Alterar</th>
+                                <th scope="col">Deletar</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($disciplinas as $d)
                                 <tr>
-                                    <td>{{ $d->id }}</td>
-                                    <td> {{ $d->codigo }}</td>
+                                    <td style="text-align: center">{{ $d->id }}</td>
                                     <td> {{ $d->nome }}</td>
                                     <td> {{ $d->periodo->descricao}}</td>
+                                    <td> {{ $d->codigo }}</td>
                                     <td>
-                                        {{-- @if (Count($d->topicos) != 0)
-                                            <ol>
-                                                @foreach ($d->topicos as $top)
-                                                    <li style="text-align: left">
-                                                        {{ $top->descricao }}
-                                                    </li>
-                                                @endforeach
-                                            </ol>
-                                        @else
-                                            <ol>
-                                                <li>Sem tópico cadastrado</li>
-                                            </ol>
-                                        @endif --}}
                                         <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#listTopico{{ $d->id }}"><i class="fas fa-list"></i></a>
                                     </td>
                                     {{-- <td>
                                         <a href="{{ route('adm.questoes.index') }}" class="btn btn-outline-primary"><i class="fas fa-file"></i></a>
                                     </td> --}}
-                                    <td>
-                                        {{-- <a href="{{ route('adm.topicos.index', $d->id) }}" class="btn btn-outline-secondary"><i class="fas fa-tag"></i></a> --}}
+                                    {{-- <td>
                                         <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#createTopico{{ $d->id }}"><i class="fas fa-tag"></i></a>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $d->id }}"><i class="fas fa-trash"></i></a>
                                     </td>
@@ -186,23 +171,13 @@
                                                             <select class="form-control mb-3" name="id_periodo">
                                                                 <option value="" selected disabled> -- selecione -- </option>
                                                                 @foreach ($periodos as $p)
-                                                                    {{-- <option value="{{ $d->id }}"
-                                                                        @if ($p->id == $p->descricao)
-                                                                        selected
-                                                                        @endif>
-                                                                       {{ $p->descricao}}
-                                                                    </option> --}}
-
                                                                     <option value="{{ $p->id }}" {{ $p->id == $d->id_periodo ? 'selected' : '' }}>
-                                                                       {{ $p->descricao}}
+                                                                    {{ $p->descricao}}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                        {{-- <div class="col-12">
-                                                            <label for="topico">Tópico</label>
-                                                            <input type="text" name="topico" id="topico" class="form-control" value="{{ $d->topicos->descricao}}" required>
-                                                        </div> --}}
+
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -215,7 +190,7 @@
                                 </div>
 
                                 {{-- cadastrar tópico --}}
-                                <div class="modal fade" id="createTopico{{ $d->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                {{-- <div class="modal fade" id="createTopico{{ $d->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <form action="{{ route('adm.topicos.store', $d->id) }}" method="POST" id="cad_topico_form">
@@ -240,7 +215,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 {{-- listagem de tópicos --}}
                                 <div class="modal fade" id="listTopico{{ $d->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
@@ -267,15 +242,10 @@
                                                     @endif
 
                                                 </div>
-                                            {{-- <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                                            </div> --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                {{-- Gerar questão --}}
-
                             @endforeach
                         </tbody>
                     </table>
@@ -287,15 +257,18 @@
 
 <script>
     $(document).ready(function() {
+
+        $('.select2').select2({
+            language: {
+                noResults: function() {
+                    return "Nenhum resultado encontrado";
+                }
+            },
+            closeOnSelect: true,
+            width: '100%',
+        });
+
         $('#datatable-responsive').dataTable({
-            // "order": [[ 0, "asc" ]],
-            // "columnDefs": [
-            //     {
-            //         "targets": [ 0 ],
-            //         "searchable": false,
-            //         "visible": false
-            //     }
-            // ],
             "oLanguage": {
                 "sLengthMenu": "Mostrar _MENU_ registros por página",
                 "sZeroRecords": "Nenhum registro encontrado",

@@ -23,7 +23,6 @@ class DisciplinaController extends Controller
 
             $disciplinas = Disciplina::where('ativo', '=', 1)
                             ->with('topicos')->get();
-            // dd($disciplinas);
 
             return view('adm.disciplinas.index', compact('disciplinas', 'periodos'));
         } catch (\Exception $ex) {

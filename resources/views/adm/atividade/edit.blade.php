@@ -23,14 +23,14 @@
         <div>
             <span><i class="fas fa-book"></i></span>
         </div>
-        <strong>Cadastro de Atividade</strong>
+        <strong>Atualização de Atividade</strong>
     </h2>
 </div>
 
 <div class="card">
     <div class="card-body">
         <div class="container-fluid">
-            <form action="{{ route('adm.atividades.store') }}" id="formQuestao" method="POST" class="form_prevent_multiple_submits">
+            <form action="{{ route('adm.atividades.update', $atividade->id) }}" id="formQuestao" method="POST" class="form_prevent_multiple_submits">
                 @csrf
                 @method('POST')
                 <div class="row">
@@ -39,17 +39,17 @@
                         <select name="id_disciplina"  id="id_disciplina" class="form-control select2">
                             <option value="" selected disabled>-- Selecione a disciplina --</option>
                             @foreach ($disciplinas as $disciplina)
-                                <option value="{{ $disciplina->id }}" name="{{ $disciplina->nome }}">{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option>
+                                <option value="{{ $disciplina->id }}" {{ $disciplina->id == $atividade->lista_questoes->id_disciplina ? 'selected' : '' }}> {{ $disciplina->nome }} - {{ $disciplina->codigo }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="descricao_atividade">Descricao</label>
-                        <input type="text" name="descricao_atividade" id="descricao_atividade" class="form-control">
+                        <input type="text" name="descricao_atividade" id="descricao_atividade" value="{{ $atividade->lista_atividades->descricao }}" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="titulo_atividade">Titulo</label>
-                        <input type="text" name="titulo_atividade" id="titulo_atividade" class="form-control">
+                        <input type="text" name="titulo_atividade" id="titulo_atividade" class="form-control" value="{{ $atividade->lista_atividades->titulo_atividade }}">
                     </div>
                 </div>
                 <hr>
@@ -57,7 +57,9 @@
                     <div class="form-group col-md-12">
                         <label class="form-label">*Questões</label>
                         <select name="id_questao[]" id="id_questao" class="form-control select2" multiple>
-
+                            @foreach ($questoes as $questao)
+                                <option value="{{ $questao->id }}" {{ $questao->id == $atividade->lista_questoes->id ? 'selected' : '' }}> {{ $questao->descricao }} </option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-12">
@@ -161,3 +163,4 @@
 
 
 @endsection
+

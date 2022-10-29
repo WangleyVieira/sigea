@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Atividade;
+use App\AtividadeQuestao;
 use App\Disciplina;
 use App\Questao;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AtividadeController extends Controller
@@ -17,7 +19,9 @@ class AtividadeController extends Controller
     public function index()
     {
         try {
-            return view('adm.atividade.index');
+            $atividades = AtividadeQuestao::get();
+
+            return view('adm.atividade.index', compact('atividades'));
         } catch (\Exception $ex) {
             return $ex->getMessage();
             // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
@@ -35,7 +39,8 @@ class AtividadeController extends Controller
             $questoes = Questao::where('ativo', '=', 1)->get();
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
 
-            return view('adm.atividade.create', compact('disciplinas', 'questoes'));
+            // return view('adm.atividade.create', compact('disciplinas', 'questoes'));
+            return view('adm.atividade.listar-questoes', compact('disciplinas', 'questoes'));
 
         } catch (\Exception $ex) {
             // return $ex->getMessage();
@@ -71,19 +76,32 @@ class AtividadeController extends Controller
                 return redirect()->back()->with('erro', 'Selecione a disciplina para cadastrar a atividade.');
             }
 
+            if($request->id_questao == null){
+                return redirect()->back()->with('erro', 'Selecione a questão para cadastrar a atividade.');
+            }
+
             $atividadeCadastrada = new Atividade();
             $atividadeCadastrada->id_disciplina = $request->id_disciplina;
             $atividadeCadastrada->descricao = $request->descricao_atividade;
             $atividadeCadastrada->titulo_atividade = $request->titulo_atividade;
             $atividadeCadastrada->cadastradoPorUsuario = auth()->user()->id;
             $atividadeCadastrada->ativo = 1;
-            // $atividadeCadastrada->save();
+            $atividadeCadastrada->save();
 
-            return redirect('/adm/atividade-questao/selecionar-questoes');
+            $questoesVincular = $request->id_questao;
+
+            for ($i = 0; $i < Count($questoesVincular); $i++) {
+                $vincularQuestaoAtividade = new AtividadeQuestao();
+                $vincularQuestaoAtividade->id_atividade = $atividadeCadastrada->id;
+                $vincularQuestaoAtividade->id_questao = $questoesVincular[$i];
+                $vincularQuestaoAtividade->save();
+            }
+
+            return redirect()->route('adm.atividades.index')->with('success', 'Cadastro realizado com sucesso.');
 
         } catch (\Exception $ex) {
-            // return $ex->getMessage();
-            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -104,9 +122,18 @@ class AtividadeController extends Controller
      * @param  \App\Atividade  $atividade
      * @return \Illuminate\Http\Response
      */
-    public function edit(Atividade $atividade)
+    public function edit(Request $request, $id)
     {
-        //
+        try {
+            $atividade = AtividadeQuestao::find($id);
+            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            $questoes = Questao::where('ativo', '=', 1)->get();
+
+            return view('adm.atividade.edit', compact('atividade', 'disciplinas', 'questoes'));
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
     }
 
     /**
@@ -116,9 +143,40 @@ class AtividadeController extends Controller
      * @param  \App\Atividade  $atividade
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Atividade $atividade)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            if($request->id_disciplina == null){
+                return redirect()->back()->with('erro', 'Selecione a disciplina para cadastrar a atividade.');
+            }
+
+            if($request->id_questao == null){
+                return redirect()->back()->with('erro', 'Selecione a questão para cadastrar a atividade.');
+            }
+
+            $atividadeUpdated = Atividade::find($id);
+            $atividadeUpdated->id_disciplina = $request->id_disciplina;
+            $atividadeUpdated->descricao = $request->descricao_atividade;
+            $atividadeUpdated->titulo_atividade = $request->titulo_atividade;
+            $atividadeUpdated->alteradoPorUsuario = auth()->user()->id;
+            $atividadeUpdated->ativo = 1;
+            $atividadeUpdated->save();
+
+            $questoesUpdated = $request->id_questao;
+
+            for ($i = 0; $i < Count($questoesUpdated); $i++) {
+                $updatedQuestaoAtividade = AtividadeQuestao::find($atividadeUpdated->id);
+                $updatedQuestaoAtividade->id_atividade = $atividadeUpdated->id;
+                $updatedQuestaoAtividade->id_questao = $questoesUpdated[$i];
+                $updatedQuestaoAtividade->save();
+            }
+
+            return redirect()->route('adm.atividades.index')->with('success', 'Cadastro realizado com sucesso.');
+
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
     }
 
     /**
@@ -127,8 +185,18 @@ class AtividadeController extends Controller
      * @param  \App\Atividade  $atividade
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Atividade $atividade)
+    public function destroy(Request $request, $id)
     {
-        //
+        try {
+            $atividade = Atividade::find($id);
+            $atividade->motivo = $request->motivo;
+            $atividade->dataInativado = Carbon::now();
+            $atividade->inativadoPorUsuario =  auth()->user()->id;
+            
+            return view('adm.atividade.edit', compact('atividade', 'disciplinas', 'questoes'));
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
     }
 }
