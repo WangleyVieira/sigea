@@ -4,13 +4,13 @@
 
 @section('content')
 
-<div class="header">
-    <h1 class="mt-4">Atividades cadastradas</h1>
-</div>
-
 @include('errors.alerts')
 @include('errors.errors')
 
+<div class="header">
+    <h1 class="mt-4">Atividades cadastradas</h1>
+</div>
+<br>
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">
@@ -32,12 +32,12 @@
                     @foreach ($atividades as $atividade)
                         <tr>
                             <td style="text-align: center"> {{ $atividade->id }} </td>
-                            <td> {{ $atividade->lista_questoes->descricao }} </td>
-                            <td> {{ $atividade->lista_atividades->titulo_atividade }} </td>
-                            <td> {{ $atividade->lista_questoes->disciplina->nome }} </td>
-                            <td> {{ isset($atividade->lista_atividades->cadastradoPorUsuario) ? $atividade->lista_atividades->cad_usuario->name : 'nativo do sistema' }} </td>
-                            <td> {{ $atividade->lista_atividades->created_at != null && $atividade->lista_atividades->created_at != "" ? $atividade->lista_atividades->created_at->format('d/m/Y H:i:s') : '-' }} </td>
-                            <td> {{ $atividade->lista_atividades->updated_at != null && $atividade->lista_atividades->updated_at != "" ? $atividade->lista_atividades->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
+                            <td> {{ $atividade->descricao }} </td>
+                            <td> {{ $atividade->titulo_atividade }} </td>
+                            <td> {{ $atividade->disciplina->nome }} </td>
+                            <td> {{ $atividade->cad_usuario->name }} </td>
+                            <td> {{ $atividade->created_at != null && $atividade->created_at != "" ? $atividade->created_at->format('d/m/Y H:i:s') : '-' }} </td>
+                            <td> {{ $atividade->updated_at != null && $atividade->updated_at != "" ? $atividade->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
                             <td>
                                 <a href="{{ route('adm.atividades.edit', $atividade->id) }}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
                             </td>
@@ -47,7 +47,7 @@
                         </tr>
 
                         {{-- modal de excluir --}}
-                        <div class="modal fade" id="dangerModal{{ $atividade->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                        {{-- <div class="modal fade" id="dangerModal{{ $atividade->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
 
@@ -74,7 +74,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     @endforeach
                 </tbody>
             </table>

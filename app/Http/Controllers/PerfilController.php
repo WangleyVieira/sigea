@@ -19,13 +19,12 @@ class PerfilController extends Controller
             $user = User::where('id', '=', auth()->user()->id)
                 ->select('id', 'name', 'email', 'id_perfil')
                 ->first();
-            // dd($user);
 
             return view('adm.perfil.index', compact('user'));
 
         } catch (\Exception $ex) {
-            $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro ao listas as disciplinas');
+            // $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro ao listas as disciplinas');
         }
     }
 
@@ -67,9 +66,9 @@ class PerfilController extends Controller
      * @param  \App\Perfil  $perfil
      * @return \Illuminate\Http\Response
      */
-    public function edit(Perfil $perfil)
+    public function edit($id)
     {
-        //
+
     }
 
     /**

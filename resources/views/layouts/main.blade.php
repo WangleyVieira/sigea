@@ -41,9 +41,9 @@
             <hr>
 
             <ul class="sidebar-nav">
-                {{-- <li class="sidebar-header">
+                <li class="sidebar-header">
                     Páginas
-                </li> --}}
+                </li>
 
                 <li class="sidebar-item {{ Route::current()->uri == 'dashboard' ? 'active' : null }}">
                     <a href="{{ route('dashboard') }}" class="sidebar-link">
@@ -88,6 +88,13 @@
                     </a>
                 </li>
 
+                <li class="sidebar-item {{ Route::current()->uri == 'adm/topicos' ? 'active' : null }}">
+                    <a href="{{ route('adm.topicos.index') }}" class="sidebar-link">
+                        <i class="fas fa-tag"></i>
+                        Tópicos
+                    </a>
+                </li>
+
                 <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes' ? 'active' : null }}">
                     <a href="{{ route('adm.questoes.index') }}" class="sidebar-link">
                         <i class="fas fa-book"></i>
@@ -116,13 +123,6 @@
                         </li>
                     </ul>
                 </li> --}}
-
-                <li class="sidebar-item {{ Route::current()->uri == 'adm/topicos' ? 'active' : null }}">
-                    <a href="{{ route('adm.topicos.index') }}" class="sidebar-link">
-                        <i class="fas fa-tag"></i>
-                        Tópicos
-                    </a>
-                </li>
 
                 <li class="sidebar-item">
                     <a href="#atividades" data-toggle="collapse" class="sidebar-link collapsed">

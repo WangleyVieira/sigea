@@ -21,7 +21,7 @@ Route::post('/home', 'Auth\LoginController@autenticacao')->name('login.autentica
 Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
 
 //Cadastrar novo usuário
-Route::get('/cadastrar', 'UserController@index')->name('registrar_usuario');
+Route::get('/cadastrar', 'UserController@create')->name('registrar_usuario');
 Route::post('/store', 'UserController@store')->name('salvar_usuario');
 
 //perfil
@@ -32,7 +32,8 @@ Route::get('/dashboard', ['middleware' => 'auth', 'uses' => 'DashboardController
 
 //Usuário
 Route::group(['prefix' => '/usuario', 'as' => 'usuario.', 'middleware' => 'auth'], function(){
-    Route::get('', 'UserController@index')->name('index');
+    Route::get('/create', 'UserController@create')->name('create');
+    Route::post('/update/{id}', 'UserController@update')->name('update');
     Route::get('/usuarios-ativos', 'UserController@listagemUsuarios')->name('listagem_usuarios');
 });
 

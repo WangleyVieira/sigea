@@ -14,7 +14,7 @@ class PerfilsTableSeeder extends Seeder
     {
         DB::table('perfils')->insert([
             ['descricao'=>'Administrador', 'ativo'=>1],
-            ['descricao'=>'Usuario', 'ativo'=>1],
+            ['descricao'=>'Usuario externo', 'ativo'=>1],
         ]);
     }
 }

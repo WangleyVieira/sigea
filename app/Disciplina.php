@@ -49,9 +49,9 @@ class Disciplina extends Model implements Auditable
         return $this->hasMany(Questao::class, 'id_disciplina', 'id')->where('ativo', '=', 1);
     }
 
-    public function atividade()
+    public function atividades()
     {
-        return $this->belongsTo(Atividade::class, 'id_disciplina', 'id');
+        return $this->hasMany(Atividade::class, 'id_disciplina', 'id')->where('ativo', '=', 1);
     }
 
 }

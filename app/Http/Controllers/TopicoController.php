@@ -51,12 +51,15 @@ class TopicoController extends Controller
             if($request->descricao == null){
                 return redirect()->back()->with('erro', 'Campo descrição obrigatório.');
             }
+            if($request->id_disciplina == null){
+                return redirect()->back()->with('erro', 'Necessário selecionar a disciplina');
+            }
 
             //verifica se existe um topico cadastrado
-            $verificarTopico = Topico::where('descricao', '=', $request->descricao)->with('disciplina')->first();
+            $verificarTopico = Topico::where('descricao', '=', $request->descricao)->first();
 
             if($verificarTopico){
-                return redirect()->back()->with('erro', 'Existe um tópico cadastrado ao informado.');
+                return redirect()->back()->with('erro', 'Existe um tópico cadastrado.');
             }
 
             $novoTopico = new Topico();

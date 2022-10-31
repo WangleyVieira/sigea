@@ -18,15 +18,18 @@
 @include('errors.alerts')
 @include('errors.errors')
 
-<div class="card-header" style="background-color:white">
+{{-- <div class="card-header" style="background-color:white">
     <h2 class="text-center">
         <div>
             <span><i class="fas fa-book"></i></span>
         </div>
         <strong>Atualização de Atividade</strong>
     </h2>
+</div> --}}
+<div class="header">
+    <h1 class="mt-4">Atualização de Atividade</h1>
 </div>
-
+<br>
 <div class="card">
     <div class="card-body">
         <div class="container-fluid">

@@ -11,7 +11,6 @@ class Questao extends Model implements Auditable
     protected $fillable = [
         'codigo_questao',
         'descricao',
-        'nivel_dificuldade',
         'id_topico',
         'id_disciplina',
         'titulo_questao',

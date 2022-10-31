@@ -17,7 +17,7 @@
 <div class="header">
     <h1 class="mt-4">Questões cadastradas</h1>
 </div>
-
+<br>
 <div id="accordion">
     <div class="card">
         <div class="card-header" id="heading">
@@ -110,8 +110,8 @@
                                     <td style="text-align: center"> {{ $questao->id }} </td>
                                     <td> {{ $questao->codigo_questao }}</td>
                                     <td> {{ $questao->descricao }}</td>
-                                    <td> {{ $questao->topico->descricao }}</td>
                                     <td> {{ $questao->titulo_questao }}</td>
+                                    <td> {{ $questao->topico->descricao }}</td>
                                     <td> {{ $questao->disciplina->nome }}</td>
                                     <td> {{ isset($questao->cadastradoPorUsuario) ? $questao->cad_usuario->name : 'nativo do sistema' }} </td>
                                     <td> {{ $questao->created_at != null && $questao->created_at != "" ? $questao->created_at->format('d/m/Y H:i:s') : '-' }} </td>
@@ -133,7 +133,7 @@
                                                 @csrf
                                                 @method('POST')
                                                 <div class="modal-header" style="background-color: rgb(218, 105, 105)">
-                                                    <h5 class="modal-title">Tem certeza que deseja excluir a questão?</b></h5>
+                                                    <h5 class="modal-title">Tem certeza que deseja excluir a questão <strong>{{ $questao->id }}</strong> ?</b></h5>
                                                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">

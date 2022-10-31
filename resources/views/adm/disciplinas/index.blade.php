@@ -11,15 +11,13 @@
 </style>
 @section('content')
 
-<div class="header">
-    <h1 class="mt-4">Disciplinas cadastradas</h1>
-</div>
-
 @include('errors.alerts')
 @include('errors.errors')
 
-
-
+<div class="header">
+    <h1 class="mt-4">Disciplinas cadastradas</h1>
+</div>
+<br>
 <div id="accordion">
     <div class="card">
         <div class="card-header" id="heading">
@@ -82,7 +80,7 @@
                     <table class="table table-striped" id="datatable-responsive">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">ID</th>
+                                <th scope="col">ID Disciplina</th>
                                 <th scope="col">Descricao</th>
                                 <th scope="col">Período</th>
                                 <th scope="col">Código Disciplina</th>

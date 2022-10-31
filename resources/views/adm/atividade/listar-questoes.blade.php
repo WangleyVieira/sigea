@@ -5,7 +5,6 @@
 @section('content')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
-
 <style>
     .error{
         color:red
@@ -18,15 +17,10 @@
 @include('errors.alerts')
 @include('errors.errors')
 
-<div class="card-header" style="background-color:white">
-    <h2 class="text-center">
-        <div>
-            <span><i class="fas fa-book"></i></span>
-        </div>
-        <strong>Cadastro de Atividade</strong>
-    </h2>
+<div class="header">
+    <h1 class="mt-4">Cadastrar Atividade</h1>
 </div>
-
+<br>
 <div class="card">
     <div class="card-body">
         <div class="container-fluid">

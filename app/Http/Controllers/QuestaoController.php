@@ -24,11 +24,13 @@ class QuestaoController extends Controller
             $topicos = Topico::where('ativo', '=', 1)->get();
             $questoes = Questao::where('ativo', '=', 1)->get();
 
+            // $questoes = Disciplina::where('ativo', '=', 1)->with('topicos')->with('questoes')->get();
+
             return view('adm.questao.index', compact('questoes', 'disciplinas', 'topicos'));
 
         } catch (\Exception $ex) {
-            // return $ex->getMessage();
-            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
