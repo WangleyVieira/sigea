@@ -77,6 +77,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::post('/update/{id}', 'AtividadeController@update')->name('update');
         Route::get('/busca-questao/{id}', 'AtividadeController@buscaQuestao')->name('busca_questao');
         Route::post('/store', 'AtividadeController@storeAtividade')->name('store');
+        Route::get('/pdf-atividade/{id}', 'AtividadeController@pdfAtividade')->name('atividade_pdf');
     });
 
     //Atividade-Questão
@@ -87,4 +88,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     });
 
 });
+
+//Rotas de Usuário externo
+
 

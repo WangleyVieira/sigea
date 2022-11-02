@@ -6,8 +6,10 @@ use App\Atividade;
 use App\AtividadeQuestao;
 use App\Disciplina;
 use App\Questao;
+use App\Topico;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Mpdf\Mpdf;
 
 class AtividadeController extends Controller
 {
@@ -45,7 +47,6 @@ class AtividadeController extends Controller
             $questoes = Questao::where('ativo', '=', 1)->get();
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
 
-            // return view('adm.atividade.create', compact('disciplinas', 'questoes'));
             return view('adm.atividade.listar-questoes', compact('disciplinas', 'questoes'));
 
         } catch (\Exception $ex) {
@@ -132,11 +133,22 @@ class AtividadeController extends Controller
     public function edit(Request $request, $id)
     {
         try {
-            $atividade = AtividadeQuestao::find($id);
+            $atividade = Atividade::find($id);
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $questoes = Questao::where('ativo', '=', 1)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->get();
+            $questaoAtv = Questao::where('ativo', '=', 1)->get();
 
-            return view('adm.atividade.edit', compact('atividade', 'disciplinas', 'questoes'));
+            $questoesArray = array();
+
+            foreach($questaoAtv as $q){
+                //verifica se a questão é pertencente a atividade
+                if($q->pertencenteAtividade($atividade->id) == false){
+                    array_push($questoesArray, $q);
+                }
+            }
+
+            return view('adm.atividade.edit', compact('atividade', 'disciplinas', 'atividadeQuestoes', 'questoesArray'));
+
         } catch (\Exception $ex) {
             return $ex->getMessage();
             // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
@@ -153,30 +165,36 @@ class AtividadeController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if($request->id_disciplina == null){
-                return redirect()->back()->with('erro', 'Selecione a disciplina para cadastrar a atividade.');
-            }
 
             if($request->id_questao == null){
                 return redirect()->back()->with('erro', 'Selecione a questão para cadastrar a atividade.');
             }
 
             $atividadeAtualizar = Atividade::find($id);
-            $atividadeAtualizar->id_disciplina = $request->id_disciplina;
+            // $atividadeAtualizar->id_disciplina = $request->id_disciplina;
             $atividadeAtualizar->descricao = $request->descricao_atividade;
             $atividadeAtualizar->titulo_atividade = $request->titulo_atividade;
             $atividadeAtualizar->alteradoPorUsuario = auth()->user()->id;
             $atividadeAtualizar->ativo = 1;
-            // $atividadeAtualizar->save();
+            $atividadeAtualizar->save();
 
             $questoesAtualizar = $request->id_questao;
 
             for ($i = 0; $i < Count($questoesAtualizar); $i++) {
-                $questaoAtividadeAtualizar = AtividadeQuestao::find($atividadeAtualizar->id);
-                $questaoAtividadeAtualizar->id_atividade = $atividadeAtualizar->id;
-                $questaoAtividadeAtualizar->id_questao = $questoesAtualizar[$i];
-                $questaoAtividadeAtualizar->ativo = 1;
-                // $questaoAtividadeAtualizar->save();
+
+                $atv = Questao::where('id', '=', $questoesAtualizar[$i])->where('ativo', '=', 1)->first();
+
+                if($atv){
+                    //se não for questao desta atividade, adiciona
+                    if($atv->pertencenteAtividade($id) == 0){
+                        $questaoAtividadeAtualizar = new AtividadeQuestao();
+                        $questaoAtividadeAtualizar->id_atividade = $atividadeAtualizar->id;
+                        $questaoAtividadeAtualizar->id_questao = $questoesAtualizar[$i];
+                        $questaoAtividadeAtualizar->ativo = 1;
+                        $questaoAtividadeAtualizar->save();
+                    }
+                }
+
             }
 
             return redirect()->route('adm.atividades.index')->with('success', 'Atualizado com sucesso.');
@@ -215,6 +233,23 @@ class AtividadeController extends Controller
             }
 
             return redirect()->route('adm.atividades.index')->with('success', 'Atividade excluído com sucesso.');
+
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
+    }
+
+    public function pdfAtividade()
+    {
+        try {
+
+            $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
+            $now = Carbon::now();
+            $html = view('adm.atividade.pdf-atividade');
+            $mpdf->WriteHTML($html);
+
+            return $mpdf->Output('Atividade - ' .$now . '.pdf', 'I');
 
         } catch (\Exception $ex) {
             return $ex->getMessage();

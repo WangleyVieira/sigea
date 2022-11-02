@@ -146,8 +146,8 @@ class QuestaoController extends Controller
         try {
             $questao = Questao::find($id);
             // $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $disciplinas = Disciplina::get();
-            $topicos = Topico::get();
+            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            $topicos = Topico::where('ativo', '=', 1)->get();
 
             return view('adm.questao.editar', compact('disciplinas', 'topicos', 'questao'));
 

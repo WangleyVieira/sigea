@@ -17,10 +17,8 @@ class TopicoController extends Controller
     public function index()
     {
         try {
-            // $topicos = Topico::where('ativo', '=', 1)->with('disciplina')->get();
             $disciplinas = Disciplina::where('ativo', '=', 1)->with('topicos')->get();
 
-            // dd($disciplinas);
             return view('adm.topico.index', compact('disciplinas'));
 
         } catch (\Exception $ex) {

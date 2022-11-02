@@ -80,29 +80,31 @@
                         </li>
                     </ul>
                 </li> --}}
+                @if ( auth()->user()->id_perfil == 1)
+                    <li class="sidebar-item {{ Route::current()->uri == 'adm/disciplinas' ? 'active' : null }}">
+                        <a href="{{ route('adm.disciplinas.index') }}" class="sidebar-link">
+                            <i class="fas fa-bookmark"></i>
+                            Disciplinas
+                        </a>
+                    </li>
 
-                <li class="sidebar-item {{ Route::current()->uri == 'adm/disciplinas' ? 'active' : null }}">
-                    <a href="{{ route('adm.disciplinas.index') }}" class="sidebar-link">
-                        <i class="fas fa-bookmark"></i>
-                        Disciplinas
-                    </a>
-                </li>
+                    <li class="sidebar-item {{ Route::current()->uri == 'adm/topicos' ? 'active' : null }}">
+                        <a href="{{ route('adm.topicos.index') }}" class="sidebar-link">
+                            <i class="fas fa-tag"></i>
+                            Tópicos
+                        </a>
+                    </li>
 
-                <li class="sidebar-item {{ Route::current()->uri == 'adm/topicos' ? 'active' : null }}">
-                    <a href="{{ route('adm.topicos.index') }}" class="sidebar-link">
-                        <i class="fas fa-tag"></i>
-                        Tópicos
-                    </a>
-                </li>
+                    <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes' ? 'active' : null }}">
+                        <a href="{{ route('adm.questoes.index') }}" class="sidebar-link">
+                            <i class="fas fa-book"></i>
+                            Questões
+                        </a>
+                    </li>
+                @endif
 
-                <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes' ? 'active' : null }}">
-                    <a href="{{ route('adm.questoes.index') }}" class="sidebar-link">
-                        <i class="fas fa-book"></i>
-                        Questões
-                    </a>
-                </li>
 
-                {{-- <li class="sidebar-item">
+                {{-- <li class="side    bar-item">
                     <a href="#questoes" data-toggle="collapse" class="sidebar-link collapsed">
                         <i class="fas fa-book"></i>
                         Questões

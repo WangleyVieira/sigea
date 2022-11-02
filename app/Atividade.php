@@ -41,10 +41,18 @@ class Atividade extends Model implements Auditable
         return $this->belongsTo(Questao::class, 'id_topico', 'id');
     }
 
-    // public function questaoAtividades()
-    // {
-    //     return $this->belongsToMany(Questao::class);
-    // }
+    public function temAtividade(Questao $questao)
+    {
+        $temSim = AtividadeQuestao::where('id_questao', '=', $this->id)
+            ->where('id_atividade', '=', $questao->id)
+            ->where('ativo', '=', 1)
+            ->first();
+
+        if(!$temSim){
+            return false;
+        }
+        return true;
+    }
 
     public function disciplina()
     {

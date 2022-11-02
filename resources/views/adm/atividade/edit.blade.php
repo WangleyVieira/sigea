@@ -18,14 +18,6 @@
 @include('errors.alerts')
 @include('errors.errors')
 
-{{-- <div class="card-header" style="background-color:white">
-    <h2 class="text-center">
-        <div>
-            <span><i class="fas fa-book"></i></span>
-        </div>
-        <strong>Atualização de Atividade</strong>
-    </h2>
-</div> --}}
 <div class="header">
     <h1 class="mt-4">Atualização de Atividade</h1>
 </div>
@@ -39,20 +31,20 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="id_disciplina">Disciplinas</label>
-                        <select name="id_disciplina"  id="id_disciplina" class="form-control select2">
+                        <select name="id_disciplina"  id="id_disciplina" class="form-control select2" disabled>
                             <option value="" selected disabled>-- Selecione a disciplina --</option>
                             @foreach ($disciplinas as $disciplina)
-                                <option value="{{ $disciplina->id }}" {{ $disciplina->id == $atividade->lista_questoes->id_disciplina ? 'selected' : '' }}> {{ $disciplina->nome }} - {{ $disciplina->codigo }} </option>
+                                <option value="{{ $disciplina->id }}" {{ $disciplina->id == $atividade->id_disciplina ? 'selected' : '' }}> {{ $disciplina->nome }} - {{ $disciplina->codigo }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="descricao_atividade">Descricao</label>
-                        <input type="text" name="descricao_atividade" id="descricao_atividade" value="{{ $atividade->lista_atividades->descricao }}" class="form-control">
+                        <input type="text" name="descricao_atividade" id="descricao_atividade" value="{{ $atividade->descricao }}" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="titulo_atividade">Titulo</label>
-                        <input type="text" name="titulo_atividade" id="titulo_atividade" class="form-control" value="{{ $atividade->lista_atividades->titulo_atividade }}">
+                        <input type="text" name="titulo_atividade" id="titulo_atividade" class="form-control" value="{{ $atividade->titulo_atividade }}">
                     </div>
                 </div>
                 <hr>
@@ -60,17 +52,76 @@
                     <div class="form-group col-md-12">
                         <label class="form-label">*Questões</label>
                         <select name="id_questao[]" id="id_questao" class="form-control select2" multiple>
-                            @foreach ($questoes as $questao)
-                                <option value="{{ $questao->id }}" {{ $questao->id == $atividade->lista_questoes->id ? 'selected' : '' }}> {{ $questao->descricao }} </option>
+                            @foreach ($questoesArray as $qt)
+                                <option value="{{ $qt->id }}"> {{ $qt->descricao }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-12">
-                        <input type="submit" class="btn btn-primary" name="Salvar" value="Salvar">
+                        <input type="submit" class="btn btn-success" name="Adicionar" value="Adicionar">
                         <a href="{{ route('adm.atividades.index') }}" class="btn btn-danger">Cancelar</a>
                     </div>
                 </div>
+                <br>
+                <hr>
             </form>
+            <span>Listagem de questões relacionados à atividade <strong>{{ $atividade->titulo_atividade }}</strong></span>
+            <br>
+            <br>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <table class="table table-striped" id="datatable-responsive">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">ID Questão</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Deletar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($atividadeQuestoes as $atvQuestao)
+                                <tr>
+                                    <td style="text-align: center"> {{ $atvQuestao->id }} </td>
+                                    <td> {{ $atvQuestao->lista_questoes->descricao }} </td>
+                                    <td>
+                                        <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $atvQuestao->id }}"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+
+                                {{-- modal de excluir --}}
+                                <div class="modal fade" id="dangerModal{{ $atvQuestao->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+
+                                            <form action="{{ route('adm.atividades.destroy', $atvQuestao->id) }}" method="POST" id="delete_form">
+                                                @csrf
+                                                @method('POST')
+                                                <div class="modal-header" style="background-color: rgb(218, 105, 105)">
+                                                    <h5 class="modal-title">Tem certeza que deseja excluir a questão <strong>{{ $atvQuestao->id }}</strong> ?</b></h5>
+                                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="motivo" class="form-label">Motivo</label>
+                                                            <input type="text" class="form-control" name="motivo" id="" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

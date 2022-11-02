@@ -27,7 +27,7 @@ class Topico extends Model implements Auditable
 
     protected $table = 'topicos';
 
-    public function cadastradoPorUsuario()
+    public function cad_usuario()
     {
         return $this->belongsTo(User::class, 'cadastradoPorUsuario');
     }

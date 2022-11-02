@@ -27,10 +27,6 @@ class CreateQuestaosTable extends Migration
             $table->bigInteger('id_disciplina')->unsigned()->nullable();
             $table->foreign('id_disciplina')->references('id')->on('disciplinas');
 
-            //Atividade
-            $table->bigInteger('id_atividade')->unsigned()->nullable();
-            $table->foreign('id_atividade')->references('id')->on('atividades');
-
             $table->bigInteger('cadastradoPorUsuario')->unsigned()->nullable();
             $table->foreign('cadastradoPorUsuario')->references('id')->on('users');
             $table->bigInteger('alteradoPorUsuario')->unsigned()->nullable();

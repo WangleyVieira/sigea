@@ -10,7 +10,8 @@ class AtividadeQuestao extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
     protected $fillable = [
         'id_atividade',
-        'id_questao'
+        'id_questao',
+        'ativo'
     ];
 
     protected $guarded = [
