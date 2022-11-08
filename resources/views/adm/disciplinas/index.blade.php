@@ -80,7 +80,7 @@
                     <table class="table table-striped" id="datatable-responsive">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">ID Disciplina</th>
+                                {{-- <th scope="col">ID Disciplina</th> --}}
                                 <th scope="col">Descricao</th>
                                 <th scope="col">Período</th>
                                 <th scope="col">Código Disciplina</th>
@@ -92,7 +92,7 @@
                         <tbody>
                             @foreach ($disciplinas as $d)
                                 <tr>
-                                    <td style="text-align: center">{{ $d->id }}</td>
+                                    {{-- <td style="text-align: center">{{ $d->id }}</td> --}}
                                     <td> {{ $d->nome }}</td>
                                     <td> {{ $d->periodo->descricao}}</td>
                                     <td> {{ $d->codigo }}</td>

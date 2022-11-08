@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <title>Atividade</title>
+        <title>{{$atividade->titulo_atividade}}</title>
 
         <style>
             html{
@@ -30,7 +30,7 @@
             }
             p {
             font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
+            /* font-style: italic; */
             font-weight: bold;
             font-size: 16px;
             line-height: 20px;
@@ -51,22 +51,16 @@
     </head>
 
     <body>
-        <header>
-            <div style="text-align: center;">
-                <div class="span-header">
-                    <div>
-                        <table id="titulo" style="font-size: 1.2rem">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Atividade
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </header>
+
+        <h2 style="text-align: center"> {{$atividade->titulo_atividade}} </h2>
+
+        <hr>
+        <h3>Disciplina: {{$atividade->disciplina->nome}} </h3>
+        <hr>
+
+        @foreach ($atividadeQuestoes as $atvQuestao)
+            <p> {{ $atvQuestao->lista_questoes->descricao }} </p>
+        @endforeach
+
     </body>
 </html>

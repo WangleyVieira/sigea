@@ -93,21 +93,21 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
 
-                                            <form action="{{ route('adm.atividades.destroy', $atvQuestao->id) }}" method="POST" id="delete_form">
+                                            <form action="{{ route('adm.atividade_questao.destroy', $atvQuestao->id) }}" method="POST" id="delete_form">
                                                 @csrf
                                                 @method('POST')
                                                 <div class="modal-header" style="background-color: rgb(218, 105, 105)">
                                                     <h5 class="modal-title">Tem certeza que deseja excluir a questão <strong>{{ $atvQuestao->id }}</strong> ?</b></h5>
                                                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body">
+                                                {{-- <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label for="motivo" class="form-label">Motivo</label>
-                                                            <input type="text" class="form-control" name="motivo" id="" required>
+                                                            <input type="text" class="form-control" name="motivo" id="">
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
                                                     <button type="submit" class="btn btn-danger">Excluir</button>

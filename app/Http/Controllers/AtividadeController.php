@@ -21,6 +21,9 @@ class AtividadeController extends Controller
     public function index()
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
             // $atividades = Disciplina::where('ativo', '=', 1)
             //     ->with('atividades')
             //     ->with('questoes')
@@ -44,6 +47,10 @@ class AtividadeController extends Controller
     public function create()
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             $questoes = Questao::where('ativo', '=', 1)->get();
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
 
@@ -79,6 +86,10 @@ class AtividadeController extends Controller
     public function storeAtividade(Request $request)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             if($request->id_disciplina == null){
                 return redirect()->back()->with('erro', 'Selecione a disciplina para cadastrar a atividade.');
             }
@@ -133,9 +144,13 @@ class AtividadeController extends Controller
     public function edit(Request $request, $id)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             $atividade = Atividade::find($id);
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
             $questaoAtv = Questao::where('ativo', '=', 1)->get();
 
             $questoesArray = array();
@@ -165,6 +180,9 @@ class AtividadeController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
 
             if($request->id_questao == null){
                 return redirect()->back()->with('erro', 'Selecione a questão para cadastrar a atividade.');
@@ -197,7 +215,7 @@ class AtividadeController extends Controller
 
             }
 
-            return redirect()->route('adm.atividades.index')->with('success', 'Atualizado com sucesso.');
+            return redirect()->route('adm.atividades.index')->with('success', 'Atividade atualizado com sucesso.');
 
         } catch (\Exception $ex) {
             return $ex->getMessage();
@@ -214,23 +232,23 @@ class AtividadeController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            dd($request->all());
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             $atividade = Atividade::find($id);
-            $atividade->motivo = $request->motivo;
+            $atividade->motivoInativado = $request->motivo;
+            $atividade->inativadoPorUsuario = auth()->user()->id;
             $atividade->dataInativado = Carbon::now();
-            $atividade->inativadoPorUsuario =  auth()->user()->id;
             $atividade->ativo = 0;
             $atividade->save();
 
-            $questoesApagar = $request->id_questao;
+            // $desvincularAtvQ = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
 
-            for ($i = 0; $i < Count($questoesApagar); $i++) {
-                $questaoAtividadeApagar = AtividadeQuestao::find($atividade->id);
-                $questaoAtividadeApagar->id_atividade = $atividade->id;
-                $questaoAtividadeApagar->id_questao = $questoesApagar[$i];
-                $questaoAtividadeApagar->ativo = 0;
-                $questaoAtividadeApagar->save();
-            }
+            // for ($i = 0; Count($desvincularAtvQ ); $i++) {
+
+            // }
+
 
             return redirect()->route('adm.atividades.index')->with('success', 'Atividade excluído com sucesso.');
 
@@ -240,13 +258,24 @@ class AtividadeController extends Controller
         }
     }
 
-    public function pdfAtividade()
+    public function pdfAtividade($id)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+            
+            $atividade = Atividade::find($id);
+            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
+            $questaoAtv = Questao::where('ativo', '=', 1)->get();
 
-            $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
+            $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
+
+            // Define a default page size/format by array - page will be 190mm wide x 236mm height
+            // $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 297]]);
+
             $now = Carbon::now();
-            $html = view('adm.atividade.pdf-atividade');
+            $html = view('adm.atividade.pdf-atividade', compact('atividade', 'atividadeQuestoes', 'questaoAtv'));
             $mpdf->WriteHTML($html);
 
             return $mpdf->Output('Atividade - ' .$now . '.pdf', 'I');

@@ -44,13 +44,14 @@
                 <li class="sidebar-header">
                     Páginas
                 </li>
-
-                <li class="sidebar-item {{ Route::current()->uri == 'dashboard' ? 'active' : null }}">
-                    <a href="{{ route('dashboard') }}" class="sidebar-link">
-                        <i class="fas fa-desktop"></i>
-                        Dashboard
-                    </a>
-                </li>
+                @if (auth()->user()->id_perfil == 1)
+                    <li class="sidebar-item {{ Route::current()->uri == 'dashboard' ? 'active' : null }}">
+                        <a href="{{ route('adm.index_adm') }}" class="sidebar-link">
+                            <i class="fas fa-desktop"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                @endif
 
                 <li class="sidebar-item {{ Route::current()->uri == 'perfil' ? 'active' : null }}">
                     <a href="{{ route('perfil') }}" class="sidebar-link">
@@ -58,29 +59,8 @@
                         Perfil do usuário
                     </a>
                 </li>
-{{--
-                <li class="sidebar-item">
-                    <a href="#adm_disciplinas" data-toggle="collapse" class="sidebar-link collapsed">
-                        <i class="fas fa-bookmark"></i>
-                        Disciplinas
-                    </a>
-                    <ul id="adm_disciplinas" class="sidebar-dropdown list-unstyled {{
-                        Route::current()->uri == 'adm/disciplinas' ||
-                        Route::current()->uri == 'adm/disciplinas/create' ? 'active' : 'collapse'
-                        }}">
-                       <li class="sidebar-item {{ Route::current()->uri == 'adm/disciplinas' ? 'active' : null }}">
-                            <a class="sidebar-link" href="{{ route('adm.disciplinas.index') }}">
-                                Listar
-                            </a>
-                        </li>
-                       <li class="sidebar-item {{ Route::current()->uri == 'adm/disciplinas/create' ? 'active' : null }}">
-                            <a class="sidebar-link" href="{{ route('adm.disciplinas.create') }}">
-                                Cadastrar
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
-                @if ( auth()->user()->id_perfil == 1)
+
+                @if (auth()->user()->id_perfil == 1)
                     <li class="sidebar-item {{ Route::current()->uri == 'adm/disciplinas' ? 'active' : null }}">
                         <a href="{{ route('adm.disciplinas.index') }}" class="sidebar-link">
                             <i class="fas fa-bookmark"></i>
@@ -101,53 +81,39 @@
                             Questões
                         </a>
                     </li>
+
+                    <li class="sidebar-item">
+                        <a href="#atividades" data-toggle="collapse" class="sidebar-link collapsed">
+                            <i class="fas fa-folder"></i>
+                            Atividades
+                        </a>
+                        <ul id="atividades" class="sidebar-dropdown list-unstyled {{
+                            Route::current()->uri == 'adm/atividades' ||
+                            Route::current()->uri == 'adm/atividades/cadastrar-atividade' ||
+                            Route::current()->uri == 'adm/atividades' ? 'active' : 'collapse'
+                            }}">
+                           <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades' ? 'active' : null }}">
+                                <a class="sidebar-link" href="{{ route('adm.atividades.index') }}">
+                                    Listar
+                                </a>
+                            </li>
+                           <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades/cadastrar-atividade' ? 'active' : null }}">
+                                <a class="sidebar-link" href="{{ route('adm.atividades.create') }}">
+                                    Cadastrar
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
 
-
-                {{-- <li class="side    bar-item">
-                    <a href="#questoes" data-toggle="collapse" class="sidebar-link collapsed">
-                        <i class="fas fa-book"></i>
-                        Questões
-                    </a>
-                    <ul id="questoes" class="sidebar-dropdown list-unstyled {{
-                        Route::current()->uri == 'adm/questoes' ||
-                        Route::current()->uri == 'adm/questoes/cadastrar-questao' ? 'active' : 'collapse'
-                        }}">
-                       <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes' ? 'active' : null }}">
-                            <a class="sidebar-link" href="{{ route('adm.questoes.index') }}">
-                                Listar
-                            </a>
-                        </li>
-                       <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes/cadastrar-questao' ? 'active' : null }}">
-                            <a class="sidebar-link" href="{{ route('adm.questoes.create') }}">
-                                Cadastrar
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
-
-                <li class="sidebar-item">
-                    <a href="#atividades" data-toggle="collapse" class="sidebar-link collapsed">
-                        <i class="fas fa-folder"></i>
-                        Atividades
-                    </a>
-                    <ul id="atividades" class="sidebar-dropdown list-unstyled {{
-                        Route::current()->uri == 'adm/atividades' ||
-                        Route::current()->uri == 'adm/atividades/cadastrar-atividade' ||
-                        Route::current()->uri == 'adm/atividades' ? 'active' : 'collapse'
-                        }}">
-                       <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades' ? 'active' : null }}">
-                            <a class="sidebar-link" href="{{ route('adm.atividades.index') }}">
-                                Listar
-                            </a>
-                        </li>
-                       <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades/cadastrar-atividade' ? 'active' : null }}">
-                            <a class="sidebar-link" href="{{ route('adm.atividades.create') }}">
-                                Cadastrar
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @if (auth()->user()->id_perfil == 2)
+                    <li class="sidebar-item {{ Route::current()->uri == 'acesso-externo/questoes' ? 'active' : null }}">
+                        <a href="{{ route('acesso_externo.questoes.index_externo') }}" class="sidebar-link">
+                            <i class="fas fa-book"></i>
+                            Questões
+                        </a>
+                    </li>
+                @endif
 
             </ul>
         </div>

@@ -28,7 +28,7 @@ Route::post('/store', 'UserController@store')->name('salvar_usuario');
 Route::get('/perfil', ['middleware' => 'auth', 'uses' => 'PerfilController@index'])->name('perfil');
 
 //Dashboard
-Route::get('/dashboard', ['middleware' => 'auth', 'uses' => 'DashboardController@index'])->name('dashboard');
+// Route::get('/dashboard', ['middleware' => 'auth', 'uses' => 'DashboardController@index'])->name('dashboard');
 
 //Usuário
 Route::group(['prefix' => '/usuario', 'as' => 'usuario.', 'middleware' => 'auth'], function(){
@@ -39,6 +39,8 @@ Route::group(['prefix' => '/usuario', 'as' => 'usuario.', 'middleware' => 'auth'
 
 //Acesso ADM
 Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], function(){
+
+    Route::get('/dashboard', 'HomeController@index')->name('index_adm');
 
         //Disciplinas
     Route::group(['prefix' => '/disciplinas', 'as' => 'disciplinas.', 'middleware' => 'auth'], function(){
@@ -83,12 +85,22 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     //Atividade-Questão
     Route::group(['prefix' => '/atividade-questao', 'as' => 'atividade_questao.', 'middleware' => 'auth'], function(){
         Route::post('/store', 'AtividadeQuestaoController@store')->name('atividade_questao');
+        Route::post('/destroy/{id}', 'AtividadeQuestaoController@destroy')->name('destroy');
         Route::get('/selecionar-questoes', 'AtividadeQuestaoController@selectQuestao')->name('select_questao');
         Route::get('/busca-questao-atividade/{id}', 'AtividadeQuestaoController@buscaQuestaoDisciplina')->name('busca_questao_disciplina');
     });
 
 });
 
-//Rotas de Usuário externo
+// Acesso Usuário externo
+Route::group(['prefix' => '/acesso-externo', 'as' => 'acesso_externo.', 'middleware' => 'auth'], function(){
 
+    Route::group(['prefix' => '/questoes', 'as' => 'questoes.', 'middleware' => 'auth'], function(){
+        Route::get('', 'QuestaoExternoController@index')->name('index_externo');
+        Route::post('/store', 'QuestaoExternoController@store')->name('store');
+        Route::post('/destroy/{id}', 'QuestaoExternoController@destroy')->name('destroy');
+        Route::post('/update/{id}', 'QuestaoExternoController@update')->name('update');
+    });
+
+});
 

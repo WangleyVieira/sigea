@@ -20,6 +20,10 @@ class QuestaoController extends Controller
     public function index()
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
             $topicos = Topico::where('ativo', '=', 1)->get();
             $questoes = Questao::where('ativo', '=', 1)->get();
@@ -57,6 +61,9 @@ class QuestaoController extends Controller
     public function create()
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
             // $disciplinas = Disciplina::where('ativo', '=', 1)->with('topicos')->get();
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
             $topicos = Topico::where('ativo', '=', 1)->get();
@@ -78,9 +85,14 @@ class QuestaoController extends Controller
     public function store(Request $request)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
            if($request->id_disciplina == null || $request->id_topico == null){
                 return redirect()->back()->with('erro', ' Selecione uma Disciplina e um Tópico vinculado.');
            }
+
            if($request->descricao == null){
                 return redirect()->back()->with('erro', 'Campo Descrição é obrigatório.');
            }
@@ -144,6 +156,10 @@ class QuestaoController extends Controller
     public function edit($id)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             $questao = Questao::find($id);
             // $disciplinas = Disciplina::where('ativo', '=', 1)->get();
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
@@ -167,9 +183,14 @@ class QuestaoController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             if($request->id_disciplina == null || $request->id_topico == null){
                  return redirect()->back()->with('erro', ' Selecione uma Disciplina e um Tópico vinculado.');
             }
+
             if($request->descricao == null){
                  return redirect()->back()->with('erro', 'Campo Descrição é obrigatório.');
             }
@@ -221,6 +242,10 @@ class QuestaoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+            
             $questao = Questao::find($request->id);
             $questao->dataInativado = Carbon::now();
             $questao->inativadoPorUsuario = auth()->user()->id;

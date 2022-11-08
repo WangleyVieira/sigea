@@ -19,6 +19,10 @@ class DisciplinaController extends Controller
     public function index()
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             $periodos = Periodo::where('ativo', '=', 1)->get();
 
             $disciplinas = Disciplina::where('ativo', '=', 1)
@@ -57,6 +61,10 @@ class DisciplinaController extends Controller
     public function store(Request $request)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             if($request->disciplina == null || $request->codigo == null || $request->id_periodo == null){
                 return redirect()->back()->with('erro', 'Campos disciplina, código e período são obrigatórios.');
             }
@@ -116,6 +124,10 @@ class DisciplinaController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             if($request->disciplina == null || $request->codigo == null || $request->id_periodo == null){
                 return redirect()->back()->with('erro', 'Campos disciplina, código e período são obrigatórios.');
             }
@@ -144,6 +156,10 @@ class DisciplinaController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+            
             //disciplina
             $d = Disciplina::find($id);
             $d->dataInativado = Carbon::now();

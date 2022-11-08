@@ -17,6 +17,10 @@ class TopicoController extends Controller
     public function index()
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             $disciplinas = Disciplina::where('ativo', '=', 1)->with('topicos')->get();
 
             return view('adm.topico.index', compact('disciplinas'));
@@ -46,9 +50,14 @@ class TopicoController extends Controller
     public function store(Request $request)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             if($request->descricao == null){
                 return redirect()->back()->with('erro', 'Campo descrição obrigatório.');
             }
+
             if($request->id_disciplina == null){
                 return redirect()->back()->with('erro', 'Necessário selecionar a disciplina');
             }
@@ -107,6 +116,10 @@ class TopicoController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
             $top = Topico::find($id);
             $top->descricao = $request->topico;
             $top->alteradoPorUsuario = auth()->user()->id;
@@ -129,6 +142,10 @@ class TopicoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
+            if(auth()->user()->id != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+            
             $top = Topico::find($id);
             $top->inativadoPorUsuario = auth()->user()->id;
             $top->dataInativado = Carbon::now();
