@@ -34,8 +34,8 @@ class AtividadeController extends Controller
             return view('adm.atividade.index', compact('atividades'));
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -54,7 +54,7 @@ class AtividadeController extends Controller
             $questoes = Questao::where('ativo', '=', 1)->get();
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
 
-            return view('adm.atividade.listar-questoes', compact('disciplinas', 'questoes'));
+            return view('adm.atividade.create', compact('disciplinas', 'questoes'));
 
         } catch (\Exception $ex) {
             // return $ex->getMessage();
@@ -119,8 +119,8 @@ class AtividadeController extends Controller
             return redirect()->route('adm.atividades.index')->with('success', 'Cadastro realizado com sucesso.');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -165,8 +165,8 @@ class AtividadeController extends Controller
             return view('adm.atividade.edit', compact('atividade', 'disciplinas', 'atividadeQuestoes', 'questoesArray'));
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -189,7 +189,6 @@ class AtividadeController extends Controller
             }
 
             $atividadeAtualizar = Atividade::find($id);
-            // $atividadeAtualizar->id_disciplina = $request->id_disciplina;
             $atividadeAtualizar->descricao = $request->descricao_atividade;
             $atividadeAtualizar->titulo_atividade = $request->titulo_atividade;
             $atividadeAtualizar->alteradoPorUsuario = auth()->user()->id;
@@ -218,8 +217,8 @@ class AtividadeController extends Controller
             return redirect()->route('adm.atividades.index')->with('success', 'Atividade atualizado com sucesso.');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -264,7 +263,7 @@ class AtividadeController extends Controller
             if(auth()->user()->id != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
-            
+
             $atividade = Atividade::find($id);
             $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
             $questaoAtv = Questao::where('ativo', '=', 1)->get();
@@ -281,8 +280,8 @@ class AtividadeController extends Controller
             return $mpdf->Output('Atividade - ' .$now . '.pdf', 'I');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 }

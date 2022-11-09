@@ -245,7 +245,7 @@ class QuestaoController extends Controller
             if(auth()->user()->id != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
-            
+
             $questao = Questao::find($request->id);
             $questao->dataInativado = Carbon::now();
             $questao->inativadoPorUsuario = auth()->user()->id;

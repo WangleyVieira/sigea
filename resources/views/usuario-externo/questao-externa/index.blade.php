@@ -66,7 +66,7 @@
                     <div class="row">
                         <div class="col-12">
                             <input type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar">
-                            <a href="{{ route('adm.questoes.index') }}" class="btn btn-danger">Cancelar</a>
+                            <a href="{{ route('acesso_externo.questoes.index_externo') }}" class="btn btn-danger">Cancelar</a>
                         </div>
                     </div>
                 </form>
@@ -90,7 +90,6 @@
                     <table class="table table-striped" id="datatable-responsive">
                         <thead class="thead-light">
                             <tr>
-                                {{-- <th scope="col">ID Questão</th> --}}
                                 <th scope="col">Código questão</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Título da questão</th>
@@ -106,7 +105,6 @@
                         <tbody>
                             @foreach ($minhasQuestoes as $mQ)
                                 <tr>
-                                    {{-- <td style="text-align: center"> {{ $mQ->id }} </td> --}}
                                     <td> {{ $mQ->codigo_questao }}</td>
                                     <td> {{ $mQ->descricao }}</td>
                                     <td> {{ $mQ->titulo_questao }}</td>
@@ -116,7 +114,7 @@
                                     <td> {{ $mQ->created_at != null && $mQ->created_at != "" ? $mQ->created_at->format('d/m/Y H:i:s') : '-' }} </td>
                                     <td> {{ $mQ->updated_at != null && $mQ->updated_at != "" ? $mQ->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
                                     <td>
-                                        <a href="#" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
+                                        <a href="{{ route('acesso_externo.questoes.edit', $mQ->id) }}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
                                     </td>
                                     <td>
                                         <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $mQ->id }}"><i class="fas fa-trash"></i></a>
@@ -128,11 +126,11 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
 
-                                            <form action="{{ route('adm.questoes.destroy', $mQ->id) }}" method="POST" id="delete_form">
+                                            <form action="{{ route('acesso_externo.questoes.destroy', $mQ->id) }}" method="POST" id="delete_form">
                                                 @csrf
                                                 @method('POST')
                                                 <div class="modal-header" style="background-color: rgb(218, 105, 105)">
-                                                    <h5 class="modal-title">Tem certeza que deseja excluir a questão <strong>{{ $mQ->id }}</strong> ?</b></h5>
+                                                    <h5 class="modal-title">Tem certeza que deseja excluir a questão <strong>{{ $mQ->titulo_questao }}</strong> ?</b></h5>
                                                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -161,14 +159,12 @@
     </div>
 </div>
 
-
-
 <div id="accordion2">
     <div class="card">
         <div class="card-header" id="headingTwo">
             <h5 class="mb-0">
                 <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Questões Cadastradas
+                    Questões cadastradas no sistema
                 </button>
             </h5>
         </div>
@@ -265,7 +261,7 @@
                 }
             },
         });
-        
+
         $('#datatable-responsive2').dataTable({
             "oLanguage": {
                 "sLengthMenu": "Mostrar _MENU_ registros por página",

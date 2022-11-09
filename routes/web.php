@@ -43,7 +43,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     Route::get('/dashboard', 'HomeController@index')->name('index_adm');
 
         //Disciplinas
-    Route::group(['prefix' => '/disciplinas', 'as' => 'disciplinas.', 'middleware' => 'auth'], function(){
+    Route::group(['prefix' => '/disciplinas', 'as' => 'disciplinas.'], function(){
         Route::get('', 'DisciplinaController@index')->name('index');
         Route::post('/destroy/{id}', 'DisciplinaController@destroy')->name('destroy');
         Route::post('/update/{id}', 'DisciplinaController@update')->name('update');
@@ -52,7 +52,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     });
 
     //Questão
-    Route::group(['prefix' => '/questoes', 'as' => 'questoes.', 'middleware' => 'auth'], function(){
+    Route::group(['prefix' => '/questoes', 'as' => 'questoes.'], function(){
         Route::get('', 'QuestaoController@index')->name('index');
         Route::get('/cadastrar-questao', 'QuestaoController@create')->name('create');
         Route::get('/busca-topicos/{id}', 'QuestaoController@buscaTopico')->name('busca_topico');
@@ -63,7 +63,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     });
 
     //Tópicos
-    Route::group(['perfix' => '/topicos', 'as' => 'topicos.', 'middleware' => 'auth'], function(){
+    Route::group(['perfix' => '/topicos', 'as' => 'topicos.'], function(){
         Route::get('/topicos', 'TopicoController@index')->name('index');
         Route::post('/destroy/{id}', 'TopicoController@destroy')->name('destroy');
         Route::post('/update/{id}', 'TopicoController@update')->name('update');
@@ -71,7 +71,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     });
 
     //Atividade
-    Route::group(['prefix' => '/atividades', 'as' => 'atividades.', 'middleware' => 'auth'], function(){
+    Route::group(['prefix' => '/atividades', 'as' => 'atividades.'], function(){
         Route::get('', 'AtividadeController@index')->name('index');
         Route::get('/cadastrar-atividade', 'AtividadeController@create')->name('create');
         Route::post('/destroy/{id}', 'AtividadeController@destroy')->name('destroy');
@@ -83,7 +83,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     });
 
     //Atividade-Questão
-    Route::group(['prefix' => '/atividade-questao', 'as' => 'atividade_questao.', 'middleware' => 'auth'], function(){
+    Route::group(['prefix' => '/atividade-questao', 'as' => 'atividade_questao.'], function(){
         Route::post('/store', 'AtividadeQuestaoController@store')->name('atividade_questao');
         Route::post('/destroy/{id}', 'AtividadeQuestaoController@destroy')->name('destroy');
         Route::get('/selecionar-questoes', 'AtividadeQuestaoController@selectQuestao')->name('select_questao');
@@ -95,11 +95,18 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
 // Acesso Usuário externo
 Route::group(['prefix' => '/acesso-externo', 'as' => 'acesso_externo.', 'middleware' => 'auth'], function(){
 
-    Route::group(['prefix' => '/questoes', 'as' => 'questoes.', 'middleware' => 'auth'], function(){
+    Route::group(['prefix' => '/questoes', 'as' => 'questoes.'], function(){
         Route::get('', 'QuestaoExternoController@index')->name('index_externo');
         Route::post('/store', 'QuestaoExternoController@store')->name('store');
         Route::post('/destroy/{id}', 'QuestaoExternoController@destroy')->name('destroy');
         Route::post('/update/{id}', 'QuestaoExternoController@update')->name('update');
+        Route::get('/edit/{id}', 'QuestaoExternoController@edit')->name('edit');
+    });
+
+    Route::group(['prefix' => '/atividades', 'as' => 'atividades.'], function(){
+        Route::get('/', 'AtividadeExternoController@index')->name('index');
+        Route::post('/store', 'AtividadeExternoController@store')->name('store');
+        Route::get('/cadastrar-atividade', 'AtividadeExternoController@create')->name('create');
     });
 
 });

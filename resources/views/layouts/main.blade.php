@@ -113,6 +113,29 @@
                             Questões
                         </a>
                     </li>
+
+                    <li class="sidebar-item">
+                        <a href="#atividades" data-toggle="collapse" class="sidebar-link collapsed">
+                            <i class="fas fa-folder"></i>
+                            Atividades
+                        </a>
+                        <ul id="atividades" class="sidebar-dropdown list-unstyled {{
+                            Route::current()->uri == 'acesso-externo/atividades' ||
+                            Route::current()->uri == 'acesso-externo/atividades/cadastrar-atividade' ||
+                            Route::current()->uri == 'acesso-externo/atividades' ? 'active' : 'collapse'
+                            }}">
+                           <li class="sidebar-item {{ Route::current()->uri == 'acesso-externo/atividades' ? 'active' : null }}">
+                                <a class="sidebar-link" href="{{ route('acesso_externo.atividades.index') }}">
+                                    Listar
+                                </a>
+                            </li>
+                           <li class="sidebar-item {{ Route::current()->uri == 'acesso-externo/atividades/cadastrar-atividade' ? 'active' : null }}">
+                                <a class="sidebar-link" href="{{ route('acesso_externo.atividades.create') }}">
+                                    Cadastrar
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
 
             </ul>

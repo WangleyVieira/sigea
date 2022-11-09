@@ -133,7 +133,7 @@
                                                 @csrf
                                                 @method('POST')
                                                 <div class="modal-header" style="background-color: rgb(218, 105, 105)">
-                                                    <h5 class="modal-title">Tem certeza que deseja excluir a questão <strong>{{ $questao->id }}</strong> ?</b></h5>
+                                                    <h5 class="modal-title">Tem certeza que deseja excluir a questão <strong>{{ $questao->titulo_questao }}</strong> ?</b></h5>
                                                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
