@@ -29,9 +29,10 @@ class AtividadeController extends Controller
             //     ->with('questoes')
             //     ->get();
 
-            $atividades = Atividade::where('ativo', '=', 1)->get();
+            $atividades = Atividade::where('ativo', '=', 1)->where('cadastradoPorUsuario', '!=', auth()->user()->id)->get();
+            $minhasAtividades = Atividade::where('ativo', '=', 1)->where('cadastradoPorUsuario', '=', auth()->user()->id)->get();
 
-            return view('adm.atividade.index', compact('atividades'));
+            return view('adm.atividade.index', compact('atividades', 'minhasAtividades'));
 
         } catch (\Exception $ex) {
             // return $ex->getMessage();
@@ -241,13 +242,6 @@ class AtividadeController extends Controller
             $atividade->dataInativado = Carbon::now();
             $atividade->ativo = 0;
             $atividade->save();
-
-            // $desvincularAtvQ = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
-
-            // for ($i = 0; Count($desvincularAtvQ ); $i++) {
-
-            // }
-
 
             return redirect()->route('adm.atividades.index')->with('success', 'Atividade excluído com sucesso.');
 

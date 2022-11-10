@@ -106,7 +106,11 @@ Route::group(['prefix' => '/acesso-externo', 'as' => 'acesso_externo.', 'middlew
     Route::group(['prefix' => '/atividades', 'as' => 'atividades.'], function(){
         Route::get('/', 'AtividadeExternoController@index')->name('index');
         Route::post('/store', 'AtividadeExternoController@store')->name('store');
+        Route::post('/update/{id}', 'AtividadeExternoController@update')->name('update');
         Route::get('/cadastrar-atividade', 'AtividadeExternoController@create')->name('create');
+        Route::get('/edit/{id}', 'AtividadeExternoController@edit')->name('edit');
+        Route::get('/pdf-atividade/{id}', 'AtividadeExternoController@pdfAtividade')->name('atividade_pdf');
+        Route::post('/destroy/{id}', 'AtividadeExternoController@destroy')->name('destroy');
     });
 
 });

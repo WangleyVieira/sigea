@@ -45,7 +45,7 @@
                     Páginas
                 </li>
                 @if (auth()->user()->id_perfil == 1)
-                    <li class="sidebar-item {{ Route::current()->uri == 'dashboard' ? 'active' : null }}">
+                    <li class="sidebar-item {{ Route::current()->uri == 'adm/dashboard' ? 'active' : null }}">
                         <a href="{{ route('adm.index_adm') }}" class="sidebar-link">
                             <i class="fas fa-desktop"></i>
                             Dashboard

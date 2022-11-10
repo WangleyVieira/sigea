@@ -25,8 +25,7 @@ class QuestaoExternoController extends Controller
             }
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
             $topicos = Topico::where('ativo', '=', 1)->get();
-            $questoes = Questao::where('ativo', '=', 1)->get();
-
+            $questoes = Questao::where('ativo', '=', 1)->where('cadastradoPorUsuario', '!=', auth()->user()->id)->get();
             $minhasQuestoes = Questao::where('ativo', '=', 1)->where('cadastradoPorUsuario', '=', auth()->user()->id)->get();
 
             return view('usuario-externo.questao-externa.index', compact('questoes', 'disciplinas', 'topicos', 'minhasQuestoes'));
