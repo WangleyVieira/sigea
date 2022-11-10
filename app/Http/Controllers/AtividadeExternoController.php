@@ -21,7 +21,7 @@ class AtividadeExternoController extends Controller
     public function index()
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -44,7 +44,7 @@ class AtividadeExternoController extends Controller
     public function create()
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -68,7 +68,7 @@ class AtividadeExternoController extends Controller
     public function store(Request $request)
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -116,7 +116,7 @@ class AtividadeExternoController extends Controller
     public function edit($id)
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -152,7 +152,7 @@ class AtividadeExternoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -208,7 +208,7 @@ class AtividadeExternoController extends Controller
     public function pdfAtividade($id)
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -222,7 +222,7 @@ class AtividadeExternoController extends Controller
             // $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 297]]);
 
             $now = Carbon::now();
-            $html = view('adm.atividade.pdf-atividade', compact('atividade', 'atividadeQuestoes', 'questaoAtv'));
+            $html = view('usuario-externo.atividade-externo.pdf-atividade', compact('atividade', 'atividadeQuestoes', 'questaoAtv'));
             $mpdf->WriteHTML($html);
 
             return $mpdf->Output('Atividade - ' .$now . '.pdf', 'I');

@@ -60,6 +60,8 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::post('/destroy/{id}', 'QuestaoController@destroy')->name('destroy');
         Route::post('/update/{id}', 'QuestaoController@update')->name('update');
         Route::get('/edit/{id}', 'QuestaoController@edit')->name('edit');
+        Route::get('/visualizar/{id}', 'QuestaoController@visualizarQuestao')->name('visualizar');
+        Route::get('/visualizar-questao-externa/{id}', 'QuestaoController@visualizarQuestaoExterna')->name('visualizar_questao_externa');
     });
 
     //Tópicos
@@ -80,6 +82,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::get('/busca-questao/{id}', 'AtividadeController@buscaQuestao')->name('busca_questao');
         Route::post('/store', 'AtividadeController@storeAtividade')->name('store');
         Route::get('/pdf-atividade/{id}', 'AtividadeController@pdfAtividade')->name('atividade_pdf');
+        Route::get('/gabarito-atividade/{id}', 'AtividadeController@gabarito')->name('gabarito');
     });
 
     //Atividade-Questão

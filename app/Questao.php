@@ -14,6 +14,7 @@ class Questao extends Model implements Auditable
         'id_topico',
         'id_disciplina',
         'titulo_questao',
+        'resposta',
         'cadastradoPorUsuario',
         'alteradoPorUsuario',
         'inativadoPorUsuario',

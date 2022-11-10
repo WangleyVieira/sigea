@@ -48,18 +48,22 @@
                                 <option value="" selected disabled>-- Selecione --</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-2">
                             <label for="codigo_questao">Código da Questão (Letras e Números)</label>
                             <input type="text" name="codigo_questao" id="codigo_questao" class="form-control">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="titulo_questao">Título da questão</label>
                             <input type="text" name="titulo_questao" id="titulo_questao" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="resposta">Resposta</label>
+                            <input type="text" name="resposta" id="resposta" class="form-control">
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <div class="col-sm-12">
-                            <textarea class="form-control" name="descricao" rows="2"></textarea>
+                            <textarea class="form-control" name="descricao" rows="4"></textarea>
                         </div>
                     </div>
 
@@ -91,15 +95,10 @@
                     <table class="table table-striped" id="datatable-responsive">
                         <thead class="thead-light">
                             <tr>
-                                {{-- <th scope="col">ID Questão</th> --}}
                                 <th scope="col">Código questão</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Título da questão</th>
-                                <th scope="col">Tópico</th>
-                                <th scope="col">Disciplina</th>
-                                <th scope="col">Cadastrado por</th>
-                                <th scope="col">Cadastrado em</th>
-                                <th scope="col">Atualizado em</th>
+                                <th scope="col">Visualizar</th>
                                 <th scope="col">Alterar</th>
                                 <th scope="col">Deletar</th>
                             </tr>
@@ -107,15 +106,12 @@
                         <tbody>
                             @foreach ($minhasQuestoes as $mQ)
                                 <tr>
-                                    {{-- <td style="text-align: center"> {{ $questao->id }} </td> --}}
                                     <td> {{ $mQ->codigo_questao }}</td>
                                     <td> {{ $mQ->descricao }}</td>
                                     <td> {{ $mQ->titulo_questao }}</td>
-                                    <td> {{ $mQ->topico->descricao }}</td>
-                                    <td> {{ $mQ->disciplina->nome }}</td>
-                                    <td> {{ isset($questao->cadastradoPorUsuario) ? $mQ->cad_usuario->name : 'nativo do sistema' }} </td>
-                                    <td> {{ $mQ->created_at != null && $mQ->created_at != "" ? $mQ->created_at->format('d/m/Y H:i:s') : '-' }} </td>
-                                    <td> {{ $mQ->updated_at != null && $mQ->updated_at != "" ? $mQ->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
+                                    <td>
+                                        <a href="{{ route('adm.questoes.visualizar', $mQ->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                                    </td>
                                     <td>
                                         <a href="{{route('adm.questoes.edit', $mQ->id)}}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
                                     </td>
@@ -180,11 +176,7 @@
                                 <th scope="col">Código questão</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Título da questão</th>
-                                <th scope="col">Tópico</th>
-                                <th scope="col">Disciplina</th>
-                                <th scope="col">Cadastrado por</th>
-                                <th scope="col">Cadastrado em</th>
-                                <th scope="col">Atualizado em</th>
+                                <th scope="col">Visualizar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -193,11 +185,9 @@
                                     <td> {{ $questao->codigo_questao }}</td>
                                     <td> {{ $questao->descricao }}</td>
                                     <td> {{ $questao->titulo_questao }}</td>
-                                    <td> {{ $questao->topico->descricao }}</td>
-                                    <td> {{ $questao->disciplina->nome }}</td>
-                                    <td> {{ isset($questao->cadastradoPorUsuario) ? $questao->cad_usuario->name : 'nativo do sistema' }} </td>
-                                    <td> {{ $questao->created_at != null && $questao->created_at != "" ? $questao->created_at->format('d/m/Y H:i:s') : '-' }} </td>
-                                    <td> {{ $questao->updated_at != null && $questao->updated_at != "" ? $questao->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
+                                    <td>
+                                        <a href="{{ route('adm.questoes.visualizar_questao_externa', $questao->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -227,6 +217,10 @@
                 required:true,
                 maxlength:255,
             },
+            resposta:{
+                required:true,
+                maxlength:255,
+            },
         },
 
         messages: {
@@ -239,6 +233,10 @@
                 maxlength:"Máximo de 255 caracteres"
             },
             titulo_questao:{
+                required:"Campo obrigatório",
+                maxlength:"Máximo de 255 caracteres"
+            },
+            resposta:{
                 required:"Campo obrigatório",
                 maxlength:"Máximo de 255 caracteres"
             },

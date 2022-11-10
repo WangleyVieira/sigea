@@ -15,19 +15,7 @@
             h4{
                 text-align: center;
             }
-            table{
-                border-collapse: collapse;
-                width: 100%;
-                border: 1px solid black;
-                text-align: center;
-            }
-            td{
-                padding: 2px;
-                border: 1px solid black;
-            }
-            th{
-                border: 1px solid black
-            }
+           
             p {
             font-family: 'Times New Roman', Times, serif;
             /* font-style: italic; */

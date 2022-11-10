@@ -46,13 +46,17 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="codigo_questao">Código da Questão (Letras e Números)</label>
                         <input type="text" name="codigo_questao" id="codigo_questao" value="{{ $questao->codigo_questao }}" class="form-control">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="titulo_questao">Título da questão</label>
                         <input type="text" name="titulo_questao" id="titulo_questao" value="{{ $questao->titulo_questao }}" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="resposta">Resposta</label>
+                        <input type="text" name="resposta" id="resposta" value="{{ $questao->resposta }}" class="form-control">
                     </div>
                 </div>
                 <div class="mb-2 row">
@@ -91,6 +95,10 @@
                 required:true,
                 maxlength:255,
             },
+            resposta:{
+                required:true,
+                maxlength:255,
+            },
         },
 
         messages: {
@@ -103,6 +111,10 @@
                 maxlength:"Máximo de 255 caracteres"
             },
             titulo_questao:{
+                required:"Campo obrigatório",
+                maxlength:"Máximo de 255 caracteres"
+            },
+            resposta:{
                 required:"Campo obrigatório",
                 maxlength:"Máximo de 255 caracteres"
             },

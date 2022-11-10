@@ -17,7 +17,7 @@ class TopicoController extends Controller
     public function index()
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -50,7 +50,7 @@ class TopicoController extends Controller
     public function store(Request $request)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -116,7 +116,7 @@ class TopicoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -142,10 +142,10 @@ class TopicoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
-            
+
             $top = Topico::find($id);
             $top->inativadoPorUsuario = auth()->user()->id;
             $top->dataInativado = Carbon::now();

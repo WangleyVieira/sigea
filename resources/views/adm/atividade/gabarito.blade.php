@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <title>{{$atividade->titulo_atividade}}</title>
+        <title>Respostas - {{ $atividade->titulo_atividade }}</title>
 
         <style>
             html{
@@ -15,14 +15,23 @@
             h4{
                 text-align: center;
             }
-            
-            p {
-            font-family: 'Times New Roman', Times, serif;
-            /* font-style: italic; */
-            font-weight: bold;
-            font-size: 16px;
-            line-height: 20px;
-            margin: 10px 0px;
+
+            .descricao{
+                font-family: 'Times New Roman', Times, serif;
+                /* font-style: italic; */
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 20px;
+                margin: 10px 0px;
+            }
+
+            .resposta{
+                font-family: 'Times New Roman', Times, serif;
+                font-style: italic;
+                /* font-weight: bold; */
+                font-size: 16px;
+                line-height: 20px;
+                margin: 10px 0px;
             }
 
             .span-header {
@@ -44,10 +53,14 @@
 
         <hr>
         <h3>Disciplina: {{$atividade->disciplina->nome}} </h3>
+
         <hr>
 
+        <h4>Respostas</h4>
+
         @foreach ($atividadeQuestoes as $atvQuestao)
-            <p> {{ $atvQuestao->lista_questoes->descricao }} </p>
+            <p class="descricao"> {{ $atvQuestao->lista_questoes->descricao }} </p>
+            <p class="resposta"> {{ $atvQuestao->lista_questoes->resposta }} </p>
         @endforeach
 
     </body>

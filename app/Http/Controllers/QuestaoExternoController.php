@@ -20,7 +20,7 @@ class QuestaoExternoController extends Controller
     public function index()
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
@@ -55,7 +55,7 @@ class QuestaoExternoController extends Controller
     public function store(Request $request)
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -69,12 +69,14 @@ class QuestaoExternoController extends Controller
             //  validacao dos campos
              $input = [
                 'descricao' => $request->descricao,
-                'codigo_questao' => $request->codigo_questao
+                'codigo_questao' => $request->codigo_questao,
+                'resposta' => $request->resposta
             ];
 
             $rules = [
                 'descricao' => 'required|max:1200',
-                'codigo_questao' => 'required|max:255'
+                'codigo_questao' => 'required|max:255',
+                'resposta' => 'required|max:255'
             ];
 
             $messages = [
@@ -82,7 +84,10 @@ class QuestaoExternoController extends Controller
                 'descricao.max' => 'Máximo 255 caracteres.',
 
                 'codigo_questao.required' => 'Código questão é obrigatório.',
-                'codigo_questao.max' => 'Máximo 255 caracteres'
+                'codigo_questao.max' => 'Máximo 255 caracteres',
+
+                'resposta.required' => 'Resposta da questão é obrigatório.',
+                'resposta.max' => 'Máximo 255 caracteres'
             ];
 
             $validaCampos = Validator::make($input, $rules, $messages);
@@ -91,6 +96,7 @@ class QuestaoExternoController extends Controller
            $novaQuestao = new Questao();
            $novaQuestao->descricao = $request->descricao;
            $novaQuestao->id_topico = $request->id_topico;
+           $novaQuestao->resposta = $request->resposta;
            $novaQuestao->codigo_questao = strtoupper($request->codigo_questao);
            $novaQuestao->id_disciplina = $request->id_disciplina;
            $novaQuestao->titulo_questao = $request->titulo_questao;
@@ -115,7 +121,7 @@ class QuestaoExternoController extends Controller
     public function edit($id)
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -140,7 +146,7 @@ class QuestaoExternoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -154,12 +160,14 @@ class QuestaoExternoController extends Controller
              //  validacao dos campos
               $input = [
                  'descricao' => $request->descricao,
-                 'codigo_questao' => $request->codigo_questao
+                 'codigo_questao' => $request->codigo_questao,
+                 'resposta' => $request->resposta,
              ];
 
              $rules = [
                  'descricao' => 'required|max:255',
-                 'codigo_questao' => 'required|max:255'
+                 'codigo_questao' => 'required|max:255',
+                 'resposta' => 'required|max:255'
              ];
 
              $messages = [
@@ -167,7 +175,10 @@ class QuestaoExternoController extends Controller
                  'descricao.max' => 'Máximo 255 caracteres.',
 
                  'codigo_questao.required' => 'Código questão é obrigatório.',
-                 'codigo_questao.max' => 'Máximo 255 caracteres'
+                 'codigo_questao.max' => 'Máximo 255 caracteres',
+
+                 'resposta.required' => 'Resposta da questão é obrigatório.',
+                 'resposta.max' => 'Máximo 255 caracteres'
              ];
 
              $validaCampos = Validator::make($input, $rules, $messages);
@@ -176,6 +187,7 @@ class QuestaoExternoController extends Controller
             $questao = Questao::find($id);
             $questao->descricao = $request->descricao;
             $questao->id_topico = $request->id_topico;
+            $questao->resposta = $request->resposta;
             $questao->codigo_questao = strtoupper($request->codigo_questao);
             $questao->id_disciplina = $request->id_disciplina;
             $questao->titulo_questao = $request->titulo_questao;
@@ -198,7 +210,7 @@ class QuestaoExternoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            if(auth()->user()->id != 2){
+            if(auth()->user()->id_perfil != 2){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 

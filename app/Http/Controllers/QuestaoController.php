@@ -9,6 +9,7 @@ use App\Topico;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Mpdf\Mpdf;
 
 class QuestaoController extends Controller
 {
@@ -20,7 +21,7 @@ class QuestaoController extends Controller
     public function index()
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -62,7 +63,7 @@ class QuestaoController extends Controller
     public function create()
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
             // $disciplinas = Disciplina::where('ativo', '=', 1)->with('topicos')->get();
@@ -86,7 +87,7 @@ class QuestaoController extends Controller
     public function store(Request $request)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -100,12 +101,14 @@ class QuestaoController extends Controller
             //  validacao dos campos
              $input = [
                 'descricao' => $request->descricao,
-                'codigo_questao' => $request->codigo_questao
+                'codigo_questao' => $request->codigo_questao,
+                'resposta' => $request->resposta
             ];
 
             $rules = [
                 'descricao' => 'required|max:1200',
-                'codigo_questao' => 'required|max:255'
+                'codigo_questao' => 'required|max:255',
+                'resposta' => 'required|max:255'
             ];
 
             $messages = [
@@ -113,7 +116,10 @@ class QuestaoController extends Controller
                 'descricao.max' => 'Máximo 255 caracteres.',
 
                 'codigo_questao.required' => 'Código questão é obrigatório.',
-                'codigo_questao.max' => 'Máximo 255 caracteres'
+                'codigo_questao.max' => 'Máximo 255 caracteres',
+
+                'resposta.required' => 'Resposta da questão é obrigatório.',
+                'resposta.max' => 'Máximo 255 caracteres'
             ];
 
             $validaCampos = Validator::make($input, $rules, $messages);
@@ -122,6 +128,7 @@ class QuestaoController extends Controller
            $novaQuestao = new Questao();
            $novaQuestao->descricao = $request->descricao;
            $novaQuestao->id_topico = $request->id_topico;
+           $novaQuestao->resposta = $request->resposta;
            $novaQuestao->codigo_questao = strtoupper($request->codigo_questao);
            $novaQuestao->id_disciplina = $request->id_disciplina;
            $novaQuestao->titulo_questao = $request->titulo_questao;
@@ -157,7 +164,7 @@ class QuestaoController extends Controller
     public function edit($id)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -184,7 +191,7 @@ class QuestaoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -198,12 +205,14 @@ class QuestaoController extends Controller
              //  validacao dos campos
               $input = [
                  'descricao' => $request->descricao,
-                 'codigo_questao' => $request->codigo_questao
+                 'codigo_questao' => $request->codigo_questao,
+                 'resposta' => $request->resposta
              ];
 
              $rules = [
                  'descricao' => 'required|max:255',
-                 'codigo_questao' => 'required|max:255'
+                 'codigo_questao' => 'required|max:255',
+                 'resposta' => 'required|max:255',
              ];
 
              $messages = [
@@ -211,7 +220,10 @@ class QuestaoController extends Controller
                  'descricao.max' => 'Máximo 255 caracteres.',
 
                  'codigo_questao.required' => 'Código questão é obrigatório.',
-                 'codigo_questao.max' => 'Máximo 255 caracteres'
+                 'codigo_questao.max' => 'Máximo 255 caracteres',
+
+                 'resposta.required' => 'Resposta da questão é obrigatório.',
+                 'resposta.max' => 'Máximo 255 caracteres'
              ];
 
              $validaCampos = Validator::make($input, $rules, $messages);
@@ -220,6 +232,7 @@ class QuestaoController extends Controller
             $questao = Questao::find($id);
             $questao->descricao = $request->descricao;
             $questao->id_topico = $request->id_topico;
+            $questao->resposta = $request->resposta;
             $questao->codigo_questao = strtoupper($request->codigo_questao);
             $questao->id_disciplina = $request->id_disciplina;
             $questao->titulo_questao = $request->titulo_questao;
@@ -243,7 +256,7 @@ class QuestaoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -259,6 +272,55 @@ class QuestaoController extends Controller
         } catch (\Exception $ex) {
             // $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu ao excluir a questão.');
+        }
+    }
+
+    public function visualizarQuestao($id)
+    {
+        try {
+            if(auth()->user()->id_perfil != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+            $minhaQuestao = Questao::find($id);
+            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            $topicos = Topico::where('ativo', '=', 1)->get();
+
+            $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
+
+            $now = Carbon::now();
+            $html = view('adm.questao.pdf-questao', compact('minhaQuestao', 'disciplinas', 'topicos'));
+            $mpdf->WriteHTML($html);
+
+            return $mpdf->Output('Questão - ' .$now . '.pdf', 'I');
+
+        } catch (\Exception $ex) {
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
+    }
+
+    public function visualizarQuestaoExterna($id)
+    {
+        try {
+            if(auth()->user()->id_perfil != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
+            $questao = Questao::find($id);
+            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            $topicos = Topico::where('ativo', '=', 1)->get();
+
+            $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
+
+            $now = Carbon::now();
+            $html = view('adm.questao.pdf-questao-externa', compact('questao', 'disciplinas', 'topicos'));
+            $mpdf->WriteHTML($html);
+
+            return $mpdf->Output('Questão - ' .$now . '.pdf', 'I');
+
+        } catch (\Exception $ex) {
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 }

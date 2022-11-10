@@ -18,6 +18,7 @@ class CreateQuestaosTable extends Migration
             $table->string('codigo_questao')->unique();
             $table->text('descricao')->nullable();
             $table->text('titulo_questao')->nullable();
+            $table->text('resposta')->nullable();
 
             //Tópicos
             $table->bigInteger('id_topico')->unsigned()->nullable();

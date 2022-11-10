@@ -47,10 +47,10 @@
                                     <td> {{ $mA->created_at != null && $mA->created_at != "" ? $mA->created_at->format('d/m/Y H:i:s') : '-' }} </td>
                                     <td> {{ $mA->updated_at != null && $mA->updated_at != "" ? $mA->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
                                     <td>
-                                        <a href="{{ route('adm.atividades.atividade_pdf', $mA->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                                        <a href="{{ route('acesso_externo.atividades.atividade_pdf', $mA->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fas fa-file-pdf"></i></a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('adm.atividades.edit', $mA->id) }}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
+                                        <a href="{{ route('acesso_externo.atividades.edit', $mA->id) }}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
                                     </td>
                                     <td>
                                         <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $mA->id }}"><i class="fas fa-trash"></i></a>
@@ -62,7 +62,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
 
-                                            <form action="{{ route('adm.atividades.destroy', $mA->id) }}" method="POST" id="delete_form">
+                                            <form action="{{ route('acesso_externo.atividades.destroy', $mA->id) }}" method="POST" id="delete_form">
                                                 @csrf
                                                 @method('POST')
                                                 <div class="modal-header" style="background-color: rgb(218, 105, 105)">
@@ -132,7 +132,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     $(document).ready(function() {

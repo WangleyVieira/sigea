@@ -21,7 +21,7 @@ class AtividadeController extends Controller
     public function index()
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
             // $atividades = Disciplina::where('ativo', '=', 1)
@@ -48,7 +48,7 @@ class AtividadeController extends Controller
     public function create()
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -87,7 +87,7 @@ class AtividadeController extends Controller
     public function storeAtividade(Request $request)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -145,7 +145,7 @@ class AtividadeController extends Controller
     public function edit(Request $request, $id)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -181,7 +181,7 @@ class AtividadeController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -232,7 +232,7 @@ class AtividadeController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
@@ -254,13 +254,13 @@ class AtividadeController extends Controller
     public function pdfAtividade($id)
     {
         try {
-            if(auth()->user()->id != 1){
+            if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
             $atividade = Atividade::find($id);
             $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
-            $questaoAtv = Questao::where('ativo', '=', 1)->get();
+            // $questaoAtv = Questao::where('ativo', '=', 1)->get();
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 
@@ -268,7 +268,7 @@ class AtividadeController extends Controller
             // $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 297]]);
 
             $now = Carbon::now();
-            $html = view('adm.atividade.pdf-atividade', compact('atividade', 'atividadeQuestoes', 'questaoAtv'));
+            $html = view('adm.atividade.pdf-atividade', compact('atividade', 'atividadeQuestoes'));
             $mpdf->WriteHTML($html);
 
             return $mpdf->Output('Atividade - ' .$now . '.pdf', 'I');
@@ -276,6 +276,33 @@ class AtividadeController extends Controller
         } catch (\Exception $ex) {
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
+    }
+
+    public function gabarito($id)
+    {
+        try {
+            if(auth()->user()->id_perfil != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
+            $atividade = Atividade::find($id);
+            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
+
+            $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
+
+            // Define a default page size/format by array - page will be 190mm wide x 236mm height
+            // $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 297]]);
+
+            // $now = Carbon::now();
+            $html = view('adm.atividade.gabarito', compact('atividade', 'atividadeQuestoes'));
+            $mpdf->WriteHTML($html);
+
+            return $mpdf->Output('Resposta - ' .$atividade->titulo_atividade . '.pdf', 'I');
+
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 }
