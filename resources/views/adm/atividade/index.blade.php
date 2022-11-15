@@ -7,10 +7,10 @@
 @include('errors.alerts')
 @include('errors.errors')
 
-<div class="header">
+{{-- <div class="header">
     <h1 class="mt-4">Listagem de atividades</h1>
 </div>
-<br>
+<br> --}}
 <div id="accordion">
     <div class="card">
         <div class="card-header" id="heading">
@@ -110,23 +110,27 @@
                                 <th scope="col">Título da questão</th>
                                 <th scope="col">Disciplina</th>
                                 <th scope="col">Cadastrado por</th>
+                                <th scope="col">PDF</th>
+                                <th scope="col">Respostas</th>
                                 <th scope="col">Cadastrado em</th>
                                 <th scope="col">Atualizado em</th>
-                                {{-- <th scope="col">PDF</th> --}}
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($atividades as $atividade)
+                            @foreach ($atividadesExternas as $atividade)
                                 <tr>
                                     <td> {{ $atividade->descricao }} </td>
                                     <td> {{ $atividade->titulo_atividade }} </td>
                                     <td> {{ $atividade->disciplina->nome }} </td>
                                     <td> {{ $atividade->cad_usuario->name }} </td>
+                                    <td>
+                                        <a href="{{ route('adm.atividades.atividade_pdf', $atividade->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('adm.atividades.gabarito', $atividade->id) }}" class="btn btn-outline-info" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                                    </td>
                                     <td> {{ $atividade->created_at != null && $atividade->created_at != "" ? $atividade->created_at->format('d/m/Y H:i:s') : '-' }} </td>
                                     <td> {{ $atividade->updated_at != null && $atividade->updated_at != "" ? $atividade->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
-                                    {{-- <td>
-                                        <a href="{{ route('adm.atividades.atividade_pdf', $atividade->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fas fa-file-pdf"></i></a>
-                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

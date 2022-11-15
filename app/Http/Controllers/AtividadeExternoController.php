@@ -156,10 +156,6 @@ class AtividadeExternoController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            if($request->id_questao == null){
-                return redirect()->back()->with('erro', 'Selecione a questão para cadastrar a atividade.');
-            }
-
             $atividadeAtualizar = Atividade::find($id);
             $atividadeAtualizar->descricao = $request->descricao_atividade;
             $atividadeAtualizar->titulo_atividade = $request->titulo_atividade;
@@ -169,21 +165,23 @@ class AtividadeExternoController extends Controller
 
             $questoesAtualizar = $request->id_questao;
 
-            for ($i = 0; $i < Count($questoesAtualizar); $i++) {
+            if($questoesAtualizar != null){
 
-                $atv = Questao::where('id', '=', $questoesAtualizar[$i])->where('ativo', '=', 1)->first();
+                for ($i = 0; $i < Count($questoesAtualizar); $i++) {
 
-                if($atv){
-                    //se não for questao desta atividade, adiciona
-                    if($atv->pertencenteAtividade($id) == 0){
-                        $questaoAtividadeAtualizar = new AtividadeQuestao();
-                        $questaoAtividadeAtualizar->id_atividade = $atividadeAtualizar->id;
-                        $questaoAtividadeAtualizar->id_questao = $questoesAtualizar[$i];
-                        $questaoAtividadeAtualizar->ativo = 1;
-                        $questaoAtividadeAtualizar->save();
+                    $atv = Questao::where('id', '=', $questoesAtualizar[$i])->where('ativo', '=', 1)->first();
+
+                    if($atv){
+                        //se não for questao desta atividade, adiciona
+                        if($atv->pertencenteAtividade($id) == 0){
+                            $questaoAtividadeAtualizar = new AtividadeQuestao();
+                            $questaoAtividadeAtualizar->id_atividade = $atividadeAtualizar->id;
+                            $questaoAtividadeAtualizar->id_questao = $questoesAtualizar[$i];
+                            $questaoAtividadeAtualizar->ativo = 1;
+                            $questaoAtividadeAtualizar->save();
+                        }
                     }
                 }
-
             }
 
             return redirect()->route('acesso_externo.atividades.index')->with('success', 'Atividade atualizado com sucesso.');
@@ -222,10 +220,36 @@ class AtividadeExternoController extends Controller
             // $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 297]]);
 
             $now = Carbon::now();
+            $dataFormatada = $now->format('d/m/Y H:i:s');
             $html = view('usuario-externo.atividade-externo.pdf-atividade', compact('atividade', 'atividadeQuestoes', 'questaoAtv'));
             $mpdf->WriteHTML($html);
 
-            return $mpdf->Output('Atividade - ' .$now . '.pdf', 'I');
+            return $mpdf->Output('Atividade - ' .$atividade->titulo_atividade. ' - ' .$dataFormatada. '.pdf', 'I');
+
+        } catch (\Exception $ex) {
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
+    }
+
+    public function gabarito($id)
+    {
+        try {
+            if(auth()->user()->id_perfil != 2){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
+            $atividade = Atividade::find($id);
+            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
+
+            $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
+
+            $now = Carbon::now();
+            $dataFormatada = $now->format('d/m/Y H:i:s');
+            $html = view('usuario-externo.atividade-externo.gabarito', compact('atividade', 'atividadeQuestoes'));
+            $mpdf->WriteHTML($html);
+
+            return $mpdf->Output('Resposta - ' .$atividade->titulo_atividade . '-' .$dataFormatada. '.pdf', 'I');
 
         } catch (\Exception $ex) {
             // return $ex->getMessage();

@@ -5,19 +5,21 @@
     .error{
             color:red
     }
-    #codigo_questao{
+    #codigo_disciplina{
         text-transform: uppercase;
     }
 </style>
 @section('content')
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 @include('errors.alerts')
 @include('errors.errors')
 
-<div class="header">
+{{-- <div class="header">
     <h1 class="mt-4">Disciplinas cadastradas</h1>
 </div>
-<br>
+<br> --}}
 <div id="accordion">
     <div class="card">
         <div class="card-header" id="heading">
@@ -29,21 +31,21 @@
         </div>
         <div id="collapse" class="collapse" aria-labelledby="heading" data-parent="#accordion">
             <div class="card-body">
-                <form action="{{ route('adm.disciplinas.store') }}" id="form" method="POST" class="form_prevent_multiple_submits">
+                <form action="{{ route('adm.disciplinas.store') }}" id="formDisciplina" method="POST" class="form_prevent_multiple_submits">
                     @csrf
                     @method('POST')
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label for="disciplina">Nome disciplina</label>
-                            <input type="text" name="disciplina" id="disciplina" class="form-control" required>
+                            <input type="text" name="disciplina" id="disciplina" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="codigo">Código</label>
-                            <input type="text" name="codigo" id="codigo" class="form-control" required>
+                            <input type="text" name="codigo" class="form-control" id="codigo_disciplina">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="id_periodo">Selecione o período</label>
-                            <select class="form-control mb-3" name="id_periodo" required>
+                            <select class="form-control" name="id_periodo">
                                 <option value="" selected disabled> -- selecione -- </option>
                                 @foreach ($periodos as $p)
                                     <option value="{{ $p->id }}"> {{ $p->descricao }} </option>
@@ -253,7 +255,42 @@
     </div>
 </div>
 
+<script src="{{asset('../js/jquery.validate.js')}}"></script>
+
 <script>
+
+    $("#formDisciplina").validate({
+        rules: {
+            disciplina:{
+                required:true,
+                maxlength:255,
+            },
+            codigo:{
+                required:true,
+                maxlength:255,
+            },
+            id_periodo:{
+                required:true,
+                maxlength:255,
+            },
+        },
+
+        messages: {
+            disciplina:{
+                required:"Campo obrigatório",
+                maxlength:"Máximo de 255 caracteres"
+            },
+            codigo:{
+                required:"Campo obrigatório",
+                maxlength:"Máximo de 255 caracteres"
+            },
+            id_periodo:{
+                required:"Campo obrigatório",
+                maxlength:"Máximo de 255 caracteres"
+            },
+        }
+    });
+
     $(document).ready(function() {
 
         $('.select2').select2({

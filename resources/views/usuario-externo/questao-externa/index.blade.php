@@ -14,10 +14,10 @@
 @include('errors.alerts')
 @include('errors.errors')
 
-<div class="header">
+{{-- <div class="header">
     <h1 class="mt-4">Questões cadastradas</h1>
 </div>
-<br>
+<br> --}}
 <div id="accordion">
     <div class="card">
         <div class="card-header" id="heading">
@@ -97,12 +97,7 @@
                                 <th scope="col">Código questão</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Título da questão</th>
-                                <th scope="col">Tópico</th>
-                                <th scope="col">Disciplina</th>
-                                <th scope="col">Cadastrado por</th>
-                                <th scope="col">Cadastrado em</th>
-                                <th scope="col">Cadastrado em</th>
-                                {{-- <th scope="col">PDF</th> --}}
+                                <th scope="col">Visualizar</th>
                                 <th scope="col">Alterar</th>
                                 <th scope="col">Deletar</th>
                             </tr>
@@ -113,11 +108,9 @@
                                     <td> {{ $mQ->codigo_questao }}</td>
                                     <td> {{ $mQ->descricao }}</td>
                                     <td> {{ $mQ->titulo_questao }}</td>
-                                    <td> {{ $mQ->topico->descricao }}</td>
-                                    <td> {{ $mQ->disciplina->nome }}</td>
-                                    <td> {{ isset($mQ->cadastradoPorUsuario) ? $mQ->cad_usuario->name : 'nativo do sistema' }} </td>
-                                    <td> {{ $mQ->created_at != null && $mQ->created_at != "" ? $mQ->created_at->format('d/m/Y H:i:s') : '-' }} </td>
-                                    <td> {{ $mQ->updated_at != null && $mQ->updated_at != "" ? $mQ->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
+                                    <td>
+                                        <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#viewModal{{ $mQ->id }}"><i class="fa fa-eye"></i></a>
+                                    </td>
                                     <td>
                                         <a href="{{ route('acesso_externo.questoes.edit', $mQ->id) }}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
                                     </td>
@@ -155,6 +148,38 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                 {{-- modal visualizar --}}
+                                 <div class="modal fade" id="viewModal{{ $mQ->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color: rgb(156, 147, 147)">
+                                                <h5 class="modal-title">Informações da questão <strong>{{ $mQ->titulo_questao }}</strong></b></h5>
+                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Código Questão: {{$mQ->codigo_questao}}</p>
+                                                <p>Disciplina: {{ $mQ->disciplina->nome }}</p>
+                                                <p>Tópico vinculado: {{ $mQ->topico->descricao }}</p>
+                                                <p>Cadastrado por: {{ $mQ->cad_usuario->name }}</p>
+                                                <p>Cadastrado em: {{ $mQ->created_at->format('d/m/Y H:i:s') }}</p>
+                                                <p>Atualizado em: {{ $mQ->updated_at->format('d/m/Y H:i:s') }}</p>
+                                                <hr>
+                                                <p style="font-weight: bold;">
+                                                    Descrição:
+                                                </p>
+
+                                                {{ $mQ->descricao }}
+
+                                                <hr>
+                                                <p>Resposta: {{ $mQ->resposta }}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </tbody>
                     </table>
@@ -182,11 +207,7 @@
                                 <th scope="col">Código questão</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Título da questão</th>
-                                <th scope="col">Tópico</th>
-                                <th scope="col">Disciplina</th>
-                                <th scope="col">Cadastrado por</th>
-                                <th scope="col">Cadastrado em</th>
-                                <th scope="col">Atualizado em</th>
+                                <th scope="col">Visualizar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -195,12 +216,42 @@
                                     <td> {{ $questao->codigo_questao }}</td>
                                     <td> {{ $questao->descricao }}</td>
                                     <td> {{ $questao->titulo_questao }}</td>
-                                    <td> {{ $questao->topico->descricao }}</td>
-                                    <td> {{ $questao->disciplina->nome }}</td>
-                                    <td> {{ isset($questao->cadastradoPorUsuario) ? $questao->cad_usuario->name : 'nativo do sistema' }} </td>
-                                    <td> {{ $questao->created_at != null && $questao->created_at != "" ? $questao->created_at->format('d/m/Y H:i:s') : '-' }} </td>
-                                    <td> {{ $questao->updated_at != null && $questao->updated_at != "" ? $questao->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
+                                    <td>
+                                        <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#viewModal{{ $questao->id }}"><i class="fa fa-eye"></i></a>
+                                    </td>
                                 </tr>
+
+                                {{-- modal visualizar --}}
+                                <div class="modal fade" id="viewModal{{ $questao->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color: rgb(156, 147, 147)">
+                                                <h5 class="modal-title">Informações da questão <strong>{{ $questao->titulo_questao }}</strong></b></h5>
+                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Código Questão: {{$questao->codigo_questao}}</p>
+                                                <p>Disciplina: {{ $questao->disciplina->nome }}</p>
+                                                <p>Tópico vinculado: {{ $questao->topico->descricao }}</p>
+                                                <p>Cadastrado por: {{ $questao->cad_usuario->name }}</p>
+                                                <p>Cadastrado em: {{ $questao->created_at->format('d/m/Y H:i:s') }}</p>
+                                                <p>Atualizado em: {{ $questao->updated_at->format('d/m/Y H:i:s') }}</p>
+                                                <hr>
+                                                <p style="font-weight: bold;">
+                                                    Descrição:
+                                                </p>
+
+                                                {{ $questao->descricao }}
+
+                                                <hr>
+                                                <p>Resposta: {{ $questao->resposta }}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </tbody>
                     </table>

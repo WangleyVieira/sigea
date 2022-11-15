@@ -58,7 +58,7 @@
                         </select>
                     </div>
                     <div class="col-12">
-                        <input type="submit" class="btn btn-success" name="Adicionar" value="Adicionar">
+                        <input type="submit" class="btn btn-success" name="Salvar" value="Salvar">
                         <a href="{{ route('acesso_externo.atividades.index') }}" class="btn btn-danger">Cancelar</a>
                     </div>
                 </div>

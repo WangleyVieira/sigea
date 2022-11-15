@@ -7,10 +7,10 @@
 @include('errors.alerts')
 @include('errors.errors')
 
-<div class="header">
+{{-- <div class="header">
     <h1 class="mt-4">Listagem de atividades</h1>
 </div>
-<br>
+<br> --}}
 <div id="accordion">
     <div class="card">
         <div class="card-header" id="heading">
@@ -33,6 +33,7 @@
                                 <th scope="col">Cadastrado em</th>
                                 <th scope="col">Atualizado em</th>
                                 <th scope="col">PDF</th>
+                                <th scope="col">Respostas</th>
                                 <th scope="col">Alterar</th>
                                 <th scope="col">Deletar</th>
                             </tr>
@@ -48,6 +49,9 @@
                                     <td> {{ $mA->updated_at != null && $mA->updated_at != "" ? $mA->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
                                     <td>
                                         <a href="{{ route('acesso_externo.atividades.atividade_pdf', $mA->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('acesso_externo.atividades.gabarito', $mA->id) }}" class="btn btn-outline-info" target="_blank"><i class="fas fa-file-pdf"></i></a>
                                     </td>
                                     <td>
                                         <a href="{{ route('acesso_externo.atividades.edit', $mA->id) }}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>

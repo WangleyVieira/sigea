@@ -58,7 +58,7 @@
                         </select>
                     </div>
                     <div class="col-12">
-                        <input type="submit" class="btn btn-success" name="Adicionar" value="Adicionar">
+                        <input type="submit" class="btn btn-success" name="Salvar" value="Salvar">
                         <a href="{{ route('adm.atividades.index') }}" class="btn btn-danger">Cancelar</a>
                     </div>
                 </div>
@@ -164,27 +164,6 @@
 
 
     $(document).ready(function() {
-
-        /*
-         realiza a requisicao Ajax no controlador QuestaoController e realiza
-         uma busca dos topicos vinculados a disciplina
-        */
-        $('#id_disciplina').on('change', function() {
-            var verifica = true;
-            var idDisciplina = $('#id_disciplina').select2("val");
-            $.get("{{ route('adm.atividade_questao.busca_questao_disciplina', '') }}" + "/" + idDisciplina, function(questoes) {
-                $('select[name="id_questao[]"]').empty();
-                $.each(questoes,
-                function(key, value) {
-                    if (verifica){
-                        // $('select[name="id_questao"]').append('<option value="" selected disabled>Selecione a questão</option>');
-                        $('select[name="id_questao[]"]');
-                    }
-                    verifica = false;
-                    $('select[name="id_questao[]"]').append('<option value=' + value.id +'>' + value.descricao + '</option>');
-                });
-            });
-        });
 
         $('.select2').select2({
             language: {

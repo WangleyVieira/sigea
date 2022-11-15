@@ -29,7 +29,7 @@
         </div>
         <div id="collapse" class="collapse" aria-labelledby="heading" data-parent="#accordion">
             <div class="card-body">
-                <form action="{{ route('adm.topicos.store') }}" method="POST" id="cad_topico_form">
+                <form action="{{ route('adm.topicos.store') }}" method="POST" id="formTopico">
                     @csrf
                     @method('POST')
                     <div class="row">
@@ -79,9 +79,9 @@
                                 <th scope="col">Disciplina</th>
                                 <th scope="col">Período</th>
                                 <th scope="col">Código Disciplina</th>
-                                <th scope="col">Cadastrado por</th>
+                                {{-- <th scope="col">Cadastrado por</th>
                                 <th scope="col">Cadastrado em</th>
-                                <th scope="col">Atualizado em</th>
+                                <th scope="col">Atualizado em</th> --}}
                                 <th scope="col">Alterar</th>
                                 <th scope="col">Deletar</th>
                             </tr>
@@ -95,9 +95,9 @@
                                         <td> {{ $top->disciplina->nome }}</td>
                                         <td> {{ $d->periodo->descricao}}</td>
                                         <td> {{ $top->disciplina->codigo }}</td>
-                                        <td> {{ isset($top->cadastradoPorUsuario) ? $top->cad_usuario->name : 'nativo do sistema' }} </td>
+                                        {{-- <td> {{ isset($top->cadastradoPorUsuario) ? $top->cad_usuario->name : 'nativo do sistema' }} </td>
                                         <td> {{ $top->created_at != null && $top->created_at != "" ? $top->created_at->format('d/m/Y H:i:s') : '-' }} </td>
-                                        <td> {{ $top->updated_at != null && $top->updated_at != "" ? $top->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
+                                        <td> {{ $top->updated_at != null && $top->updated_at != "" ? $top->updated_at->format('d/m/Y H:i:s') : '-' }} </td> --}}
                                         <td>
                                             <a href="" class="btn btn-outline-warning" data-toggle="modal" data-target="#updateModal{{ $top->id }}"><i class="fas fa-pen"></i></a>
                                         </td>
@@ -170,8 +170,34 @@
     </div>
 </div>
 
+<script src="{{asset('../js/jquery.validate.js')}}"></script>
 
 <script>
+
+    $("#formTopico").validate({
+        rules: {
+            descricao:{
+                required:true,
+                maxlength:255,
+            },
+            id_disciplina:{
+                required:true,
+                maxlength:255,
+            },
+        },
+
+        messages: {
+            descricao:{
+                required:"Campo obrigatório",
+                maxlength:"Máximo de 255 caracteres"
+            },
+            id_disciplina:{
+                required:"Campo obrigatório",
+                maxlength:"Máximo de 255 caracteres"
+            },
+        }
+    });
+
     $(document).ready(function() {
 
         $('.select2').select2({

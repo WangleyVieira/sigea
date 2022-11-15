@@ -91,24 +91,25 @@ class QuestaoController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-           if($request->id_disciplina == null || $request->id_topico == null){
+            if($request->id_disciplina == null || $request->id_topico == null){
                 return redirect()->back()->with('erro', ' Selecione uma Disciplina e um Tópico vinculado.');
-           }
+            }
 
-           if($request->descricao == null){
-                return redirect()->back()->with('erro', 'Campo Descrição é obrigatório.');
-           }
             //  validacao dos campos
              $input = [
                 'descricao' => $request->descricao,
                 'codigo_questao' => $request->codigo_questao,
-                'resposta' => $request->resposta
+                'resposta' => $request->resposta,
+                // 'id_disciplina' => $request->id_disciplina,
+                // 'id_topico' => $request->id_topico
             ];
 
             $rules = [
                 'descricao' => 'required|max:1200',
                 'codigo_questao' => 'required|max:255',
-                'resposta' => 'required|max:255'
+                'resposta' => 'required|max:255',
+                // 'id_disciplina' => 'required|max:255',
+                // 'id_topico' => 'required|max:255'
             ];
 
             $messages = [
@@ -119,7 +120,13 @@ class QuestaoController extends Controller
                 'codigo_questao.max' => 'Máximo 255 caracteres',
 
                 'resposta.required' => 'Resposta da questão é obrigatório.',
-                'resposta.max' => 'Máximo 255 caracteres'
+                'resposta.max' => 'Máximo 255 caracteres',
+
+                // 'id_disciplina.required' => 'Disciplina da questão é obrigatório.',
+                // 'id_disciplina.max' => 'Máximo 255 caracteres',
+
+                // 'id_topico.required' => 'Tópico da questão é obrigatório.',
+                // 'id_topico.max' => 'Máximo 255 caracteres'
             ];
 
             $validaCampos = Validator::make($input, $rules, $messages);
@@ -139,8 +146,8 @@ class QuestaoController extends Controller
             return redirect()->route('adm.questoes.index')->with('success', 'Questão cadastrado com sucesso.');
 
         } catch (\Exception $ex) {
-            // return $ex->getMessage();
-            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -195,36 +202,39 @@ class QuestaoController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            if($request->id_disciplina == null || $request->id_topico == null){
-                 return redirect()->back()->with('erro', ' Selecione uma Disciplina e um Tópico vinculado.');
-            }
-
-            if($request->descricao == null){
-                 return redirect()->back()->with('erro', 'Campo Descrição é obrigatório.');
-            }
              //  validacao dos campos
-              $input = [
-                 'descricao' => $request->descricao,
-                 'codigo_questao' => $request->codigo_questao,
-                 'resposta' => $request->resposta
-             ];
+             $input = [
+                'descricao' => $request->descricao,
+                'codigo_questao' => $request->codigo_questao,
+                'resposta' => $request->resposta,
+                'id_disciplina' => $request->id_disciplina,
+                'id_topico' => $request->id_topico
+            ];
 
-             $rules = [
-                 'descricao' => 'required|max:255',
-                 'codigo_questao' => 'required|max:255',
-                 'resposta' => 'required|max:255',
-             ];
+            $rules = [
+                'descricao' => 'required|max:1200',
+                'codigo_questao' => 'required|max:255',
+                'resposta' => 'required|max:255',
+                'id_disciplina' => 'required|max:255',
+                'id_topico' => 'required|max:255'
+            ];
 
-             $messages = [
-                 'descricao.required' => 'descricao é obrigatório.',
-                 'descricao.max' => 'Máximo 255 caracteres.',
+            $messages = [
+                'descricao.required' => 'descricao é obrigatório.',
+                'descricao.max' => 'Máximo 255 caracteres.',
 
-                 'codigo_questao.required' => 'Código questão é obrigatório.',
-                 'codigo_questao.max' => 'Máximo 255 caracteres',
+                'codigo_questao.required' => 'Código questão é obrigatório.',
+                'codigo_questao.max' => 'Máximo 255 caracteres',
 
-                 'resposta.required' => 'Resposta da questão é obrigatório.',
-                 'resposta.max' => 'Máximo 255 caracteres'
-             ];
+                'resposta.required' => 'Resposta da questão é obrigatório.',
+                'resposta.max' => 'Máximo 255 caracteres',
+
+                'id_disciplina.required' => 'Disciplina da questão é obrigatório.',
+                'id_disciplina.max' => 'Máximo 255 caracteres',
+
+                'id_topico.required' => 'Tópico da questão é obrigatório.',
+                'id_topico.max' => 'Máximo 255 caracteres'
+            ];
 
              $validaCampos = Validator::make($input, $rules, $messages);
              $validaCampos->validate();
@@ -242,8 +252,8 @@ class QuestaoController extends Controller
              return redirect()->route('adm.questoes.index')->with('success', 'Questão alterado com sucesso.');
 
          } catch (\Exception $ex) {
-            //  return $ex->getMessage();
-             return redirect()->back()->with('erro', 'Ocorreu um erro ao alterar a questão, entre em contato com Adm.');
+             return $ex->getMessage();
+            //  return redirect()->back()->with('erro', 'Ocorreu um erro ao alterar a questão, entre em contato com Adm.');
          }
     }
 

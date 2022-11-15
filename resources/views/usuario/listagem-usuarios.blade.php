@@ -42,7 +42,7 @@
     </div>
 
     <div class="col-12">
-        <a href="{{ route('dashboard') }}" class="btn btn-info"> Voltar ao Dashboard</a>
+        <a href="{{ route('adm.index_adm') }}" class="btn btn-info"> Voltar ao Dashboard</a>
     </div>
     <br>
 

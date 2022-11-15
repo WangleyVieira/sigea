@@ -150,13 +150,6 @@ class QuestaoExternoController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            if($request->id_disciplina == null || $request->id_topico == null){
-                 return redirect()->back()->with('erro', ' Selecione uma Disciplina e um Tópico vinculado.');
-            }
-
-            if($request->descricao == null){
-                 return redirect()->back()->with('erro', 'Campo Descrição é obrigatório.');
-            }
              //  validacao dos campos
               $input = [
                  'descricao' => $request->descricao,

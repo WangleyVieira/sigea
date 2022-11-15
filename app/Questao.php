@@ -58,8 +58,20 @@ class Questao extends Model implements Auditable
 
     public function pertencenteAtividade($id_questao)
     {
-        $ehPertencente= AtividadeQuestao::where('id_atividade', '=', $id_questao)
+        $ehPertencente = AtividadeQuestao::where('id_atividade', '=', $id_questao)
             ->where('id_questao', '=', $this->id)
+            ->where('ativo', '=', 1)
+            ->first();
+
+        if(!$ehPertencente){
+            return false;
+        }
+        return true;
+    }
+
+    public function pertencenteDisciplina()
+    {
+        $ehPertencente = Questao::where('id_disciplina', '=', $this->id_disciplina)
             ->where('ativo', '=', 1)
             ->first();
 

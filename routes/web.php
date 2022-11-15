@@ -54,7 +54,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     //Questão
     Route::group(['prefix' => '/questoes', 'as' => 'questoes.'], function(){
         Route::get('', 'QuestaoController@index')->name('index');
-        Route::get('/cadastrar-questao', 'QuestaoController@create')->name('create');
+        // Route::get('/cadastrar-questao', 'QuestaoController@create')->name('create');
         Route::get('/busca-topicos/{id}', 'QuestaoController@buscaTopico')->name('busca_topico');
         Route::post('/store', 'QuestaoController@store')->name('store');
         Route::post('/destroy/{id}', 'QuestaoController@destroy')->name('destroy');
@@ -79,9 +79,10 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::post('/destroy/{id}', 'AtividadeController@destroy')->name('destroy');
         Route::get('/edit/{id}', 'AtividadeController@edit')->name('edit');
         Route::post('/update/{id}', 'AtividadeController@update')->name('update');
-        Route::get('/busca-questao/{id}', 'AtividadeController@buscaQuestao')->name('busca_questao');
+        // Route::get('/busca-questao/{id}', 'AtividadeController@buscaQuestao')->name('busca_questao');
         Route::post('/store', 'AtividadeController@storeAtividade')->name('store');
         Route::get('/pdf-atividade/{id}', 'AtividadeController@pdfAtividade')->name('atividade_pdf');
+        Route::get('/pdf-atividade-externa/{id}', 'AtividadeController@pdfAtividadeExterna')->name('atividade_externa_pdf');
         Route::get('/gabarito-atividade/{id}', 'AtividadeController@gabarito')->name('gabarito');
     });
 
@@ -89,7 +90,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     Route::group(['prefix' => '/atividade-questao', 'as' => 'atividade_questao.'], function(){
         Route::post('/store', 'AtividadeQuestaoController@store')->name('atividade_questao');
         Route::post('/destroy/{id}', 'AtividadeQuestaoController@destroy')->name('destroy');
-        Route::get('/selecionar-questoes', 'AtividadeQuestaoController@selectQuestao')->name('select_questao');
+        // Route::get('/selecionar-questoes', 'AtividadeQuestaoController@selectQuestao')->name('select_questao');
         Route::get('/busca-questao-atividade/{id}', 'AtividadeQuestaoController@buscaQuestaoDisciplina')->name('busca_questao_disciplina');
     });
 
@@ -114,6 +115,7 @@ Route::group(['prefix' => '/acesso-externo', 'as' => 'acesso_externo.', 'middlew
         Route::get('/edit/{id}', 'AtividadeExternoController@edit')->name('edit');
         Route::get('/pdf-atividade/{id}', 'AtividadeExternoController@pdfAtividade')->name('atividade_pdf');
         Route::post('/destroy/{id}', 'AtividadeExternoController@destroy')->name('destroy');
+        Route::get('/gabarito-atividade/{id}', 'AtividadeExternoController@gabarito')->name('gabarito');
     });
 
 });
