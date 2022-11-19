@@ -22,7 +22,7 @@ class Topico extends Model implements Auditable
     protected $guarded = [
         'id',
         'created_at',
-        'update_at'
+        'updated_at'
     ];
 
     protected $table = 'topicos';
@@ -39,7 +39,7 @@ class Topico extends Model implements Auditable
 
     public function disciplina()
     {
-        return $this->belongsTo(Disciplina::class, 'id_disciplina', 'id');
+        return $this->belongsTo(Disciplina::class, 'id_disciplina');
     }
 
     public function questoes()

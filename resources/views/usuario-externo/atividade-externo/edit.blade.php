@@ -73,16 +73,20 @@
                     <table class="table table-striped" id="datatable-responsive">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">ID Questão</th>
+                                {{-- <th scope="col">ID Questão</th> --}}
                                 <th scope="col">Descrição</th>
+                                <th scope="col">Título da questão</th>
+                                <th scope="col">Cadastrado por</th>
                                 <th scope="col">Deletar</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($atividadeQuestoes as $atvQuestao)
                                 <tr>
-                                    <td style="text-align: center"> {{ $atvQuestao->id }} </td>
+                                    {{-- <td style="text-align: center"> {{ $atvQuestao->id }} </td> --}}
                                     <td> {{ $atvQuestao->lista_questoes->descricao }} </td>
+                                    <td> {{ $atvQuestao->lista_questoes->titulo_questao }} </td>
+                                    <td> {{ $atvQuestao->lista_questoes->cad_usuario->name }} </td>
                                     <td>
                                         <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $atvQuestao->id }}"><i class="fas fa-trash"></i></a>
                                     </td>
@@ -97,8 +101,9 @@
                                                 @csrf
                                                 @method('POST')
                                                 <div class="modal-header" style="background-color: rgb(218, 105, 105)">
-                                                    <h5 class="modal-title">Tem certeza que deseja excluir a questão <strong>{{ $atvQuestao->id }}</strong> ?</b></h5>
+                                                    <h5 class="modal-title">Tem certeza que deseja excluir a questão <strong>{{$atvQuestao->lista_questoes->titulo_questao }}</strong> ?</b></h5>
                                                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                    <input type="hidden" name="id_questao" value="{{$atvQuestao->lista_questoes->id}}">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>

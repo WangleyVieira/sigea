@@ -24,7 +24,7 @@ class AtividadeQuestaoController extends Controller
     {
         try {
            $questoesCadastradas = Disciplina::where('ativo', '=', 1)->with('questoes')->get();
-            dd($questoesCadastradas );
+
            return view('adm.atividade.listar-questoes', compact('questoesCadastradas'));
 
         } catch (\Exception $ex) {
@@ -112,8 +112,9 @@ class AtividadeQuestaoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            // $atvQuestao = AtividadeQuestao::where('id_questao', '=', $id)->where('id_atividade', '=', $id)->first();
+            // desativando somente a questão vinculada a disciplina
             $atvQuestao = AtividadeQuestao::find($id);
+            $atvQuestao->id_questao = $request->id_questao;
             $atvQuestao->ativo = 0;
             $atvQuestao->save();
 

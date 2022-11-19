@@ -50,7 +50,7 @@
                                 <option value="" selected disabled>-- Selecione --</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-4">
                             <label for="codigo_questao">Código da Questão (Letras e Números)</label>
                             <input type="text" name="codigo_questao" id="codigo_questao" class="form-control">
                         </div>
@@ -58,7 +58,7 @@
                             <label for="titulo_questao">Título da questão</label>
                             <input type="text" name="titulo_questao" id="titulo_questao" class="form-control">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="resposta">Resposta</label>
                             <input type="text" name="resposta" id="resposta" class="form-control">
                         </div>
@@ -177,7 +177,12 @@
                                                 {{ $mQ->descricao }}
 
                                                 <hr>
-                                                <p>Resposta: {{ $mQ->resposta }}</p>
+
+                                                <p style="font-weight: bold;">
+                                                    Resposta:
+                                                </p>
+                                                {{ $mQ->resposta }}
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>

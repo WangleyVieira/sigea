@@ -63,21 +63,6 @@ class AtividadeController extends Controller
         }
     }
 
-    // public function buscaQuestao(Request $request, $id)
-    // {
-    //     try {
-    //         if($request->ajax()){
-    //             $questoes = Questao::where('id_topico', '=', $id)->where('ativo', '=', 1)->get();
-
-    //             return response()->json($questoes);
-    //         }
-
-    //     } catch (\Exception $ex) {
-    //         // return $ex->getMessage();
-    //         return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
-    //     }
-    // }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -158,16 +143,25 @@ class AtividadeController extends Controller
 
             foreach($questaoAtv as $q){
                 //verifica se a questão é pertencente a atividade
-                if($q->pertencenteAtividade($atividade->id) == false && $q->pertencenteDisciplina() == true){
+                if($q->pertencenteAtividade($atividade->id) == false){
                     array_push($questoesArray, $q);
                 }
+
+                // if($q->ehpertencenteDisciplina() == true){
+
+                //     if($q->pertencenteAtividade($atividade->id) == false){
+                //         array_push($questoesArray, $q);
+                //     }
+
+                // }
+
             }
 
             return view('adm.atividade.edit', compact('atividade', 'disciplinas', 'atividadeQuestoes', 'questoesArray'));
 
         } catch (\Exception $ex) {
-            // return $ex->getMessage();
-            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 

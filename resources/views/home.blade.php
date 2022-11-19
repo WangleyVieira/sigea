@@ -169,7 +169,7 @@
                             <h3 class="mb-2">{{ $disciplinas }}</h3>
                             <p class="mb-2">Disciplinas cadastradas (ativos)</p>
                             <div class="mb-0">
-                                <span class="text-muted"><a href="">Ver detalhes</a></span>
+                                <span class="text-muted"><a href="{{ route('adm.relatorio.relatorio_disciplinas') }}" target="_blank">Ver detalhes</a></span>
                             </div>
                         </div>
                         <div class="col-auto">
@@ -232,7 +232,7 @@
                             <h3 class="mb-2">{{ $atividades }}</h3>
                             <p class="mb-2">Atividades cadastradas (ativos)</p>
                             <div class="mb-0">
-                                <span class="text-muted"><a href="">Ver detalhes</a></span>
+                                <span class="text-muted"><a href="{{ route('adm.atividades.index') }}">Ver detalhes</a></span>
                             </div>
                         </div>
                         <div class="col-auto">
@@ -258,6 +258,26 @@
                         <div class="col-auto">
                             <div class="stat text-primary">
                                 <i class="fas fa-tag" style="width: 100%"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1">
+                            {{-- <h3 class="mb-2">{{ $topicos }}</h3> --}}
+                            <p class="mb-2">Relatório geral</p>
+                            <div class="mb-0">
+                                <span class="text-muted"><a href="{{ route('adm.relatorio.relatorio_geral') }}" target="_blank">Ver detalhes</a></span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="stat text-primary">
+                                <i class="fas fa-file" style="width: 100%"></i>
                             </div>
                         </div>
                     </div>

@@ -16,7 +16,7 @@ class Perfil extends Model implements Auditable
     protected $guarded = [
         'id',
         'created_at',
-        'update_at'
+        'updated_at'
     ];
 
     protected $table = 'perfils';

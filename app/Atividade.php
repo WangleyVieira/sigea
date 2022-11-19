@@ -23,7 +23,7 @@ class Atividade extends Model implements Auditable
     protected $guarded = [
         'id',
         'created_at',
-        'update_at'
+        'updated_at'
     ];
 
     protected $table = 'atividades';
@@ -41,18 +41,18 @@ class Atividade extends Model implements Auditable
         return $this->belongsTo(Questao::class, 'id_topico', 'id');
     }
 
-    public function temAtividade(Questao $questao)
-    {
-        $temSim = AtividadeQuestao::where('id_questao', '=', $this->id)
-            ->where('id_atividade', '=', $questao->id)
-            ->where('ativo', '=', 1)
-            ->first();
+    // public function temAtividade(Questao $questao)
+    // {
+    //     $temSim = AtividadeQuestao::where('id_questao', '=', $this->id)
+    //         ->where('id_atividade', '=', $questao->id)
+    //         ->where('ativo', '=', 1)
+    //         ->first();
 
-        if(!$temSim){
-            return false;
-        }
-        return true;
-    }
+    //     if(!$temSim){
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     public function disciplina()
     {

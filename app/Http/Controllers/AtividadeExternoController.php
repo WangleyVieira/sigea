@@ -200,7 +200,24 @@ class AtividadeExternoController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        //
+        try {
+            if(auth()->user()->id_perfil != 2){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
+            $atividade = Atividade::find($id);
+            $atividade->motivoInativado = $request->motivo;
+            $atividade->inativadoPorUsuario = auth()->user()->id;
+            $atividade->dataInativado = Carbon::now();
+            $atividade->ativo = 0;
+            $atividade->save();
+
+            return redirect()->route('acesso_externo.atividades.index')->with('success', 'Atividade excluído com sucesso.');
+
+        } catch (\Exception $ex) {
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+        }
     }
 
     public function pdfAtividade($id)

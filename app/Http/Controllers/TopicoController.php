@@ -21,7 +21,7 @@ class TopicoController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            $disciplinas = Disciplina::where('ativo', '=', 1)->with('topicos')->get();
+            $disciplinas = Disciplina::with('topicos')->where('ativo', '=', 1)->get();
 
             return view('adm.topico.index', compact('disciplinas'));
 

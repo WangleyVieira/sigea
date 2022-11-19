@@ -5,7 +5,7 @@
 @section('content')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
-{{-- <script src="https://cdn.tiny.cloud/1/gtdwd51t47mdkyks6pppuhqf941qu0bqu4sxkjz9qzirr20j/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> --}}
+<script src="https://cdn.tiny.cloud/1/gtdwd51t47mdkyks6pppuhqf941qu0bqu4sxkjz9qzirr20j/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <style>
     .error{
             color:red
@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="id_disciplina">Disciplinas</label>
-                        <select name="id_disciplina"  id="id_disciplina" class="form-control select2" readonly>
+                        <select name="id_disciplina"  id="id_disciplina" class="form-control select2" disabled>
                             <option value="" selected disabled>-- Selecione a disciplina --</option>
                             @foreach ($disciplinas as $disciplina)
                                 <option value="{{ $disciplina->id }}" {{ $disciplina->id == $questao->id_disciplina ? 'selected' : '' }}> {{ $disciplina->nome }} - {{ $disciplina->codigo }} </option>

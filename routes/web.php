@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\QuestaoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,8 +59,8 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::post('/destroy/{id}', 'QuestaoController@destroy')->name('destroy');
         Route::post('/update/{id}', 'QuestaoController@update')->name('update');
         Route::get('/edit/{id}', 'QuestaoController@edit')->name('edit');
-        Route::get('/visualizar/{id}', 'QuestaoController@visualizarQuestao')->name('visualizar');
-        Route::get('/visualizar-questao-externa/{id}', 'QuestaoController@visualizarQuestaoExterna')->name('visualizar_questao_externa');
+        // Route::get('/visualizar/{id}', 'QuestaoController@visualizarQuestao')->name('visualizar');
+        // Route::get('/visualizar-questao-externa/{id}', 'QuestaoController@visualizarQuestaoExterna')->name('visualizar_questao_externa');
     });
 
     //Tópicos
@@ -92,6 +91,11 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::post('/destroy/{id}', 'AtividadeQuestaoController@destroy')->name('destroy');
         // Route::get('/selecionar-questoes', 'AtividadeQuestaoController@selectQuestao')->name('select_questao');
         Route::get('/busca-questao-atividade/{id}', 'AtividadeQuestaoController@buscaQuestaoDisciplina')->name('busca_questao_disciplina');
+    });
+
+    Route::group(['prefix' => '/relatorio', 'as' => 'relatorio.'], function(){
+        Route::get('/disciplinas', 'RelatorioController@disciplinas')->name('relatorio_disciplinas');
+        Route::get('/geral', 'RelatorioController@relatorioGeral')->name('relatorio_geral');
     });
 
 });

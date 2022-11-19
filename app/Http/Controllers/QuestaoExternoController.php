@@ -9,6 +9,7 @@ use App\Topico;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class QuestaoExternoController extends Controller
 {
@@ -63,9 +64,6 @@ class QuestaoExternoController extends Controller
                 return redirect()->back()->with('erro', ' Selecione uma Disciplina e um Tópico vinculado.');
            }
 
-           if($request->descricao == null){
-                return redirect()->back()->with('erro', 'Campo Descrição é obrigatório.');
-           }
             //  validacao dos campos
              $input = [
                 'descricao' => $request->descricao,
@@ -106,7 +104,14 @@ class QuestaoExternoController extends Controller
 
             return redirect()->route('acesso_externo.questoes.index_externo')->with('success', 'Questão cadastrado com sucesso.');
 
-        } catch (\Exception $ex) {
+        }
+        catch (ValidationException $e ) {
+            $message = $e->errors();
+            return redirect()->back()
+                ->withErrors($message)
+                ->withInput();
+        }
+        catch (\Exception $ex) {
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
@@ -164,7 +169,7 @@ class QuestaoExternoController extends Controller
              ];
 
              $messages = [
-                 'descricao.required' => 'descricao é obrigatório.',
+                 'descricao.required' => 'descricao da pergunta é obrigatório.',
                  'descricao.max' => 'Máximo 255 caracteres.',
 
                  'codigo_questao.required' => 'Código questão é obrigatório.',
@@ -182,14 +187,21 @@ class QuestaoExternoController extends Controller
             $questao->id_topico = $request->id_topico;
             $questao->resposta = $request->resposta;
             $questao->codigo_questao = strtoupper($request->codigo_questao);
-            $questao->id_disciplina = $request->id_disciplina;
+            // $questao->id_disciplina = $request->id_disciplina;
             $questao->titulo_questao = $request->titulo_questao;
             $questao->alteradoPorUsuario = auth()->user()->id;
             $questao->save();
 
              return redirect()->route('acesso_externo.questoes.index_externo')->with('success', 'Questão alterado com sucesso.');
 
-         } catch (\Exception $ex) {
+         }
+         catch (ValidationException $e ) {
+            $message = $e->errors();
+            return redirect()->back()
+                ->withErrors($message)
+                ->withInput();
+        }
+         catch (\Exception $ex) {
             //  return $ex->getMessage();
              return redirect()->back()->with('erro', 'Ocorreu um erro ao alterar a questão, entre em contato com Adm.');
          }

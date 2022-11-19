@@ -9,6 +9,7 @@ use App\Topico;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Mpdf\Mpdf;
 
 class QuestaoController extends Controller
@@ -100,16 +101,12 @@ class QuestaoController extends Controller
                 'descricao' => $request->descricao,
                 'codigo_questao' => $request->codigo_questao,
                 'resposta' => $request->resposta,
-                // 'id_disciplina' => $request->id_disciplina,
-                // 'id_topico' => $request->id_topico
             ];
 
             $rules = [
                 'descricao' => 'required|max:1200',
                 'codigo_questao' => 'required|max:255',
                 'resposta' => 'required|max:255',
-                // 'id_disciplina' => 'required|max:255',
-                // 'id_topico' => 'required|max:255'
             ];
 
             $messages = [
@@ -121,12 +118,6 @@ class QuestaoController extends Controller
 
                 'resposta.required' => 'Resposta da questão é obrigatório.',
                 'resposta.max' => 'Máximo 255 caracteres',
-
-                // 'id_disciplina.required' => 'Disciplina da questão é obrigatório.',
-                // 'id_disciplina.max' => 'Máximo 255 caracteres',
-
-                // 'id_topico.required' => 'Tópico da questão é obrigatório.',
-                // 'id_topico.max' => 'Máximo 255 caracteres'
             ];
 
             $validaCampos = Validator::make($input, $rules, $messages);
@@ -145,7 +136,14 @@ class QuestaoController extends Controller
 
             return redirect()->route('adm.questoes.index')->with('success', 'Questão cadastrado com sucesso.');
 
-        } catch (\Exception $ex) {
+        }
+        catch (ValidationException $e ) {
+            $message = $e->errors();
+            return redirect()->back()
+                ->withErrors($message)
+                ->withInput();
+        }
+        catch (\Exception $ex) {
             return $ex->getMessage();
             // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
@@ -182,7 +180,8 @@ class QuestaoController extends Controller
 
             return view('adm.questao.editar', compact('disciplinas', 'topicos', 'questao'));
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
@@ -207,7 +206,6 @@ class QuestaoController extends Controller
                 'descricao' => $request->descricao,
                 'codigo_questao' => $request->codigo_questao,
                 'resposta' => $request->resposta,
-                'id_disciplina' => $request->id_disciplina,
                 'id_topico' => $request->id_topico
             ];
 
@@ -215,12 +213,11 @@ class QuestaoController extends Controller
                 'descricao' => 'required|max:1200',
                 'codigo_questao' => 'required|max:255',
                 'resposta' => 'required|max:255',
-                'id_disciplina' => 'required|max:255',
                 'id_topico' => 'required|max:255'
             ];
 
             $messages = [
-                'descricao.required' => 'descricao é obrigatório.',
+                'descricao.required' => 'descricao da pergunta é obrigatório.',
                 'descricao.max' => 'Máximo 255 caracteres.',
 
                 'codigo_questao.required' => 'Código questão é obrigatório.',
@@ -228,9 +225,6 @@ class QuestaoController extends Controller
 
                 'resposta.required' => 'Resposta da questão é obrigatório.',
                 'resposta.max' => 'Máximo 255 caracteres',
-
-                'id_disciplina.required' => 'Disciplina da questão é obrigatório.',
-                'id_disciplina.max' => 'Máximo 255 caracteres',
 
                 'id_topico.required' => 'Tópico da questão é obrigatório.',
                 'id_topico.max' => 'Máximo 255 caracteres'
@@ -244,14 +238,20 @@ class QuestaoController extends Controller
             $questao->id_topico = $request->id_topico;
             $questao->resposta = $request->resposta;
             $questao->codigo_questao = strtoupper($request->codigo_questao);
-            $questao->id_disciplina = $request->id_disciplina;
             $questao->titulo_questao = $request->titulo_questao;
             $questao->alteradoPorUsuario = auth()->user()->id;
             $questao->save();
 
              return redirect()->route('adm.questoes.index')->with('success', 'Questão alterado com sucesso.');
 
-         } catch (\Exception $ex) {
+         }
+         catch (ValidationException $e ) {
+            $message = $e->errors();
+            return redirect()->back()
+                ->withErrors($message)
+                ->withInput();
+        }
+         catch (\Exception $ex) {
              return $ex->getMessage();
             //  return redirect()->back()->with('erro', 'Ocorreu um erro ao alterar a questão, entre em contato com Adm.');
          }
@@ -285,52 +285,52 @@ class QuestaoController extends Controller
         }
     }
 
-    public function visualizarQuestao($id)
-    {
-        try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-            $minhaQuestao = Questao::find($id);
-            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $topicos = Topico::where('ativo', '=', 1)->get();
+    // public function visualizarQuestao($id)
+    // {
+    //     try {
+    //         if(auth()->user()->id_perfil != 1){
+    //             return redirect()->back()->with('erro', 'Acesso negado.');
+    //         }
+    //         $minhaQuestao = Questao::find($id);
+    //         $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+    //         $topicos = Topico::where('ativo', '=', 1)->get();
 
-            $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
+    //         $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 
-            $now = Carbon::now();
-            $html = view('adm.questao.pdf-questao', compact('minhaQuestao', 'disciplinas', 'topicos'));
-            $mpdf->WriteHTML($html);
+    //         $now = Carbon::now();
+    //         $html = view('adm.questao.pdf-questao', compact('minhaQuestao', 'disciplinas', 'topicos'));
+    //         $mpdf->WriteHTML($html);
 
-            return $mpdf->Output('Questão - ' .$now . '.pdf', 'I');
+    //         return $mpdf->Output('Questão - ' .$now . '.pdf', 'I');
 
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
-            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
-        }
-    }
+    //     } catch (\Exception $ex) {
+    //         // return $ex->getMessage();
+    //         return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+    //     }
+    // }
 
-    public function visualizarQuestaoExterna($id)
-    {
-        try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
+    // public function visualizarQuestaoExterna($id)
+    // {
+    //     try {
+    //         if(auth()->user()->id_perfil != 1){
+    //             return redirect()->back()->with('erro', 'Acesso negado.');
+    //         }
 
-            $questao = Questao::find($id);
-            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $topicos = Topico::where('ativo', '=', 1)->get();
+    //         $questao = Questao::find($id);
+    //         $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+    //         $topicos = Topico::where('ativo', '=', 1)->get();
 
-            $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
+    //         $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 
-            $now = Carbon::now();
-            $html = view('adm.questao.pdf-questao-externa', compact('questao', 'disciplinas', 'topicos'));
-            $mpdf->WriteHTML($html);
+    //         $now = Carbon::now();
+    //         $html = view('adm.questao.pdf-questao-externa', compact('questao', 'disciplinas', 'topicos'));
+    //         $mpdf->WriteHTML($html);
 
-            return $mpdf->Output('Questão - ' .$now . '.pdf', 'I');
+    //         return $mpdf->Output('Questão - ' .$now . '.pdf', 'I');
 
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
-            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
-        }
-    }
+    //     } catch (\Exception $ex) {
+    //         // return $ex->getMessage();
+    //         return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+    //     }
+    // }
 }

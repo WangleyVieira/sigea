@@ -112,7 +112,8 @@
                                 <th scope="col">Cadastrado por</th>
                                 <th scope="col">Cadastrado em</th>
                                 <th scope="col">Atualizado em</th>
-                                {{-- <th scope="col">PDF</th> --}}
+                                <th scope="col">PDF</th>
+                                <th scope="col">Respostas</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,9 +125,12 @@
                                     <td> {{ $atividade->cad_usuario->name }} </td>
                                     <td> {{ $atividade->created_at != null && $atividade->created_at != "" ? $atividade->created_at->format('d/m/Y H:i:s') : '-' }} </td>
                                     <td> {{ $atividade->updated_at != null && $atividade->updated_at != "" ? $atividade->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
-                                    {{-- <td>
-                                        <a href="{{ route('adm.atividades.atividade_pdf', $atividade->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fas fa-file-pdf"></i></a>
-                                    </td> --}}
+                                    <td>
+                                        <a href="{{ route('acesso_externo.atividades.atividade_pdf', $atividade->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                                        <td>
+                                            <a href="{{ route('acesso_externo.atividades.gabarito', $atividade->id) }}" class="btn btn-outline-info" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                                        </td>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

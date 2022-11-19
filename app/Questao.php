@@ -26,7 +26,7 @@ class Questao extends Model implements Auditable
     protected $guarded = [
         'id',
         'created_at',
-        'update_at'
+        'updated_at'
     ];
 
     protected $table = 'questaos';
@@ -69,15 +69,15 @@ class Questao extends Model implements Auditable
         return true;
     }
 
-    public function pertencenteDisciplina()
+    public function ehpertencenteDisciplina()
     {
-        $ehPertencente = Questao::where('id_disciplina', '=', $this->id_disciplina)
+        $ehPertencente = Disciplina::where('id', '=', $this->id_disciplina)
             ->where('ativo', '=', 1)
             ->first();
 
         if(!$ehPertencente){
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }
