@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>RELATÓRIO</title>
+    <title>RELATÓRIO TÓPICOS</title>
 
     <style>
         html {
@@ -38,10 +38,13 @@
         p {
             font-family: 'Times New Roman', Times, serif;
             font-style: italic;
-            font-weight: bold;
+            /* font-weight: bold; */
             font-size: 16px;
             line-height: 20px;
             margin: 10px 0px;
+        }
+        .titulo{
+            font-weight: bold;
         }
 
         .span-header {
@@ -67,7 +70,7 @@
                     <table id="titulo" style="font-size: 1.2rem">
                         <tr>
                             <td>
-                                RELATÓRIO DISCIPLINAS
+                                RELATÓRIO TÓPICOS
                             </td>
                         </tr>
                     </table>
@@ -79,32 +82,32 @@
         <div>
             <br>
 
-            <div class="" style="margin-top: 5px;">
+            <div style="margin-top: 5px;">
                 <h2>Relação</h2>
-                <h3>Total: {{ $contador }}</h3>
-                @if (Count($disciplinas) == 0)
+                <h3>Total de Tópicos ativos: {{ $contador }}</h3>
+                @if (Count($topicos) == 0)
                     <div><p>Sem cadastros</p></div>
                 @else
-                    @foreach ($disciplinas as $d)
+                    @foreach ($topicos as $top)
                         <br>
                         <table style="text-align: left">
                             <tr>
-                                {{-- <td>Nome: {{ $d->nome != "" && $d->nome != null ? $d->nome : 'Não cadastrado' }}</td> --}}
-                                <td>Disciplina: {{ mb_strtoupper($d->nome, 'UTF-8')}} </td>
-                                <td>Período: {{ $d->periodo->descricao != "" && $d->periodo->descricao != null ? $d->periodo->descricao : 'Não cadastrado' }}</td>
-                                <td>Código: {{ $d->codigo != "" && $d->codigo != null ? $d->codigo : 'Não cadastrado' }}</td>
+                                {{-- <td>Descricao: {{ $top->descricao != "" && $top->descricao != null ? $top->descricao : 'Não cadastrado' }}</td> --}}
+                                <td>Descricao: {{ mb_strtoupper($top->descricao, 'UTF-8') }}</td>
+                                <td>Disciplina vinculada: {{ mb_strtoupper($top->disciplina->nome, 'UTF-8') }}</td>
                             </tr>
                         </table>
                     @endforeach
                 @endif
             </div>
+
         </div>
 
-        <div style="text-align: center">
+        {{-- <div style="text-align: center">
             <br><br><br>
             <span>__________________________________</span><br>
             <span>Responsável pela listagem</span>
-        </div>
+        </div> --}}
     </main>
 </body>
 

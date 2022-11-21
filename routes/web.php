@@ -96,6 +96,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
     Route::group(['prefix' => '/relatorio', 'as' => 'relatorio.'], function(){
         Route::get('/disciplinas', 'RelatorioController@disciplinas')->name('relatorio_disciplinas');
         Route::get('/geral', 'RelatorioController@relatorioGeral')->name('relatorio_geral');
+        Route::get('/relatorio-topicos', 'RelatorioController@topicos')->name('relatorio_topicos');
     });
 
 });

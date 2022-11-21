@@ -39,7 +39,7 @@ class AtividadeController extends Controller
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
-
+ 
     /**
      * Show the form for creating a new resource.
      *

@@ -93,7 +93,7 @@
                         <br>
                         <table style="text-align: left">
                             <tr>
-                                <td class="titulo">Disciplina: {{ $d->nome != "" && $d->nome != null ? $d->nome : 'Não cadastrado' }}</td>
+                                <td class="titulo">Disciplina: {{ mb_strtoupper($d->nome, 'UTF-8')}}</td>
                                 <td class="titulo">Período: {{ $d->periodo->descricao != "" && $d->periodo->descricao != null ? $d->periodo->descricao : 'Não cadastrado' }}</td>
                                 <td class="titulo">Código: {{ $d->codigo != "" && $d->codigo != null ? $d->codigo : 'Não cadastrado' }}</td>
                                 <tr>
@@ -113,15 +113,14 @@
             <hr>
             <div style="margin-top: 5px;">
                 <h2>Relações de Questões</h2>
-                {{-- <h3>Total de Disciplinas ativas: {{ $contador }}</h3>
-                <h3>Total de Tópicos vinculados a Disciplina ativas: {{ $contadorTopicos }}</h3> --}}
+                <h3>Total de quesõtes ativas: {{ $contadorQuestoes }}</h3>
 
                     @foreach ($questoes as $questao)
                         <br>
                         <table style="text-align: left">
                             <tr>
-                                <td class="titulo" colspan="3">Disciplina: {{ $questao->disciplina->nome }}</td>
-
+                                {{-- <td class="titulo" colspan="3">Disciplina: {{ $questao->disciplina->nome }}</td> --}}
+                                <td class="titulo" colspan="3">Disciplina: {{ mb_strtoupper($questao->disciplina->nome, 'UTF-8')}}</td>
                             </tr>
                             <tr>
                                 <td class="titulo">Cadastrado por: {{ $questao->cad_usuario->name }} </td>
@@ -143,29 +142,48 @@
                         </table>
                     @endforeach
             </div>
+
             <br>
             <hr>
 
-            {{-- <div class="" style="margin-top: 5px;">
-                <h2>Relação</h2>
-                <h3>Tópicos cadastrados (ativos): </h3>
-                @if (Count($disciplinas) == 0)
-                    <div><p>Sem cadastros</p></div>
-                @else
-                    @foreach ($disciplinas as $d)
-                        <tr>
-                            <td> {{ $d->topicos->descricao }}</td>
-                        </tr>
+            <div style="margin-top: 5px;">
+                <h2>Relações de Atividades</h2>
+                <h3>Total de atividades ativas: {{ $contadorAtividades }}</h3>
+
+                    @foreach ($atividades as $atividade)
+                        <br>
+                        <table style="text-align: left">
+                            <tr>
+                                {{-- <td class="titulo" colspan="3">Disciplina relacionada: {{ $atividade->disciplina->nome }}</td> --}}
+                                <td class="titulo" colspan="3">Disciplina relacionada: {{ mb_strtoupper($atividade->disciplina->nome, 'UTF-8') }}</td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="3">Descrição da atividade: {{ $atividade->descricao }}</td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="3">Título da atividade: {{ $atividade->titulo_atividade }}</td>
+
+                            </tr>
+                            <tr>
+                                <td>Cadastrado por: {{ $atividade->cad_usuario->name }} </td>
+                                <td>Cadastrado em: {{  date('d/m/Y H:i:s', strtotime($atividade->created_at))}} </td>
+                                <td>Atualizado em: {{  date('d/m/Y H:i:s', strtotime($atividade->updated_at))}}  </td>
+                            </tr>
+                        </table>
                     @endforeach
-                @endif
-            </div> --}}
+            </div>
+            <br>
+            <hr>
+
         </div>
 
-        <div style="text-align: center">
+        {{-- <div style="text-align: center">
             <br><br><br>
             <span>__________________________________</span><br>
             <span>Responsável pela listagem</span>
-        </div>
+        </div> --}}
     </main>
 </body>
 

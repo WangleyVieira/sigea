@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Atividade;
+use App\AtividadeQuestao;
 use App\Disciplina;
 use App\Periodo;
 use App\Questao;
@@ -41,6 +42,32 @@ class RelatorioController extends Controller
         }
     }
 
+    public function topicos()
+    {
+        try {
+            if(auth()->user()->id_perfil != 1){
+                return redirect()->back()->with('erro', 'Acesso negado.');
+            }
+
+            $topicos = Topico::where('ativo', '=', 1)->orderBy('id_disciplina', 'ASC')->get();
+
+            $contador = Count($topicos);
+
+            $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
+
+            $now = Carbon::now();
+            $dataFormatada = $now->format('d/m/Y H:i:s');
+            $html = view('adm.relatorio.topicos.index', compact('topicos', 'contador'));
+            $mpdf->WriteHTML($html);
+
+            return $mpdf->Output('Relatório tópicos - ' .$dataFormatada. '.pdf', 'I');
+
+        } catch (\Exception $ex) {
+            $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu ao exibir o relatório da disciplina');
+        }
+    }
+
     public function relatorioGeral()
     {
         try {
@@ -53,16 +80,20 @@ class RelatorioController extends Controller
             $disciplinas = Disciplina::where('ativo', '=', 1)->orderBy('nome', 'ASC')->with('topicos')->get();
             $questoes = Questao::where('ativo', '=', 1)->get();
             $topicos = Topico::where('ativo', '=', 1)->get();
+            $atividades = Atividade::where('ativo', '=', 1)->get();
             // dd($disciplinas[0]->topicos[0]);
 
             $contador = Count($disciplinas);
             $contadorTopicos = Count($topicos);
+            $contadorAtividades = Count($atividades);
+            $contadorQuestoes = Count($questoes);
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 
             $now = Carbon::now();
             $dataFormatada = $now->format('d/m/Y H:i:s');
-            $html = view('adm.relatorio.geral.index', compact('periodos', 'disciplinas', 'contador', 'contadorTopicos', 'questoes'));
+            $html = view('adm.relatorio.geral.index', compact('periodos', 'disciplinas', 'contador',
+                    'contadorTopicos', 'questoes', 'atividades', 'contadorAtividades', 'contadorQuestoes'));
             $mpdf->WriteHTML($html);
 
             return $mpdf->Output('Relatório Geral - ' .$dataFormatada. '.pdf', 'I');

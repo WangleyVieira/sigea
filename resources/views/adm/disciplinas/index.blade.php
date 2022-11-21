@@ -82,7 +82,6 @@
                     <table class="table table-striped" id="datatable-responsive">
                         <thead class="thead-light">
                             <tr>
-                                {{-- <th scope="col">ID Disciplina</th> --}}
                                 <th scope="col">Descricao</th>
                                 <th scope="col">Período</th>
                                 <th scope="col">Código Disciplina</th>
@@ -94,24 +93,17 @@
                         <tbody>
                             @foreach ($disciplinas as $d)
                                 <tr>
-                                    {{-- <td style="text-align: center">{{ $d->id }}</td> --}}
                                     <td> {{ $d->nome }}</td>
                                     <td> {{ $d->periodo->descricao}}</td>
                                     <td> {{ $d->codigo }}</td>
                                     <td>
                                         <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#listTopico{{ $d->id }}"><i class="fas fa-list"></i></a>
                                     </td>
-                                    {{-- <td>
-                                        <a href="{{ route('adm.questoes.index') }}" class="btn btn-outline-primary"><i class="fas fa-file"></i></a>
-                                    </td> --}}
-                                    {{-- <td>
-                                        <a class="btn btn-outline-secondary" data-toggle="modal" data-target="#createTopico{{ $d->id }}"><i class="fas fa-tag"></i></a>
-                                    </td> --}}
-                                    <td>
-                                        <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $d->id }}"><i class="fas fa-trash"></i></a>
-                                    </td>
                                     <td>
                                         <a href="" class="btn btn-outline-warning" data-toggle="modal" data-target="#updateModal{{ $d->id }}"><i class="fas fa-pen"></i></a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $d->id }}"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
 

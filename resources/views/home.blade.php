@@ -252,7 +252,7 @@
                             <h3 class="mb-2">{{ $topicos }}</h3>
                             <p class="mb-2">Tópicos cadastradas (ativos)</p>
                             <div class="mb-0">
-                                <span class="text-muted"><a href="{{ route('adm.topicos.index') }}">Ver detalhes</a></span>
+                                <span class="text-muted"><a href="{{ route('adm.relatorio.relatorio_topicos') }}" target="_blank">Ver detalhes</a></span>
                             </div>
                         </div>
                         <div class="col-auto">
