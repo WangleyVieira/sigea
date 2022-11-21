@@ -59,9 +59,7 @@
         }
 
     </style>
-
 </head>
-
 <body>
     <header>
         <div style="text-align: center;">
@@ -113,7 +111,7 @@
             <hr>
             <div style="margin-top: 5px;">
                 <h2>Relações de Questões</h2>
-                <h3>Total de quesõtes ativas: {{ $contadorQuestoes }}</h3>
+                <h3>Total de questões ativas: {{ $contadorQuestoes }}</h3>
 
                     @foreach ($questoes as $questao)
                         <br>
@@ -142,10 +140,8 @@
                         </table>
                     @endforeach
             </div>
-
             <br>
             <hr>
-
             <div style="margin-top: 5px;">
                 <h2>Relações de Atividades</h2>
                 <h3>Total de atividades ativas: {{ $contadorAtividades }}</h3>
@@ -176,9 +172,31 @@
             </div>
             <br>
             <hr>
-
+            <div style="margin-top: 5px;">
+                <h2>Relações de Usuários</h2>
+                <h3>Total de usuários ativas: {{ $contadorUsuarios }}</h3>
+                    @foreach ($usuarios as $usuario)
+                        <br>
+                        <table style="text-align: left">
+                            <tr>
+                                <td class="titulo" colspan="2">Usuário: {{ mb_strtoupper($usuario->name, 'UTF-8') }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">E-mail: {{ $usuario->email }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Perfil: {{ $usuario->perfil->descricao }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cadastrado em: {{  date('d/m/Y H:i:s', strtotime( $usuario->created_at != "" && $usuario->created_at != null ? $usuario->created_at : ' - '))}} </td>
+                                <td>Atualizado em: {{  date('d/m/Y H:i:s', strtotime( $usuario->updated_at != "" && $usuario->updated_at != null ? $usuario->updated_at : ' - '))}}  </td>
+                            </tr>
+                        </table>
+                    @endforeach
+            </div>
+            {{-- <br>
+            <hr> --}}
         </div>
-
         {{-- <div style="text-align: center">
             <br><br><br>
             <span>__________________________________</span><br>

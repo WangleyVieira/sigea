@@ -93,7 +93,7 @@
                         <table style="text-align: left">
                             <tr>
                                 {{-- <td>Descricao: {{ $top->descricao != "" && $top->descricao != null ? $top->descricao : 'Não cadastrado' }}</td> --}}
-                                <td>Descricao: {{ mb_strtoupper($top->descricao, 'UTF-8') }}</td>
+                                <td>Descricao: {{ mb_strtoupper($top->descricao != "" && $top->descricao != null ? $top->descricao : 'Não cadastrado', 'UTF-8') }}</td>
                                 <td>Disciplina vinculada: {{ mb_strtoupper($top->disciplina->nome, 'UTF-8') }}</td>
                             </tr>
                         </table>

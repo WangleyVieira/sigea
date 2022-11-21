@@ -39,7 +39,7 @@ class AtividadeController extends Controller
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
- 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -136,8 +136,8 @@ class AtividadeController extends Controller
 
             $atividade = Atividade::find($id);
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
-            $questaoAtv = Questao::where('ativo', '=', 1)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
+            $questaoAtv = Questao::where('id_disciplina', '=', $atividade->id_disciplina)->where('ativo', '=', 1)->get();
 
             $questoesArray = array();
 
@@ -146,15 +146,6 @@ class AtividadeController extends Controller
                 if($q->pertencenteAtividade($atividade->id) == false){
                     array_push($questoesArray, $q);
                 }
-
-                // if($q->ehpertencenteDisciplina() == true){
-
-                //     if($q->pertencenteAtividade($atividade->id) == false){
-                //         array_push($questoesArray, $q);
-                //     }
-
-                // }
-
             }
 
             return view('adm.atividade.edit', compact('atividade', 'disciplinas', 'atividadeQuestoes', 'questoesArray'));

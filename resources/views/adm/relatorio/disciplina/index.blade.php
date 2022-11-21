@@ -89,8 +89,7 @@
                         <br>
                         <table style="text-align: left">
                             <tr>
-                                {{-- <td>Nome: {{ $d->nome != "" && $d->nome != null ? $d->nome : 'Não cadastrado' }}</td> --}}
-                                <td>Disciplina: {{ mb_strtoupper($d->nome, 'UTF-8')}} </td>
+                                <td>Disciplina: {{ mb_strtoupper($d->nome != "" && $d->nome != null ? $d->nome : 'Não cadastrado', 'UTF-8')}} </td>
                                 <td>Período: {{ $d->periodo->descricao != "" && $d->periodo->descricao != null ? $d->periodo->descricao : 'Não cadastrado' }}</td>
                                 <td>Código: {{ $d->codigo != "" && $d->codigo != null ? $d->codigo : 'Não cadastrado' }}</td>
                             </tr>

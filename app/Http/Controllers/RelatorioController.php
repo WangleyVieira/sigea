@@ -8,6 +8,7 @@ use App\Disciplina;
 use App\Periodo;
 use App\Questao;
 use App\Topico;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Mpdf\Mpdf;
@@ -81,19 +82,23 @@ class RelatorioController extends Controller
             $questoes = Questao::where('ativo', '=', 1)->get();
             $topicos = Topico::where('ativo', '=', 1)->get();
             $atividades = Atividade::where('ativo', '=', 1)->get();
+            $usuarios = User::where('ativo', '=', 1)->get();
             // dd($disciplinas[0]->topicos[0]);
 
             $contador = Count($disciplinas);
             $contadorTopicos = Count($topicos);
             $contadorAtividades = Count($atividades);
             $contadorQuestoes = Count($questoes);
+            $contadorUsuarios = Count($usuarios);
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 
             $now = Carbon::now();
             $dataFormatada = $now->format('d/m/Y H:i:s');
             $html = view('adm.relatorio.geral.index', compact('periodos', 'disciplinas', 'contador',
-                    'contadorTopicos', 'questoes', 'atividades', 'contadorAtividades', 'contadorQuestoes'));
+                        'contadorTopicos', 'questoes', 'atividades', 'contadorAtividades', 'contadorQuestoes',
+                        'usuarios', 'contadorUsuarios'
+                    ));
             $mpdf->WriteHTML($html);
 
             return $mpdf->Output('Relatório Geral - ' .$dataFormatada. '.pdf', 'I');
