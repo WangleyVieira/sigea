@@ -123,7 +123,7 @@ class AtividadeExternoController extends Controller
             $atividade = Atividade::find($id);
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
             $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
-            $questaoAtv = Questao::where('ativo', '=', 1)->get();
+            $questaoAtv = Questao::where('id_disciplina', '=', $atividade->id_disciplina)->where('ativo', '=', 1)->get();
 
             $questoesArray = array();
 
