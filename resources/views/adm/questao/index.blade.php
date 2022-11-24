@@ -65,10 +65,15 @@
                     </div>
                     <div class="mb-2 row">
                         <div class="col-sm-12">
+                            <hr>
+                        <span>Observações</span>
+                        <ul>
+                            <li>Não é necessário ordenação e não ordenação de pergunta</li>
+                        </ul>
+                        {{-- <br> --}}
                             <textarea class="form-control" name="descricao" rows="4"></textarea>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-12">
                             {{-- <button type="submit" class="btn btn-primary">Cadastrar</button> --}}

@@ -50,7 +50,7 @@ class RelatorioController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            $topicos = Topico::where('ativo', '=', 1)->orderBy('id_disciplina', 'ASC')->get();
+            $topicos = Topico::orderBy('id_disciplina', 'ASC')->where('ativo', '=', 1)->get();
 
             $contador = Count($topicos);
 

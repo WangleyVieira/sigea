@@ -25,8 +25,8 @@ class AtividadeExternoController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            $atividades = Atividade::where('ativo', '=', 1)->where('cadastradoPorUsuario', '!=', auth()->user()->id)->get();
-            $minhasAtividades = Atividade::where('ativo', '=', 1)->where('cadastradoPorUsuario', '=', auth()->user()->id)->get();
+            $atividades = Atividade::where('cadastradoPorUsuario', '!=', auth()->user()->id)->where('ativo', '=', 1)->get();
+            $minhasAtividades = Atividade::where('cadastradoPorUsuario', '=', auth()->user()->id)->where('ativo', '=', 1)->get();
 
             return view('usuario-externo.atividade-externo.index', compact('atividades', 'minhasAtividades'));
 
@@ -122,7 +122,7 @@ class AtividadeExternoController extends Controller
 
             $atividade = Atividade::find($id);
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
             $questaoAtv = Questao::where('id_disciplina', '=', $atividade->id_disciplina)->where('ativo', '=', 1)->get();
 
             $questoesArray = array();
@@ -228,7 +228,7 @@ class AtividadeExternoController extends Controller
             }
 
             $atividade = Atividade::find($id);
-            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
             $questaoAtv = Questao::where('ativo', '=', 1)->get();
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
@@ -257,7 +257,7 @@ class AtividadeExternoController extends Controller
             }
 
             $atividade = Atividade::find($id);
-            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 

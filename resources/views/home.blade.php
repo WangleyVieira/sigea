@@ -189,7 +189,7 @@
                             <h3 class="mb-2">{{ $usuarios }}</h3>
                             <p class="mb-2">Usuários (ativos)</p>
                             <div class="mb-0">
-                                <span class="text-muted"><a href="{{ route('usuario.listagem_usuarios') }}">Ver detalhes</a></span>
+                                <span class="text-muted"><a href="{{ route('adm.usuario.listagem_usuarios') }}">Ver detalhes</a></span>
                             </div>
                         </div>
                         <div class="col-auto">

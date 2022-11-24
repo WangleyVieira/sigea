@@ -28,8 +28,8 @@ class QuestaoController extends Controller
 
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
             $topicos = Topico::where('ativo', '=', 1)->get();
-            $questoes = Questao::where('ativo', '=', 1)->where('cadastradoPorUsuario', '!=', auth()->user()->id)->get();
-            $minhasQuestoes = Questao::where('ativo', '=', 1)->where('cadastradoPorUsuario', '=', auth()->user()->id)->get();
+            $questoes = Questao::where('cadastradoPorUsuario', '!=', auth()->user()->id)->where('ativo', '=', 1)->get();
+            $minhasQuestoes = Questao::where('cadastradoPorUsuario', '=', auth()->user()->id)->where('ativo', '=', 1)->get();
 
             // $questoes = Disciplina::where('ativo', '=', 1)->with('topicos')->with('questoes')->get();
 

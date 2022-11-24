@@ -48,7 +48,7 @@
                                 <option value="" selected disabled>-- Selecione --</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-4">
                             <label for="codigo_questao">Código da Questão (Letras e Números)</label>
                             <input type="text" name="codigo_questao" id="codigo_questao" class="form-control">
                         </div>
@@ -56,17 +56,22 @@
                             <label for="titulo_questao">Título da questão</label>
                             <input type="text" name="titulo_questao" id="titulo_questao" class="form-control">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="resposta">Resposta</label>
                             <input type="text" name="resposta" id="resposta" class="form-control">
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <div class="col-sm-12">
+                            <hr>
+                        <span>Observações</span>
+                        <ul>
+                            <li>Não é necessário ordenação e não ordenação de pergunta</li>
+                        </ul>
+                        {{-- <br> --}}
                             <textarea class="form-control" name="descricao" rows="4"></textarea>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-12">
                             <input type="submit" class="btn btn-primary" name="cadastrar" value="Cadastrar">

@@ -61,6 +61,13 @@
                 </li>
 
                 @if (auth()->user()->id_perfil == 1)
+                    <li class="sidebar-item {{ Route::current()->uri == 'adm/usuario/usuarios-ativos' ? 'active' : null }}">
+                        <a href="{{ route('adm.usuario.listagem_usuarios') }}" class="sidebar-link">
+                            <i class="fas fa-fw fa-user-check"></i>
+                            Usuários
+                        </a>
+                    </li>
+
                     <li class="sidebar-item {{ Route::current()->uri == 'adm/disciplinas' ? 'active' : null }}">
                         <a href="{{ route('adm.disciplinas.index') }}" class="sidebar-link">
                             <i class="fas fa-bookmark"></i>

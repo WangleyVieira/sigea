@@ -19,6 +19,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'id_perfil',
+        'inativadoPorUsuario',
+        'dataInativado',
+        'motivoInativado',
+        'ativo',
     ];
 
     /**

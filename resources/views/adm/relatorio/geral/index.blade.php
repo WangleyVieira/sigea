@@ -112,40 +112,45 @@
             <div style="margin-top: 5px;">
                 <h2>Relações de Questões</h2>
                 <h3>Total de questões ativas: {{ $contadorQuestoes }}</h3>
-
-                    @foreach ($questoes as $questao)
-                        <br>
-                        <table style="text-align: left">
-                            <tr>
-                                {{-- <td class="titulo" colspan="3">Disciplina: {{ $questao->disciplina->nome }}</td> --}}
-                                <td class="titulo" colspan="3">Disciplina: {{ mb_strtoupper($questao->disciplina->nome, 'UTF-8')}}</td>
-                            </tr>
-                            <tr>
-                                <td class="titulo">Cadastrado por: {{ $questao->cad_usuario->name }} </td>
-                                <td class="titulo">Cadastrado em: {{  date('d/m/Y H:i:s', strtotime($questao->created_at))}} </td>
-                                <td class="titulo">Atualizado em: {{  date('d/m/Y H:i:s', strtotime($questao->updated_at))}}  </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    Descrição:
-                                    <p>{{ $questao->descricao != "" && $questao->descricao != null ? $questao->descricao : 'Não cadastrado' }}</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    Resposta:
-                                    <p>{{ $questao->resposta != "" && $questao->resposta != null ? $questao->resposta : 'Não cadastrado' }}</p>
-                                </td>
-                            </tr>
-                        </table>
-                    @endforeach
+                    @if (Count($questoes) == 0)
+                        <div><p>Sem cadastros</p></div>
+                    @else
+                        @foreach ($questoes as $questao)
+                            <br>
+                            <table style="text-align: left">
+                                <tr>
+                                    {{-- <td class="titulo" colspan="3">Disciplina: {{ $questao->disciplina->nome }}</td> --}}
+                                    <td class="titulo" colspan="3">Disciplina: {{ mb_strtoupper($questao->disciplina->nome, 'UTF-8')}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="titulo">Cadastrado por: {{ $questao->cad_usuario->name }} </td>
+                                    <td class="titulo">Cadastrado em: {{  date('d/m/Y H:i:s', strtotime($questao->created_at))}} </td>
+                                    <td class="titulo">Atualizado em: {{  date('d/m/Y H:i:s', strtotime($questao->updated_at))}}  </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        Descrição:
+                                        <p>{{ $questao->descricao != "" && $questao->descricao != null ? $questao->descricao : 'Não cadastrado' }}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        Resposta:
+                                        <p>{{ $questao->resposta != "" && $questao->resposta != null ? $questao->resposta : 'Não cadastrado' }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        @endforeach
+                    @endif
             </div>
             <br>
             <hr>
             <div style="margin-top: 5px;">
                 <h2>Relações de Atividades</h2>
                 <h3>Total de atividades ativas: {{ $contadorAtividades }}</h3>
-
+                @if (Count($atividades) == 0)
+                    <div><p>Sem cadastros</p></div>
+                @else
                     @foreach ($atividades as $atividade)
                         <br>
                         <table style="text-align: left">
@@ -169,6 +174,7 @@
                             </tr>
                         </table>
                     @endforeach
+                @endif
             </div>
             <br>
             <hr>

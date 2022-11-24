@@ -29,16 +29,21 @@ class LoginController extends Controller
         };
 
         $usuario = User::where('email', '=', $request->email)
+            ->select('id', 'email', 'id_perfil', 'ativo')
             ->where('ativo', '=', 1)
-            ->select('id', 'email', 'id_perfil')
             ->first();
 
-        //Se o usuário perfil é 1, redireciona para rota adm
-        if($usuario->id_perfil == 1){
-            return redirect('/adm/dashboard');
+        if($usuario != null){
+            //Se o usuário perfil é 1, redireciona para rota adm
+            if($usuario->id_perfil == 1){
+                return redirect('/adm/dashboard');
+            }
+            else{
+                return redirect('/perfil');
+            }
         }
         else{
-            return redirect('/perfil');
+            return redirect()->back()->with('erro', 'Usuário inexistente ou inativado.');
         }
 
     }

@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('id_perfil')->unsigned();
             $table->foreign('id_perfil')->references('id')->on('perfils');
+            $table->bigInteger('inativadoPorUsuario')->nullable();
+            $table->date('dataInativado')->nullable();
+            $table->text('motivoInativado')->nullable();
             $table->boolean('ativo')->nullable();
             $table->rememberToken();
             $table->timestamps();

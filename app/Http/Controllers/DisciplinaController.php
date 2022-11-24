@@ -176,11 +176,19 @@ class DisciplinaController extends Controller
             foreach ($d->topicos as $top) {
                 $top->dataInativado = Carbon::now();
                 $top->inativadoPorUsuario = auth()->user()->id;
+                $top->motivoInativado = 'Desvinculado da disciplina';
                 $top->ativo = 0;
                 $top->save();
             }
 
-            // dd($d);
+            //questões
+            foreach ($d->questoes as $questao) {
+                $questao->dataInativado = Carbon::now();
+                $questao->inativadoPorUsuario = auth()->user()->id;
+                $questao->ativo = 0;
+                $questao->motivoInativado = 'Desvinculado da disciplina e tópico';
+                $questao->save();
+            }
 
             return redirect()->back()->with('success', 'Disciplina excluído com sucesso.');
 

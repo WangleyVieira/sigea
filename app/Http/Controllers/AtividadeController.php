@@ -242,7 +242,7 @@ class AtividadeController extends Controller
             }
 
             $atividade = Atividade::find($id);
-            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 
@@ -291,7 +291,7 @@ class AtividadeController extends Controller
             }
 
             $atividade = Atividade::find($id);
-            $atividadeQuestoes = AtividadeQuestao::where('ativo', '=', 1)->where('id_atividade', '=', $atividade->id)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 

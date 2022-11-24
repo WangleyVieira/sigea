@@ -25,21 +25,27 @@ Route::post('/store', 'UserController@store')->name('salvar_usuario');
 
 //perfil
 Route::get('/perfil', ['middleware' => 'auth', 'uses' => 'PerfilController@index'])->name('perfil');
+Route::post('/perfil/{id}', ['middleware' => 'auth', 'uses' => 'PerfilController@update'])->name('perfil_update');
 
 //Dashboard
 // Route::get('/dashboard', ['middleware' => 'auth', 'uses' => 'DashboardController@index'])->name('dashboard');
 
-//Usuário
-Route::group(['prefix' => '/usuario', 'as' => 'usuario.', 'middleware' => 'auth'], function(){
-    Route::get('/create', 'UserController@create')->name('create');
-    Route::post('/update/{id}', 'UserController@update')->name('update');
-    Route::get('/usuarios-ativos', 'UserController@listagemUsuarios')->name('listagem_usuarios');
-});
 
 //Acesso ADM
 Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], function(){
 
     Route::get('/dashboard', 'HomeController@index')->name('index_adm');
+
+    //Usuário
+    Route::group(['prefix' => '/usuario', 'as' => 'usuario.'], function(){
+        Route::get('/create', 'UserController@create')->name('create');
+        Route::get('/cadastrar-usuario', 'UserController@createUser')->name('createUser');
+        Route::post('/destroy/{id}', 'UserController@destroy')->name('destroy');
+        Route::get('/edit/{id}', 'UserController@edit')->name('edit');
+        Route::post('/update/{id}', 'UserController@update')->name('update');
+        Route::post('/store', 'UserController@store')->name('salvar_usuario');
+        Route::get('/usuarios-ativos', 'UserController@listagemUsuarios')->name('listagem_usuarios');
+    });
 
         //Disciplinas
     Route::group(['prefix' => '/disciplinas', 'as' => 'disciplinas.'], function(){
@@ -93,6 +99,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
         Route::get('/busca-questao-atividade/{id}', 'AtividadeQuestaoController@buscaQuestaoDisciplina')->name('busca_questao_disciplina');
     });
 
+    //Relatórios
     Route::group(['prefix' => '/relatorio', 'as' => 'relatorio.'], function(){
         Route::get('/disciplinas', 'RelatorioController@disciplinas')->name('relatorio_disciplinas');
         Route::get('/geral', 'RelatorioController@relatorioGeral')->name('relatorio_geral');
