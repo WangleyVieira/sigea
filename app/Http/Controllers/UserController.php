@@ -112,12 +112,12 @@ class UserController extends Controller
             $novoUsuario->ativo = 1;
             $novoUsuario->save();
 
-            //se existe um usuário autenticado no sistema
+            //se não existe um usuário autenticado no sistema
             if(!Auth::check()){
                 return redirect()->route('login')->with('success', 'Cadastro realizado com sucesso.');
 
             }
-            //se não existe usuário autenticado, redireciona a tela de login
+            //se existe usuário autenticado, redireciona a tela de login
             return redirect()->route('adm.usuario.listagem_usuarios')->with('success', 'Cadastro realizado com sucesso.');
 
         }
