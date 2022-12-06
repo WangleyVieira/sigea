@@ -19,7 +19,9 @@
     <script src="{{ asset('js/jquery.js') }}"></script>
 
 </head>
+@if (auth()->user()->id_perfil == 2)
 <style>
+
     .sidebar, .sidebar-nav, .sidebar-content{
         /* background-color: rgb(12, 71, 12); */
         background-color: rgb(9, 58, 9);
@@ -31,6 +33,8 @@
         background-color: rgb(148, 206, 148);
     }
 </style>
+@endif
+
 <div class="wrapper">
     <nav id="sidebar" class="sidebar">
         <div class="sidebar-content js-simplebar">
@@ -206,20 +210,19 @@
         <footer class="footer" id="footer">
             <div class="container-fluid">
                 <div class="row text-muted">
-                    <div class="col-6 text-left">
+                    <div class="col-12 text-left">
                         <p class="mb-0">
                             &copy; <b>2022 - SIGEA - Sistema de Geração de Atividades</b>
                         </p>
                     </div>
-                    <div class="col-6 text-right">
+                    {{-- <div class="col-6 text-right">
                         <p class="mb-0">
                             <a href="https://adminkit.io/" target="_blank" class="text-muted"><strong> &copy; AdminKit - Free & Premium Bootstrap 5 Admin Template</strong></a>
                         </p>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </footer>
-
     </div>
 </div>
 </body>

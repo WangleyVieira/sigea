@@ -17,11 +17,15 @@
 @include('errors.alerts')
 @include('errors.errors')
 
-<div class="header">
+{{-- <div class="header">
     <h1 class="mt-4">Cadastrar Atividade</h1>
-</div>
+</div> --}}
 <br>
 <div class="card">
+    <div class="card-header">
+        <h3 class="card-title mb-0">Cadastrar atividade e relacionar à disciplina</h3>
+        <hr>
+    </div>
     <div class="card-body">
         <div class="container-fluid">
             <form action="{{ route('adm.atividades.store') }}" id="formQuestao" method="POST" class="form_prevent_multiple_submits">

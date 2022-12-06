@@ -36,15 +36,15 @@
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label class="form-label">Senha (mínimo 6 caracteres)</label>
-                            <input class="form-control" type="password" name="password" placeholder="Informe uma senha">
+                            <input class="form-control" type="password" name="password" placeholder="Digite uma senha">
                         </div>
                         <div class="form-group col-md-4">
                             <label class="form-label">Confirme a senha (mínimo 6 caracteres)</label>
-                            <input class="form-control" type="password" name="confirmacao" placeholder="Confirme a senha">
+                            <input class="form-control" type="password" name="confirmacao" placeholder="Confirme novamente a senha">
                         </div>
                         <div class="form-group col-md-4">
                             <label class="form-label">Perfil</label>
-                            <select name="id_perfil" id="id_perfil" class="form-control select2">
+                            <select name="id_perfil" id="id_perfil" class="form-control">
                                 <option value="">-- Selecione -</option>
                                 <option value="1">Administrador</option>
                                 <option value="2">Usuário externo</option>

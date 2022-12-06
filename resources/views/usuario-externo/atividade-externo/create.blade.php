@@ -17,11 +17,15 @@
 @include('errors.alerts')
 @include('errors.errors')
 
-<div class="header">
+{{-- <div class="header">
     <h1 class="mt-4">Cadastrar Atividade</h1>
 </div>
-<br>
+<br> --}}
 <div class="card">
+    <div class="card-header">
+        <h3 class="card-title mb-0">Cadastrar Atividade</h3>
+        <hr>
+    </div>
     <div class="card-body">
         <div class="container-fluid">
             <form action="{{ route('acesso_externo.atividades.store') }}" id="formQuestao" method="POST" class="form_prevent_multiple_submits">

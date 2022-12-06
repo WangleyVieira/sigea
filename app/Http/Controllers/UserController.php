@@ -100,7 +100,7 @@ class UserController extends Controller
             $novoUsuario->name = $request->nome;
             $novoUsuario->email = $request->email;
 
-            if($request->id_perfil){
+            if($request->id_perfil == 1){
                 //administrador
                 $novoUsuario->id_perfil = 1;
             }
@@ -139,14 +139,17 @@ class UserController extends Controller
             if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
-
+            //usuários ativos
             $usuarios = User::where('ativo', '=', 1)->get();
 
-            return view('adm.usuario.listagem-usuarios', compact('usuarios'));
+            //usuarios inativos
+            $usuarios_inativos = User::where('ativo', '=', 0)->get();
+
+            return view('adm.usuario.listagem-usuarios', compact('usuarios', 'usuarios_inativos'));
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 
@@ -163,8 +166,8 @@ class UserController extends Controller
             return view('adm.usuario.edit', compact('user', 'perfils'));
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 
@@ -178,15 +181,11 @@ class UserController extends Controller
             $input = [
                 'name' => $request->nome,
                 'email' => $request->email,
-                // 'password' => $request->password,
-                // 'confirmacao' =>$request->confirmacao
             ];
 
             $regras = [
                 'name' => 'required|max:255',
                 'email' => 'required|max:255',
-                // 'password' => 'required|min:6',
-                // 'confirmacao' => 'required|min:6'
             ];
 
             $mensagens = [
@@ -195,12 +194,6 @@ class UserController extends Controller
 
                 'email.required' => 'O email é obrigatório.',
                 'email.max' => 'Máximo 255 caracteres',
-
-                // 'password.required' => 'Asenha é obrigatória.',
-                // 'password.min' => 'Minímo 6 caracteres',
-
-                // 'confirmacao.required' => 'Confirmação é obrigatória',
-                // 'confirmacao.min' => 'Minímo 6 caracteres',
             ];
 
             $validaCampos = Validator::make($input, $regras, $mensagens);
@@ -251,8 +244,8 @@ class UserController extends Controller
                 ->withInput();
         }
         catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 

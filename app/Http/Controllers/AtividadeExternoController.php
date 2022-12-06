@@ -212,6 +212,12 @@ class AtividadeExternoController extends Controller
             $atividade->ativo = 0;
             $atividade->save();
 
+            // desativando somente a questão vinculada a atividade
+            // $atvQuestao = AtividadeQuestao::find($atividade->id);
+            // $atvQuestao->id_questao = $request->id_questao;
+            // $atvQuestao->ativo = 0;
+            // $atvQuestao->save();
+
             return redirect()->route('acesso_externo.atividades.index')->with('success', 'Atividade excluído com sucesso.');
 
         } catch (\Exception $ex) {

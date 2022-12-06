@@ -11,6 +11,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title mb-0">Informações de Perfil de Usuário</h3>
+                <hr>
             </div>
             <div class="card-body">
                 <form action="{{ route('perfil_update', $user->id) }}" id="form" method="POST" class="form_prevent_multiple_submits">
@@ -33,7 +34,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label class="form-label">Confirme a senha (mínimo 6 caracteres)</label>
-                            <input class="form-control" type="password" name="confirmacao" placeholder="Confirme a senha">
+                            <input class="form-control" type="password" name="confirmacao" placeholder="Confirme novamente a senha">
                         </div>
                         <div class="form-group col-md-4">
                             <label class="form-label">Perfil</label>

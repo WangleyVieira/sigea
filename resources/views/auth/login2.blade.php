@@ -89,14 +89,6 @@ rel="stylesheet"
 
           </div>
         </div>
-
-        <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5" id="rodape">
-            <!-- Right -->
-            <div class="text-white mb-3 mb-md-0">
-                <a> Desenvolvimento com &copy; AdminKit - Free & Premium Bootstrap 5 Admin Template</a>
-            </div>
-            <!-- Right -->
-        </div>
     </section>
 
 <!-- MDB -->

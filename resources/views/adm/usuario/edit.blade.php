@@ -36,15 +36,15 @@
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label class="form-label">Senha (mínimo 6 caracteres)</label>
-                            <input class="form-control" type="password" name="password" placeholder="Informe uma senha">
+                            <input class="form-control" type="password" name="password" placeholder="Digite uma senha para alterar">
                         </div>
                         <div class="form-group col-md-4">
                             <label class="form-label">Confirme a senha (mínimo 6 caracteres)</label>
-                            <input class="form-control" type="password" name="confirmacao" placeholder="Confirme a senha">
+                            <input class="form-control" type="password" name="confirmacao" placeholder="Confirme novamente a senha">
                         </div>
                         <div class="form-group col-md-4">
                             <label class="form-label">Perfil</label>
-                            <select name="id_perfil" id="id_perfil" class="form-control select2">
+                            <select name="id_perfil" id="id_perfil" class="form-control">
                                 @foreach ($perfils as $perfil)
                                     <option value="{{ $perfil->id }}" {{ $perfil->id == $user->id_perfil ? 'selected' : '' }}>
                                         {{ $perfil->descricao }}

@@ -99,11 +99,11 @@
             </div>
         </div>
 
-        <div style="text-align: center">
+        {{-- <div style="text-align: center">
             <br><br><br>
             <span>__________________________________</span><br>
             <span>Responsável pela listagem</span>
-        </div>
+        </div> --}}
     </main>
 </body>
 
