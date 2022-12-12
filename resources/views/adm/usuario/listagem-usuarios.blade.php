@@ -120,7 +120,6 @@
         <a href="{{ route('adm.index_adm') }}" class="btn btn-info"> Voltar ao Dashboard</a>
         <a href="{{ route('adm.usuario.createUser') }}" class="btn btn-primary"> cadastrar usuário</a>
     </div>
-
 </div>
 
 <script>

@@ -50,7 +50,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="codigo_questao">Código da Questão (Letras e Números)</label>
-                            <input type="text" name="codigo_questao" id="codigo_questao" class="form-control">
+                            <input type="text" name="codigo_questao" id="codigo_questao" placeholder="Digite a resposta da questão" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="titulo_questao">Título da questão</label>
@@ -67,9 +67,10 @@
                         <span>Observações</span>
                         <ul>
                             <li>Não é necessário ordenação e não ordenação de pergunta</li>
+                            <li>Seguir o modelo conforme no campo abaixo</li>
                         </ul>
                         {{-- <br> --}}
-                            <textarea class="form-control" name="descricao" rows="4"></textarea>
+                            <textarea class="form-control" name="descricao" rows="4" placeholder="Digite sua pergunta?"></textarea>
                         </div>
                     </div>
                     <div class="row">

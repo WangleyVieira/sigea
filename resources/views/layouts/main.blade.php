@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="{{ asset('img/icone.png') }}">
+
     <title>@yield('title')</title>
     <link rel="shortcut icon" type="svg" href="{{ asset('image/layer-group-solid.svg') }}" style="color: #4a88eb">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&amp;display=swap" rel="stylesheet">
@@ -20,19 +23,19 @@
 
 </head>
 @if (auth()->user()->id_perfil == 2)
-<style>
+    <style>
 
-    .sidebar, .sidebar-nav, .sidebar-content{
-        /* background-color: rgb(12, 71, 12); */
-        background-color: rgb(9, 58, 9);
-    }
-    .navbar{
-        background-color: rgb(148, 206, 148);
-    }
-    #footer{
-        background-color: rgb(148, 206, 148);
-    }
-</style>
+        .sidebar, .sidebar-nav, .sidebar-content{
+            /* background-color: rgb(12, 71, 12); */
+            background-color: rgb(13, 83, 13);
+        }
+        .navbar{
+            background-color: rgb(148, 206, 148);
+        }
+        #footer{
+            background-color: rgb(148, 206, 148);
+        }
+    </style>
 @endif
 
 <div class="wrapper">
@@ -45,9 +48,9 @@
             <hr>
 
             <ul class="sidebar-nav">
-                <li class="sidebar-header">
+                {{-- <li class="sidebar-header">
                     Páginas
-                </li>
+                </li> --}}
                 @if (auth()->user()->id_perfil == 1)
                     <li class="sidebar-item {{ Route::current()->uri == 'adm/dashboard' ? 'active' : null }}">
                         <a href="{{ route('adm.index_adm') }}" class="sidebar-link">
@@ -202,7 +205,6 @@
             </div>
         </nav>
 
-
         <main class="content">
             @yield('content')
         </main>
@@ -210,16 +212,16 @@
         <footer class="footer" id="footer">
             <div class="container-fluid">
                 <div class="row text-muted">
-                    <div class="col-12 text-left">
+                    <div class="col-6 text-left">
                         <p class="mb-0">
-                            &copy; <b>2022 - SIGEA - Sistema de Geração de Atividades</b>
+                            <b> © <?php echo date("Y"); ?> - SIGEA - Sistema de Geração de Atividades</b>
                         </p>
                     </div>
-                    {{-- <div class="col-6 text-right">
+                    <div class="col-6 text-right">
                         <p class="mb-0">
                             <a href="https://adminkit.io/" target="_blank" class="text-muted"><strong> &copy; AdminKit - Free & Premium Bootstrap 5 Admin Template</strong></a>
                         </p>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </footer>

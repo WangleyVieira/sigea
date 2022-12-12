@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="resposta">Resposta</label>
-                            <input type="text" name="resposta" id="resposta" class="form-control">
+                            <input type="text" name="resposta" id="resposta" class="form-control" placeholder="Digite a resposta da questão">
                         </div>
                     </div>
                     <div class="mb-2 row">
@@ -69,9 +69,10 @@
                         <span>Observações</span>
                         <ul>
                             <li>Não é necessário ordenação e não ordenação de pergunta</li>
+                            <li>Seguir o modelo conforme no campo abaixo</li>
                         </ul>
                         {{-- <br> --}}
-                            <textarea class="form-control" name="descricao" rows="4"></textarea>
+                            <textarea class="form-control" name="descricao" rows="4" placeholder="Digite sua pergunta?"></textarea>
                         </div>
                     </div>
                     <div class="row">

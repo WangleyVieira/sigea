@@ -13570,9 +13570,12 @@ a.sidebar-link {
 	position: relative;
 	text-decoration: none;
 	cursor: pointer;
-	color: rgba(233, 236, 239, .5)
+	color: rgba(233, 236, 239, .5);
 }
-
+a.sidebar-link:hover{
+    color: whitesmoke;
+    background-color: rgb(39, 56, 77);
+}
 body[data-theme=colored] .sidebar-link,
 body[data-theme=colored] a.sidebar-link {
 	color: rgba(248, 249, 250, .7)
@@ -13626,7 +13629,8 @@ body[data-theme=light] a.sidebar-link svg {
 }
 
 .sidebar-link:focus {
-	outline: 0
+	outline: 0;
+    background-color: rgb(39, 56, 77);
 }
 
 .sidebar-link:hover {
@@ -13667,6 +13671,8 @@ body[data-theme=light] .sidebar-link:hover svg {
 
 .sidebar-item.active .sidebar-link:hover,
 .sidebar-item.active>.sidebar-link {
+    background-color: rgb(39, 56, 77);
+    border-left-color: red;
 	color: #e9ecef
 }
 
@@ -13689,7 +13695,8 @@ body[data-theme=light] .sidebar-item.active>.sidebar-link {
 .sidebar-item.active .sidebar-link:hover svg,
 .sidebar-item.active>.sidebar-link i,
 .sidebar-item.active>.sidebar-link svg {
-	color: #e9ecef
+	color: #e9ecef;
+    border-left-color: #3b7ddd;
 }
 
 body[data-theme=colored] .sidebar-item.active .sidebar-link:hover i,

@@ -63,7 +63,7 @@ class UserController extends Controller
                 'email.required' => 'O email é obrigatório.',
                 'email.max' => 'Máximo 255 caracteres',
 
-                'password.required' => 'Asenha é obrigatória.',
+                'password.required' => 'A senha é obrigatória.',
                 'password.min' => 'Minímo 6 caracteres',
 
                 'confirmacao.required' => 'Confirmação é obrigatória',

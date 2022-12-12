@@ -18,6 +18,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title mb-0">Alteração de dados do usuário</h3>
+                <hr>
             </div>
             <div class="card-body">
                 <form action="{{ route('adm.usuario.update', $user->id) }}" id="form-user" method="POST" class="form_prevent_multiple_submits">

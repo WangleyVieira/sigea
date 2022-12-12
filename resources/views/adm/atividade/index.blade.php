@@ -32,7 +32,7 @@
                                 <th scope="col">Cadastrado por</th>
                                 <th scope="col">Cadastrado em</th>
                                 <th scope="col">Atualizado em</th>
-                                <th scope="col">PDF</th>
+                                <th scope="col">Questões</th>
                                 <th scope="col">Respostas</th>
                                 <th scope="col">Alterar</th>
                                 <th scope="col">Deletar</th>
@@ -112,7 +112,7 @@
                                 <th scope="col">Cadastrado por</th>
                                 <th scope="col">Cadastrado em</th>
                                 <th scope="col">Atualizado em</th>
-                                <th scope="col">PDF</th>
+                                <th scope="col">Questões</th>
                                 <th scope="col">Respostas</th>
                             </tr>
                         </thead>
@@ -141,6 +141,11 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-12">
+        <a href="{{ route('adm.atividades.create') }}" class="btn btn-primary"> cadastrar atividade</a>
+    </div>
+</div>
 
 <script>
     $(document).ready(function() {
