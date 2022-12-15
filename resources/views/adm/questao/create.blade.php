@@ -86,7 +86,7 @@
             },
             titulo_questao:{
                 required:true,
-                maxlength:255,
+                maxlength:1200,
             },
         },
 

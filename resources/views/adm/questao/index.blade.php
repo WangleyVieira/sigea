@@ -301,7 +301,7 @@
             },
             resposta:{
                 required:true,
-                maxlength:255,
+                maxlength:1200,
             },
         },
 

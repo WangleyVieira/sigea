@@ -54,7 +54,5 @@
             @endforeach
         @endif
 
-
-
     </body>
 </html>

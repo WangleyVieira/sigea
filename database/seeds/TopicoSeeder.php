@@ -203,19 +203,18 @@ class TopicoSeeder extends Seeder
             ['descricao' => 'Schema XML', 'id_disciplina' => 35, 'ativo' => 1],
             ['descricao' => 'Transformação de XML', 'id_disciplina' => 35, 'ativo' => 1],
 
-            //Projeto de Redes
-            ['descricao' => 'Metodologia para Projeto de Redes de Computadores: Análise de Requisitos, Projeto Lógico, Projeto Físico', 'id_disciplina' => 36, 'ativo' => 1],
-            ['descricao' => 'Estudo de Caso', 'id_disciplina' => 36, 'ativo' => 1],
-            ['descricao' => 'Aplicações Práticas', 'id_disciplina' => 36, 'ativo' => 1],
-
             //Projeto Integrador II
-            ['descricao' => 'Elaboração de proposta de trabalho científico e/ou tecnológico envolvendo temas abrangidos pelo curso', 'id_disciplina' => 37, 'ativo' => 1],
+            ['descricao' => 'Elaboração de proposta de trabalho científico e/ou tecnológico envolvendo temas abrangidos pelo curso', 'id_disciplina' => 36, 'ativo' => 1],
 
-            //Libras
-            ['descricao' => 'Apresentação e desenvolvimento da língua brasileira de sinais', 'id_disciplina' => 38, 'ativo' => 1],
-            ['descricao' => 'O sujeito surdo em um mundo ouvinte', 'id_disciplina' => 38, 'ativo' => 1],
-            ['descricao' => 'Familiarização do tecnólogo com o mundo da surdez', 'id_disciplina' => 38, 'ativo' => 1],
+             //Libras
+             ['descricao' => 'Apresentação e desenvolvimento da língua brasileira de sinais', 'id_disciplina' => 37, 'ativo' => 1],
+             ['descricao' => 'O sujeito surdo em um mundo ouvinte', 'id_disciplina' => 37, 'ativo' => 1],
+             ['descricao' => 'Familiarização do tecnólogo com o mundo da surdez', 'id_disciplina' => 37, 'ativo' => 1],
 
+            //Projeto de Redes
+            ['descricao' => 'Metodologia para Projeto de Redes de Computadores: Análise de Requisitos, Projeto Lógico, Projeto Físico', 'id_disciplina' => 38, 'ativo' => 1],
+            ['descricao' => 'Estudo de Caso', 'id_disciplina' => 38, 'ativo' => 1],
+            ['descricao' => 'Aplicações Práticas', 'id_disciplina' => 38, 'ativo' => 1],
 
         ]);
     }

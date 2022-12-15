@@ -25,7 +25,7 @@ class LoginController extends Controller
 
         if (!Auth::attempt($request->only(['email', 'password']))) {
 
-            return redirect()->back()->withErrors('Email de usuário ou Senha com dados incorretos');
+            return redirect()->back()->withErrors('E-mail ou senha de usuário com dados incorretos');
         };
 
         $usuario = User::where('email', '=', $request->email)

@@ -58,10 +58,14 @@
 
         <h4>Respostas</h4>
 
-        @foreach ($atividadeQuestoes as $atvQuestao)
-            <p class="descricao"> {{ $atvQuestao->lista_questoes->descricao }} </p>
-            <p class="resposta"> {{ $atvQuestao->lista_questoes->resposta }} </p>
-        @endforeach
+        @if (Count($atividadeQuestoes) == 0)
+            <p style="text-align: center">Sem respostas vinculadas</p>
+        @else
+            @foreach ($atividadeQuestoes as $atvQuestao)
+                <p class="descricao"> {{ $atvQuestao->lista_questoes->descricao }} </p>
+                <p class="resposta"> {{ $atvQuestao->lista_questoes->resposta }} </p>
+            @endforeach
+        @endif
 
     </body>
 </html>

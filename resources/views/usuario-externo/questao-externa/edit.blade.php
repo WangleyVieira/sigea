@@ -18,10 +18,6 @@
 @include('errors.alerts')
 @include('errors.errors')
 
-{{-- <div class="header">
-    <h1 class="mt-4">Alterar Questão</h1>
-</div> --}}
-
 <div class="card">
     <div class="card-header">
         <h3 class="card-title mb-0">Alterar questão</h3>
@@ -34,17 +30,17 @@
                 @method('POST')
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="id_disciplina">Disciplinas</label>
-                        <select name="id_disciplina"  id="id_disciplina" class="form-control select2" disabled>
-                            <option value="" selected disabled>-- Selecione a disciplina --</option>
+                        <label for="id_disciplina">Disciplina selecionada</label>
+                        <select name="id_disciplina"  id="id_disciplina" class="form-control" disabled>
+                            {{-- <option value="" selected disabled>-- Selecione a disciplina --</option> --}}
                             @foreach ($disciplinas as $disciplina)
                                 <option value="{{ $disciplina->id }}" {{ $disciplina->id == $questao->id_disciplina ? 'selected' : '' }}> {{ $disciplina->nome }} - {{ $disciplina->codigo }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="id_topico">Selecione o Tópico</label>
-                        <select name="id_topico" id="id_topico" class="form-control select2">
+                        <label for="id_topico">Tópico selecionado</label>
+                        <select name="id_topico" id="id_topico" class="form-control" disabled>
                             @foreach ($topicos as $topico)
                                 <option value="{{ $topico->id }}" {{ $topico->id == $questao->id_topico ? 'selected' : '' }}> {{ $topico->descricao }} </option>
                             @endforeach
@@ -52,7 +48,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="codigo_questao">Código da Questão (Letras e Números)</label>
-                        <input type="text" name="codigo_questao" id="codigo_questao" value="{{ $questao->codigo_questao }}" class="form-control">
+                        <input type="text" name="codigo_questao" id="codigo_questao" value="{{ $questao->codigo_questao }}" class="form-control" disabled>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="titulo_questao">Título da questão</label>
@@ -65,6 +61,12 @@
                 </div>
                 <div class="mb-2 row">
                     <div class="col-sm-12">
+                        <hr>
+                        <span>Observações</span>
+                        <ul>
+                            <li>Não é necessário ordenação e não ordenação de pergunta</li>
+                            <li>Seguir o modelo conforme no campo abaixo</li>
+                        </ul>
                         <textarea class="form-control" name="descricao" rows="4" > {{ $questao->descricao }} </textarea>
                     </div>
                 </div>
@@ -90,10 +92,10 @@
                 required:true,
                 maxlength:255,
             },
-            codigo_questao:{
-                required:true,
-                maxlength:255,
-            },
+            // codigo_questao:{
+            //     required:true,
+            //     maxlength:255,
+            // },
             titulo_questao:{
                 required:true,
                 maxlength:255,
@@ -105,10 +107,10 @@
                 required:"Campo obrigatório",
                 maxlength:"Máximo de 255 caracteres"
             },
-            codigo_questao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
+            // codigo_questao:{
+            //     required:"Campo obrigatório",
+            //     maxlength:"Máximo de 255 caracteres"
+            // },
             titulo_questao:{
                 required:"Campo obrigatório",
                 maxlength:"Máximo de 255 caracteres"

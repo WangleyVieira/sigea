@@ -234,7 +234,9 @@ class UserController extends Controller
                 return redirect()->route('perfil')->with('success', 'Cadastro alterado com sucesso.');
             }
 
-            return redirect()->route('adm.usuario.listagem_usuarios')->with('success', 'Cadastro alterado com sucesso.');
+            if($user->id_perfil == 1){
+                return redirect()->route('adm.usuario.listagem_usuarios')->with('success', 'Cadastro alterado com sucesso.');
+            }
 
         }
         catch (ValidationException $e ) {

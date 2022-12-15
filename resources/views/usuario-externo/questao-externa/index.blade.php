@@ -14,10 +14,6 @@
 @include('errors.alerts')
 @include('errors.errors')
 
-{{-- <div class="header">
-    <h1 class="mt-4">Questões cadastradas</h1>
-</div>
-<br> --}}
 <div id="accordion">
     <div class="card">
         <div class="card-header" id="heading">
@@ -50,7 +46,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="codigo_questao">Código da Questão (Letras e Números)</label>
-                            <input type="text" name="codigo_questao" id="codigo_questao" placeholder="Digite a resposta da questão" class="form-control">
+                            <input type="text" name="codigo_questao" id="codigo_questao" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="titulo_questao">Título da questão</label>
@@ -58,7 +54,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="resposta">Resposta</label>
-                            <input type="text" name="resposta" id="resposta" class="form-control">
+                            <input type="text" name="resposta" id="resposta" class="form-control" placeholder="Digite a resposta da questão" >
                         </div>
                     </div>
                     <div class="mb-2 row">
@@ -288,7 +284,7 @@
             },
             resposta:{
                 required:true,
-                maxlength:255,
+                maxlength:1200,
             },
         },
 

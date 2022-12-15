@@ -108,7 +108,7 @@
                             }}">
                            <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades' ? 'active' : null }}">
                                 <a class="sidebar-link" href="{{ route('adm.atividades.index') }}">
-                                    Listar
+                                    Listar atividades cadastradas
                                 </a>
                             </li>
                            <li class="sidebar-item {{ Route::current()->uri == 'adm/atividades/cadastrar-atividade' ? 'active' : null }}">

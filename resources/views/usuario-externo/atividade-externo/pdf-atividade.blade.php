@@ -46,9 +46,13 @@
         <h3>Disciplina: {{$atividade->disciplina->nome}} </h3>
         <hr>
 
-        @foreach ($atividadeQuestoes as $atvQuestao)
-            <p> {{ $atvQuestao->lista_questoes->descricao }} </p>
-        @endforeach
+        @if (Count($atividadeQuestoes) == 0)
+            <p style="text-align: center">Sem questões vinculadas</p>
+        @else
+            @foreach ($atividadeQuestoes as $atvQuestao)
+                <p> {{ $atvQuestao->lista_questoes->descricao }} </p>
+            @endforeach
+        @endif
 
     </body>
 </html>

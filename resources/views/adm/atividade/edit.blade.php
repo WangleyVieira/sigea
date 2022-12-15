@@ -30,8 +30,8 @@
                 @method('POST')
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="id_disciplina">Disciplinas</label>
-                        <select name="id_disciplina"  id="id_disciplina" class="form-control select2" disabled>
+                        <label for="id_disciplina">Disciplina selecionada</label>
+                        <select name="id_disciplina"  id="id_disciplina" class="form-control" disabled>
                             <option value="" selected disabled>-- Selecione a disciplina --</option>
                             @foreach ($disciplinas as $disciplina)
                                 <option value="{{ $disciplina->id }}" {{ $disciplina->id == $atividade->id_disciplina ? 'selected' : '' }}> {{ $disciplina->nome }} - {{ $disciplina->codigo }} </option>

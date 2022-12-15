@@ -106,33 +106,43 @@ class QuestaoController extends Controller
             $rules = [
                 'descricao' => 'required|max:1200',
                 'codigo_questao' => 'required|max:255',
-                'resposta' => 'required|max:255',
+                'resposta' => 'required|max:1200',
             ];
 
             $messages = [
                 'descricao.required' => 'descricao é obrigatório.',
-                'descricao.max' => 'Máximo 255 caracteres.',
+                'descricao.max' => 'Máximo 1200 caracteres.',
 
                 'codigo_questao.required' => 'Código questão é obrigatório.',
                 'codigo_questao.max' => 'Máximo 255 caracteres',
 
                 'resposta.required' => 'Resposta da questão é obrigatório.',
-                'resposta.max' => 'Máximo 255 caracteres',
+                'resposta.max' => 'Máximo 1200 caracteres',
             ];
 
             $validaCampos = Validator::make($input, $rules, $messages);
             $validaCampos->validate();
 
-           $novaQuestao = new Questao();
-           $novaQuestao->descricao = $request->descricao;
-           $novaQuestao->id_topico = $request->id_topico;
-           $novaQuestao->resposta = $request->resposta;
-           $novaQuestao->codigo_questao = strtoupper($request->codigo_questao);
-           $novaQuestao->id_disciplina = $request->id_disciplina;
-           $novaQuestao->titulo_questao = $request->titulo_questao;
-           $novaQuestao->cadastradoPorUsuario = auth()->user()->id;
-           $novaQuestao->ativo = 1;
-           $novaQuestao->save();
+            //verifica se existe um código cadastrado
+            $verificarCodigoQuestao = Questao::where('codigo_questao', '=', $request->codigo_questao)
+                ->where('ativo', '=', 1)
+                ->select('codigo_questao')
+                ->first();
+
+            if($verificarCodigoQuestao){
+                return redirect()->back()->with('erro', 'Código questão está vinculado já.');
+            }
+
+            $novaQuestao = new Questao();
+            $novaQuestao->descricao = $request->descricao;
+            $novaQuestao->id_topico = $request->id_topico;
+            $novaQuestao->resposta = $request->resposta;
+            $novaQuestao->codigo_questao = strtoupper($request->codigo_questao);
+            $novaQuestao->id_disciplina = $request->id_disciplina;
+            $novaQuestao->titulo_questao = $request->titulo_questao;
+            $novaQuestao->cadastradoPorUsuario = auth()->user()->id;
+            $novaQuestao->ativo = 1;
+            $novaQuestao->save();
 
             return redirect()->route('adm.questoes.index')->with('success', 'Questão cadastrado com sucesso.');
 
@@ -204,30 +214,30 @@ class QuestaoController extends Controller
              //  validacao dos campos
              $input = [
                 'descricao' => $request->descricao,
-                'codigo_questao' => $request->codigo_questao,
+                // 'codigo_questao' => $request->codigo_questao,
                 'resposta' => $request->resposta,
-                'id_topico' => $request->id_topico
+                // 'id_topico' => $request->id_topico
             ];
 
             $rules = [
                 'descricao' => 'required|max:1200',
-                'codigo_questao' => 'required|max:255',
-                'resposta' => 'required|max:255',
-                'id_topico' => 'required|max:255'
+                // 'codigo_questao' => 'required|max:255',
+                'resposta' => 'required|max:1200',
+                // 'id_topico' => 'required|max:255'
             ];
 
             $messages = [
                 'descricao.required' => 'descricao da pergunta é obrigatório.',
-                'descricao.max' => 'Máximo 255 caracteres.',
+                'descricao.max' => 'Máximo 1200 caracteres.',
 
-                'codigo_questao.required' => 'Código questão é obrigatório.',
-                'codigo_questao.max' => 'Máximo 255 caracteres',
+                // 'codigo_questao.required' => 'Código questão é obrigatório.',
+                // 'codigo_questao.max' => 'Máximo 255 caracteres',
 
                 'resposta.required' => 'Resposta da questão é obrigatório.',
-                'resposta.max' => 'Máximo 255 caracteres',
+                'resposta.max' => 'Máximo 1200 caracteres',
 
-                'id_topico.required' => 'Tópico da questão é obrigatório.',
-                'id_topico.max' => 'Máximo 255 caracteres'
+                // 'id_topico.required' => 'Tópico da questão é obrigatório.',
+                // 'id_topico.max' => 'Máximo 255 caracteres'
             ];
 
              $validaCampos = Validator::make($input, $rules, $messages);
@@ -235,9 +245,9 @@ class QuestaoController extends Controller
 
             $questao = Questao::find($id);
             $questao->descricao = $request->descricao;
-            $questao->id_topico = $request->id_topico;
+            // $questao->id_topico = $request->id_topico;
             $questao->resposta = $request->resposta;
-            $questao->codigo_questao = strtoupper($request->codigo_questao);
+            // $questao->codigo_questao = strtoupper($request->codigo_questao);
             $questao->titulo_questao = $request->titulo_questao;
             $questao->alteradoPorUsuario = auth()->user()->id;
             $questao->save();

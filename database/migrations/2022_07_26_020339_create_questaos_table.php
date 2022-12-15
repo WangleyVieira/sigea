@@ -15,7 +15,7 @@ class CreateQuestaosTable extends Migration
     {
         Schema::create('questaos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codigo_questao')->unique();
+            $table->string('codigo_questao')->nullable();
             $table->text('descricao')->nullable();
             $table->text('titulo_questao')->nullable();
             $table->text('resposta')->nullable();
