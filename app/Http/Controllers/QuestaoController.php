@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Disciplina;
+use App\Http\Requests\QuestaoStoreRequest;
 use App\Periodo;
 use App\Questao;
 use App\Topico;
@@ -85,54 +86,9 @@ class QuestaoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestaoStoreRequest $request)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-
-            if($request->id_disciplina == null || $request->id_topico == null){
-                return redirect()->back()->with('erro', ' Selecione uma Disciplina e um Tópico vinculado.');
-            }
-
-            //  validacao dos campos
-             $input = [
-                'descricao' => $request->descricao,
-                'codigo_questao' => $request->codigo_questao,
-                'resposta' => $request->resposta,
-            ];
-
-            $rules = [
-                'descricao' => 'required|max:1200',
-                'codigo_questao' => 'required|max:255',
-                'resposta' => 'required|max:1200',
-            ];
-
-            $messages = [
-                'descricao.required' => 'descricao é obrigatório.',
-                'descricao.max' => 'Máximo 1200 caracteres.',
-
-                'codigo_questao.required' => 'Código questão é obrigatório.',
-                'codigo_questao.max' => 'Máximo 255 caracteres',
-
-                'resposta.required' => 'Resposta da questão é obrigatório.',
-                'resposta.max' => 'Máximo 1200 caracteres',
-            ];
-
-            $validaCampos = Validator::make($input, $rules, $messages);
-            $validaCampos->validate();
-
-            //verifica se existe um código cadastrado
-            $verificarCodigoQuestao = Questao::where('codigo_questao', '=', $request->codigo_questao)
-                ->where('ativo', '=', 1)
-                ->select('codigo_questao')
-                ->first();
-
-            if($verificarCodigoQuestao){
-                return redirect()->back()->with('erro', 'Código questão está vinculado já.');
-            }
-
             $novaQuestao = new Questao();
             $novaQuestao->descricao = $request->descricao;
             $novaQuestao->id_topico = $request->id_topico;
@@ -141,21 +97,15 @@ class QuestaoController extends Controller
             $novaQuestao->id_disciplina = $request->id_disciplina;
             $novaQuestao->titulo_questao = $request->titulo_questao;
             $novaQuestao->cadastradoPorUsuario = auth()->user()->id;
-            $novaQuestao->ativo = 1;
+            $novaQuestao->ativo = Questao::ATIVO;
             $novaQuestao->save();
 
             return redirect()->route('adm.questoes.index')->with('success', 'Questão cadastrado com sucesso.');
 
         }
-        catch (ValidationException $e ) {
-            $message = $e->errors();
-            return redirect()->back()
-                ->withErrors($message)
-                ->withInput();
-        }
         catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -207,42 +157,6 @@ class QuestaoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-
-             //  validacao dos campos
-             $input = [
-                'descricao' => $request->descricao,
-                // 'codigo_questao' => $request->codigo_questao,
-                'resposta' => $request->resposta,
-                // 'id_topico' => $request->id_topico
-            ];
-
-            $rules = [
-                'descricao' => 'required|max:1200',
-                // 'codigo_questao' => 'required|max:255',
-                'resposta' => 'required|max:1200',
-                // 'id_topico' => 'required|max:255'
-            ];
-
-            $messages = [
-                'descricao.required' => 'descricao da pergunta é obrigatório.',
-                'descricao.max' => 'Máximo 1200 caracteres.',
-
-                // 'codigo_questao.required' => 'Código questão é obrigatório.',
-                // 'codigo_questao.max' => 'Máximo 255 caracteres',
-
-                'resposta.required' => 'Resposta da questão é obrigatório.',
-                'resposta.max' => 'Máximo 1200 caracteres',
-
-                // 'id_topico.required' => 'Tópico da questão é obrigatório.',
-                // 'id_topico.max' => 'Máximo 255 caracteres'
-            ];
-
-             $validaCampos = Validator::make($input, $rules, $messages);
-             $validaCampos->validate();
-
             $questao = Questao::find($id);
             $questao->descricao = $request->descricao;
             // $questao->id_topico = $request->id_topico;
@@ -252,19 +166,13 @@ class QuestaoController extends Controller
             $questao->alteradoPorUsuario = auth()->user()->id;
             $questao->save();
 
-             return redirect()->route('adm.questoes.index')->with('success', 'Questão alterado com sucesso.');
+            return redirect()->route('adm.questoes.index')->with('success', 'Questão alterado com sucesso.');
 
-         }
-         catch (ValidationException $e ) {
-            $message = $e->errors();
-            return redirect()->back()
-                ->withErrors($message)
-                ->withInput();
         }
-         catch (\Exception $ex) {
-             return $ex->getMessage();
-            //  return redirect()->back()->with('erro', 'Ocorreu um erro ao alterar a questão, entre em contato com Adm.');
-         }
+        catch (\Exception $ex) {
+            return $ex->getMessage();
+        //  return redirect()->back()->with('erro', 'Ocorreu um erro ao alterar a questão, entre em contato com Adm.');
+        }
     }
 
     /**

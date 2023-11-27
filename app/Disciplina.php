@@ -26,6 +26,9 @@ class Disciplina extends Model implements Auditable
         'updated_at'
     ];
 
+    const ATIVO = 1;
+    const INATIVO = 0;
+
     protected $table = 'disciplinas';
 
     public function cadastradoPorUsuario()

@@ -29,6 +29,9 @@ class Questao extends Model implements Auditable
         'updated_at'
     ];
 
+    const ATIVO = 1;
+    const INATIVO = 0;
+
     protected $table = 'questaos';
 
     public function cad_usuario()

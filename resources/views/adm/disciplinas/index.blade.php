@@ -13,8 +13,8 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@include('errors.alerts')
-@include('errors.errors')
+{{-- @include('errors.alerts')
+@include('errors.errors') --}}
 
 {{-- <div class="header">
     <h1 class="mt-4">Disciplinas cadastradas</h1>
@@ -29,28 +29,41 @@
             </button>
             </h5>
         </div>
-        <div id="collapse" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+        <div id="collapse" class="collapse show" aria-labelledby="heading" data-parent="#accordion">
             <div class="card-body">
                 <form action="{{ route('adm.disciplinas.store') }}" id="formDisciplina" method="POST" class="form_prevent_multiple_submits">
                     @csrf
                     @method('POST')
                     <div class="row">
-                        <div class="form-group col-md-4">
+                        {{-- <div class="form-group col-md-4">
                             <label for="disciplina">Nome disciplina</label>
                             <input type="text" name="disciplina" id="disciplina" class="form-control">
+                        </div> --}}
+                        <div class="form-group col-md-4">
+                            <label for="disciplina">Nome disciplina</label>
+                            <input type="text" name="nome" id="disciplina" class="form-control @error('nome') is-invalid @enderror">
+                            @error('nome')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-4">
                             <label for="codigo">Código</label>
-                            <input type="text" name="codigo" class="form-control" id="codigo_disciplina">
+                            <input type="text" name="codigo" class="form-control @error('codigo') is-invalid @enderror" id="codigo_disciplina">
+                            @error('codigo')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-4">
                             <label for="id_periodo">Selecione o período</label>
-                            <select class="form-control" name="id_periodo">
+                            <select class="form-control @error('codigo') is-invalid @enderror" name="id_periodo">
                                 <option value="" selected disabled> -- selecione -- </option>
                                 @foreach ($periodos as $p)
                                     <option value="{{ $p->id }}"> {{ $p->descricao }} </option>
                                 @endforeach
                             </select>
+                            @error('id_periodo')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -251,7 +264,7 @@
 
 <script>
 
-    $("#formDisciplina").validate({
+    /*$("#formDisciplina").validate({
         rules: {
             disciplina:{
                 required:true,
@@ -281,7 +294,7 @@
                 maxlength:"Máximo de 255 caracteres"
             },
         }
-    });
+    });*/
 
     $(document).ready(function() {
 

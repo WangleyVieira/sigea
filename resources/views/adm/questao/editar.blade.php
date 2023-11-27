@@ -15,8 +15,8 @@
     }
 </style>
 
-@include('errors.alerts')
-@include('errors.errors')
+{{-- @include('errors.alerts')
+@include('errors.errors') --}}
 
 <div class="card">
     <div class="card-header">

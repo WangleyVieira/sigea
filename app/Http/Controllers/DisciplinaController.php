@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CurricularEletiva;
 use App\Disciplina;
+use App\Http\Requests\DisciplinaStoreRequest;
 use App\Periodo;
 use App\Topico;
 use Carbon\Carbon;
@@ -62,37 +63,22 @@ class DisciplinaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DisciplinaStoreRequest $request)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-
-            if($request->disciplina == null || $request->codigo == null || $request->id_periodo == null){
-                return redirect()->back()->with('erro', 'Campos disciplina, código e período são obrigatórios.');
-            }
-
-            //verifica se existe uma disciplina cadastrada
-            $verificarDisciplina = Disciplina::where('nome', '=', $request->disciplina)->first();
-
-            if($verificarDisciplina){
-                return redirect()->back()->with('erro', 'Existe uma disciplina cadastrado ao informado.');
-            }
-
             $novaDisciplina = new Disciplina();
             $novaDisciplina->nome = $request->disciplina;
             $novaDisciplina->codigo = $request->codigo;
             $novaDisciplina->id_periodo = $request->id_periodo;
             $novaDisciplina->cadastradoPorUsuario = auth()->user()->id;
-            $novaDisciplina->ativo = 1;
+            $novaDisciplina->ativo = Disciplina::ATIVO;
             $novaDisciplina->save();
 
             return redirect()->route('adm.disciplinas.index')->with('success', 'Disciplina cadastrado com sucesso.');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 

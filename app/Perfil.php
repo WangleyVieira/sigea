@@ -19,6 +19,9 @@ class Perfil extends Model implements Auditable
         'updated_at'
     ];
 
+    const ADMIN = 1;
+    const USUARIO_EXTERNO = 2;
+
     protected $table = 'perfils';
 
 }
