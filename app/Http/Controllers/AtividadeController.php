@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Atividade;
 use App\AtividadeQuestao;
 use App\Disciplina;
+use App\Http\Requests\AtividadeStoreRequest;
 use App\Questao;
 use App\Topico;
 use Carbon\Carbon;
@@ -69,20 +70,9 @@ class AtividadeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeAtividade(Request $request)
+    public function storeAtividade(AtividadeStoreRequest $request)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-
-            if($request->id_disciplina == null){
-                return redirect()->back()->with('erro', 'Selecione a disciplina para cadastrar a atividade.');
-            }
-
-            if($request->id_questao == null){
-                return redirect()->back()->with('erro', 'Selecione a questão para cadastrar a atividade.');
-            }
 
             $atividadeCadastrada = new Atividade();
             $atividadeCadastrada->id_disciplina = $request->id_disciplina;

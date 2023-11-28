@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
 use App\Perfil;
 use App\User;
 use Carbon\Carbon;
@@ -13,7 +14,8 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    public function create(){
+    public function create()
+    {
         try {
 
             return view('adm.usuario.create');
@@ -24,7 +26,8 @@ class UserController extends Controller
         }
     }
 
-    public function createUser(){
+    public function createUser()
+    {
         try {
             if(auth()->user()->id_perfil != 1){
                 return redirect()->back()->with('erro', 'Acesso negado.');
@@ -38,41 +41,9 @@ class UserController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
         try {
-            //validacao dos campos
-            $input = [
-                'name' => $request->nome,
-                'email' => $request->email,
-                'password' => $request->password,
-                'confirmacao' =>$request->confirmacao
-            ];
-
-            $regras = [
-                'name' => 'required|max:255',
-                'email' => 'required|max:255',
-                'password' => 'required|min:6',
-                'confirmacao' => 'required|min:6'
-            ];
-
-            $mensagens = [
-                'name.required' => 'O nome é obrigatório.',
-                'name.max' => 'Máximo 255 caracteres.',
-
-                'email.required' => 'O email é obrigatório.',
-                'email.max' => 'Máximo 255 caracteres',
-
-                'password.required' => 'A senha é obrigatória.',
-                'password.min' => 'Minímo 6 caracteres',
-
-                'confirmacao.required' => 'Confirmação é obrigatória',
-                'confirmacao.min' => 'Minímo 6 caracteres',
-            ];
-
-            $validaCampos = Validator::make($input, $regras, $mensagens);
-            $validaCampos->validate();
-
             $verificacaoEmail = User::where('email', '=', $request->email)
                 ->select('name', 'email')
                 ->first();
@@ -109,7 +80,7 @@ class UserController extends Controller
                 $novoUsuario->id_perfil = 2;
             }
 
-            $novoUsuario->ativo = 1;
+            $novoUsuario->ativo = User::ATIVO;
             $novoUsuario->save();
 
             //se não existe um usuário autenticado no sistema
@@ -121,15 +92,9 @@ class UserController extends Controller
             return redirect()->route('adm.usuario.listagem_usuarios')->with('success', 'Cadastro realizado com sucesso.');
 
         }
-        catch (ValidationException $e ) {
-            $message = $e->errors();
-            return redirect()->back()
-                ->withErrors($message)
-                ->withInput();
-        }
         catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 
@@ -171,34 +136,9 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(UserStoreRequest $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-            //validacao dos campos
-            $input = [
-                'name' => $request->nome,
-                'email' => $request->email,
-            ];
-
-            $regras = [
-                'name' => 'required|max:255',
-                'email' => 'required|max:255',
-            ];
-
-            $mensagens = [
-                'name.required' => 'O nome é obrigatório.',
-                'name.max' => 'Máximo 255 caracteres.',
-
-                'email.required' => 'O email é obrigatório.',
-                'email.max' => 'Máximo 255 caracteres',
-            ];
-
-            $validaCampos = Validator::make($input, $regras, $mensagens);
-            $validaCampos->validate();
-
              $verificacao_user = User::where('email', '=', $request->email)
                 ->select('id', 'name', 'email')
                 ->first();
@@ -230,20 +170,14 @@ class UserController extends Controller
             }
             $user->save();
 
-            if($user->id_perfil == 2){
+            if(Auth::user()->id_perfil == 2){
                 return redirect()->route('perfil')->with('success', 'Cadastro alterado com sucesso.');
             }
 
-            if($user->id_perfil == 1){
+            if(Auth::user()->id_perfil == 1){
                 return redirect()->route('adm.usuario.listagem_usuarios')->with('success', 'Cadastro alterado com sucesso.');
             }
 
-        }
-        catch (ValidationException $e ) {
-            $message = $e->errors();
-            return redirect()->back()
-                ->withErrors($message)
-                ->withInput();
         }
         catch (\Exception $ex) {
             // return $ex->getMessage();

@@ -26,6 +26,9 @@ class User extends Authenticatable
         'ativo',
     ];
 
+    const ATIVO = 1;
+    const INATIVO = 0;
+
     /**
      * The attributes that should be hidden for arrays.
      *

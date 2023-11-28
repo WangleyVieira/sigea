@@ -6,7 +6,7 @@ use App\Perfil;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class DisciplinaStoreRequest extends FormRequest
+class AtividadeStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +26,10 @@ class DisciplinaStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'title' => 'required|unique:posts|max:255',
-            'nome' => ['required', 'unique:disciplinas,nome'],
-            'codigo' => ['required'],
-            'id_periodo' => ['required']
+            'id_disciplina' => ['required', 'integer'],
+            'descricao_atividade' => ['required'],
+            'titulo_atividade' => ['required'],
+            'id_questao' => ['required']
         ];
     }
 
@@ -41,10 +41,11 @@ class DisciplinaStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.required' => 'Nome obrigatório',
-            'nome.unique' => 'Existe uma disciplina cadastrado ao informado.',
-            'codigo.required' => 'Código obrigatório',
-            'id_periodo.required' => 'Período obrigatório',
+            'id_disciplina.required' => 'Disciplina obrigatório',
+            'descricao_atividade.required' => 'Descrição da atividade obrigatório',
+            'titulo_atividade.required' => 'Título obrigatório',
+            'id_questao.required' => 'Questão obrigatório',
         ];
     }
+
 }

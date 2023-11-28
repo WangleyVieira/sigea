@@ -11,8 +11,8 @@
 </style>
 @section('content')
 
-@include('errors.alerts')
-@include('errors.errors')
+{{-- @include('errors.alerts')
+@include('errors.errors') --}}
 
     <div class="col-12 col-lg-12">
         <div class="card">
@@ -26,30 +26,44 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Nome</label>
-                            <input type="text" class="form-control" name="nome">
+                            <input type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('nome') }}">
+                            @error('nome')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Email</label>
-                            <input type="text" class="form-control" name="email">
+                            <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
                             <label class="form-label">Senha (mínimo 6 caracteres)</label>
-                            <input class="form-control" type="password" name="password" placeholder="Digite uma senha">
+                            <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Digite uma senha">
+                            @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-4">
                             <label class="form-label">Confirme a senha (mínimo 6 caracteres)</label>
-                            <input class="form-control" type="password" name="confirmacao" placeholder="Confirme novamente a senha">
+                            <input class="form-control @error('confirmacao') is-invalid @enderror" type="password" name="confirmacao" placeholder="Confirme novamente a senha">
+                            @error('confirmacao')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-4">
                             <label class="form-label">Perfil</label>
-                            <select name="id_perfil" id="id_perfil" class="form-control">
+                            <select name="id_perfil" id="id_perfil" class="form-control @error('id_perfil') is-invalid @enderror">
                                 <option value="">-- Selecione -</option>
-                                <option value="1">Administrador</option>
-                                <option value="2">Usuário externo</option>
+                                <option value="1" {{ old('id_perfil') == '1' ? 'selected' : '' }}>Administrador</option>
+                                <option value="2" {{ old('id_perfil') == '2' ? 'selected' : '' }}>Usuário externo</option>
                             </select>
-                            {{-- <input type="text" class="form-control" name="id_perfil" disabled=""> --}}
+                            @error('id_perfil')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="row">
@@ -68,53 +82,53 @@
 
 <script>
 
-    $("#form-user").validate({
-        rules: {
-            nome:{
-                required:true,
-                maxlength:255,
-            },
-            email:{
-                required:true,
-                maxlength:255,
-            },
-            password:{
-                required:true,
-                maxlength:255,
-            },
-            confirmacao:{
-                required:true,
-                maxlength:255,
-            },
-            id_perfil:{
-                required:true,
-                maxlength:255,
-            },
-        },
+    // $("#form-user").validate({
+    //     rules: {
+    //         nome:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //         email:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //         password:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //         confirmacao:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //         id_perfil:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //     },
 
-        messages: {
-            nome:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            email:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            password:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            confirmacao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            id_perfil:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-        }
-    });
+    //     messages: {
+    //         nome:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         email:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         password:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         confirmacao:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         id_perfil:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //     }
+    // });
 
     $(document).ready(function() {
 

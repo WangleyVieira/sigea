@@ -170,8 +170,8 @@ class QuestaoController extends Controller
 
         }
         catch (\Exception $ex) {
-            return $ex->getMessage();
-        //  return redirect()->back()->with('erro', 'Ocorreu um erro ao alterar a questão, entre em contato com Adm.');
+            // return $ex->getMessage();
+         return redirect()->back()->with('erro', 'Ocorreu um erro ao alterar a questão, entre em contato com Adm.');
         }
     }
 

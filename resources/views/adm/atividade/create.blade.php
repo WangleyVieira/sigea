@@ -14,8 +14,8 @@
     }
 </style>
 
-@include('errors.alerts')
-@include('errors.errors')
+{{-- @include('errors.alerts')
+@include('errors.errors') --}}
 
 {{-- <div class="header">
     <h1 class="mt-4">Cadastrar Atividade</h1>
@@ -34,29 +34,41 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="id_disciplina">Disciplinas</label>
-                        <select name="id_disciplina"  id="id_disciplina" class="form-control select2">
+                        <select name="id_disciplina"  id="id_disciplina" class="form-control select2 @error('id_disciplina') is-invalid @enderror">
                             <option value="" selected disabled>-- Selecione a disciplina --</option>
                             @foreach ($disciplinas as $disciplina)
-                                <option value="{{ $disciplina->id }}" name="{{ $disciplina->nome }}">{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option>
+                                <option value="{{ $disciplina->id }}" name="{{ $disciplina->nome }}" {{ $disciplina->id == old('id_disciplina') ? 'selected' : '' }}>{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option>
                             @endforeach
                         </select>
+                        @error('id_disciplina')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-4">
                         <label for="descricao_atividade">Descricao</label>
-                        <input type="text" name="descricao_atividade" id="descricao_atividade" class="form-control">
+                        <input type="text" name="descricao_atividade" id="descricao_atividade" class="form-control @error('descricao_atividade') is-invalid @enderror" value="{{ old('descricao_atividade') }}">
+                        @error('descricao_atividade')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-4">
                         <label for="titulo_atividade">Titulo</label>
-                        <input type="text" name="titulo_atividade" id="titulo_atividade" class="form-control">
+                        <input type="text" name="titulo_atividade" id="titulo_atividade" class="form-control @error('titulo_atividade') is-invalid @enderror" value="{{ old('titulo_atividade') }}">
+                        @error('titulo_atividade')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label class="form-label">*Questões</label>
-                        <select name="id_questao[]" id="id_questao" class="form-control select2" multiple>
+                        <select name="id_questao[]" id="id_questao" class="form-control select2 @error('id_questao') is-invalid @enderror" multiple>
 
                         </select>
+                        @error('id_questao')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="col-12">
                         <input type="submit" class="btn btn-primary" name="Salvar" value="Salvar">
@@ -72,37 +84,37 @@
 
 <script>
 
-    $("#formQuestao").validate({
-        rules: {
-            descricao_atividade:{
-                required:true,
-                maxlength:255,
-            },
-            titulo_atividade:{
-                required:true,
-                maxlength:255,
-            },
-            id_questao:{
-                required:true,
-                maxlength:255,
-            },
-        },
+    // $("#formQuestao").validate({
+    //     rules: {
+    //         descricao_atividade:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //         titulo_atividade:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //         id_questao:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //     },
 
-        messages: {
-            descricao_atividade:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            titulo_atividade:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            id_questao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-        }
-    });
+    //     messages: {
+    //         descricao_atividade:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         titulo_atividade:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         id_questao:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //     }
+    // });
 
 
     $(document).ready(function() {
