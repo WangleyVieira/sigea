@@ -6,7 +6,7 @@ use App\Perfil;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class QuestaoStoreRequest extends FormRequest
+class QuestaoUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class QuestaoStoreRequest extends FormRequest
         if ($usuarioAutenticado == Perfil::USUARIO_EXTERNO) {
             return true;
         }
-
+        
         // return Auth::user()->id_perfil == Perfil::ADMIN;
     }
 
@@ -36,9 +36,6 @@ class QuestaoStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_disciplina' => ['required'],
-            'id_topico' => ['required'],
-            'codigo_questao' => ['required', 'unique:questaos,codigo_questao'],
             'titulo_questao' => ['required'],
             'resposta' => ['required'],
             'descricao' => ['required']
@@ -53,13 +50,10 @@ class QuestaoStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'codigo_questao.required' => 'Código da questão obrigatório',
-            'codigo_questao.unique' => 'Código da questão já está vinculado a um existente',
-            'id_topico.required' => 'Tópico da questão obrigatório',
             'titulo_questao.required' => 'Título obrigatório',
             'resposta.required' => 'Resposta obrigatório',
-            'id_disciplina.required' => 'Disciplina obrigatório',
             'descricao.required' => 'Descrição obrigatório',
         ];
     }
+
 }

@@ -15,8 +15,7 @@
 </style>
 
 @include('errors.alerts')
-@include('errors.errors')
-
+{{-- @include('errors.errors') --}}
 
 <div id="accordion">
     <div class="card">
@@ -27,7 +26,7 @@
             </button>
             </h5>
         </div>
-        <div id="collapse" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+        <div id="collapse" class="collapse show" aria-labelledby="heading" data-parent="#accordion">
             <div class="card-body">
                 <form action="{{ route('adm.topicos.store') }}" method="POST" id="formTopico">
                     @csrf
@@ -35,16 +34,22 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="descricao">Descricao*</label>
-                            <input type="text" name="descricao" id="descricao" class="form-control" required>
+                            <input type="text" name="descricao" id="descricao" class="form-control @error('descricao') is-invalid @enderror" value="{{ old('descricao') }}">
+                            @error('descricao')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-6">
                             <label for="id_disciplina">Vincular à Disciplina</label>
-                            <select name="id_disciplina"  id="id_disciplina" class="form-control select2">
+                            <select name="id_disciplina"  id="id_disciplina" class="form-control select2 @error('id_disciplina') is-invalid @enderror">
                                 <option value="" selected disabled>-- Selecione a disciplina --</option>
                                 @foreach ($disciplinas as $disciplina)
-                                    <option value="{{ $disciplina->id }}">{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option>
+                                    <option value="{{ $disciplina->id }}" {{ $disciplina->id == old('id_disciplina') ? 'selected' : '' }}>{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option>
                                 @endforeach
                             </select>
+                            @error('id_disciplina')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -162,33 +167,33 @@
     </div>
 </div>
 
-<script src="{{asset('../js/jquery.validate.js')}}"></script>
+{{-- <script src="{{asset('../js/jquery.validate.js')}}"></script> --}}
 
 <script>
 
-    $("#formTopico").validate({
-        rules: {
-            descricao:{
-                required:true,
-                maxlength:255,
-            },
-            id_disciplina:{
-                required:true,
-                maxlength:255,
-            },
-        },
+    // $("#formTopico").validate({
+    //     rules: {
+    //         descricao:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //         id_disciplina:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //     },
 
-        messages: {
-            descricao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            id_disciplina:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-        }
-    });
+    //     messages: {
+    //         descricao:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         id_disciplina:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //     }
+    // });
 
     $(document).ready(function() {
 

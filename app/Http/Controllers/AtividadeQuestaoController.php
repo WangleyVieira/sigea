@@ -24,7 +24,7 @@ class AtividadeQuestaoController extends Controller
     {
         try {
             if($request->ajax()){
-                $questoes = Questao::where('id_disciplina', '=', $id)->where('ativo', '=', 1)->get();
+                $questoes = Questao::where('id_disciplina', '=', $id)->where('ativo', '=', Questao::ATIVO)->get();
 
                 return response()->json($questoes);
             }

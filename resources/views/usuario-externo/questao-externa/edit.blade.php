@@ -16,7 +16,7 @@
 </style>
 
 @include('errors.alerts')
-@include('errors.errors')
+{{-- @include('errors.errors') --}}
 
 <div class="card">
     <div class="card-header">
@@ -52,11 +52,17 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="titulo_questao">Título da questão</label>
-                        <input type="text" name="titulo_questao" id="titulo_questao" value="{{ $questao->titulo_questao }}" class="form-control">
+                        <input type="text" name="titulo_questao" id="titulo_questao" value="{{ $questao->titulo_questao }}" class="form-control @error('titulo_questao') is-invalid @enderror">
+                        @error('titulo_questao')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group col-md-6">
                         <label for="resposta">Resposta</label>
-                        <input type="text" name="resposta" id="resposta" class="form-control" value="{{ $questao->resposta }}" >
+                        <input type="text" name="resposta" id="resposta" class="form-control @error('resposta') is-invalid @enderror" value="{{ $questao->resposta }}" >
+                        @error('resposta')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="mb-2 row">
@@ -67,7 +73,10 @@
                             <li>Não é necessário ordenação e não ordenação de pergunta</li>
                             <li>Seguir o modelo conforme no campo abaixo</li>
                         </ul>
-                        <textarea class="form-control" name="descricao" rows="4" > {{ $questao->descricao }} </textarea>
+                        <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" rows="4" > {{ $questao->descricao }} </textarea>
+                        @error('descricao')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
@@ -82,42 +91,41 @@
     </div>
 </div>
 
-<script src="{{asset('../js/jquery.validate.js')}}"></script>
+{{-- <script src="{{asset('../js/jquery.validate.js')}}"></script> --}}
 
 <script>
 
-    $("#formQuestao").validate({
-        rules: {
-            descricao:{
-                required:true,
-                maxlength:255,
-            },
-            // codigo_questao:{
-            //     required:true,
-            //     maxlength:255,
-            // },
-            titulo_questao:{
-                required:true,
-                maxlength:255,
-            },
-        },
+    // $("#formQuestao").validate({
+    //     rules: {
+    //         descricao:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //         // codigo_questao:{
+    //         //     required:true,
+    //         //     maxlength:255,
+    //         // },
+    //         titulo_questao:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //     },
 
-        messages: {
-            descricao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            // codigo_questao:{
-            //     required:"Campo obrigatório",
-            //     maxlength:"Máximo de 255 caracteres"
-            // },
-            titulo_questao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-        }
-    });
-
+    //     messages: {
+    //         descricao:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         // codigo_questao:{
+    //         //     required:"Campo obrigatório",
+    //         //     maxlength:"Máximo de 255 caracteres"
+    //         // },
+    //         titulo_questao:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //     }
+    // });
 
     $(document).ready(function() {
 

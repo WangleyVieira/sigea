@@ -23,8 +23,8 @@ class RelatorioController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            $periodos = Periodo::where('ativo', '=', 1)->get();
-            $disciplinas = Disciplina::orderBy('nome', 'ASC')->where('ativo', '=', 1)->get();
+            $periodos = Periodo::where('ativo', '=', Periodo::ATIVO)->get();
+            $disciplinas = Disciplina::orderBy('nome', 'ASC')->where('ativo', '=', Disciplina::ATIVO)->get();
 
             $contador = Count($disciplinas);
 
@@ -50,7 +50,7 @@ class RelatorioController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            $topicos = Topico::orderBy('id_disciplina', 'ASC')->where('ativo', '=', 1)->get();
+            $topicos = Topico::orderBy('id_disciplina', 'ASC')->where('ativo', '=', Topico::ATIVO)->get();
 
             $contador = Count($topicos);
 
@@ -76,13 +76,13 @@ class RelatorioController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            $periodos = Periodo::where('ativo', '=', 1)->get();
+            $periodos = Periodo::where('ativo', '=', Periodo::ATIVO)->get();
 
-            $disciplinas = Disciplina::where('ativo', '=', 1)->orderBy('nome', 'ASC')->with('topicos')->get();
-            $questoes = Questao::where('ativo', '=', 1)->get();
-            $topicos = Topico::where('ativo', '=', 1)->get();
-            $atividades = Atividade::where('ativo', '=', 1)->get();
-            $usuarios = User::where('ativo', '=', 1)->get();
+            $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->orderBy('nome', 'ASC')->with('topicos')->get();
+            $questoes = Questao::where('ativo', '=', Questao::ATIVO)->get();
+            $topicos = Topico::where('ativo', '=', Topico::ATIVO)->get();
+            $atividades = Atividade::where('ativo', '=', Atividade::ATIVO)->get();
+            $usuarios = User::where('ativo', '=', User::ATIVO)->get();
             // dd($disciplinas[0]->topicos[0]);
 
             $contador = Count($disciplinas);
@@ -104,8 +104,8 @@ class RelatorioController extends Controller
             return $mpdf->Output('Relatório Geral - ' .$dataFormatada. '.pdf', 'I');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu ao exibir o relatório da disciplina');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu ao exibir o relatório da disciplina');
         }
     }
 }

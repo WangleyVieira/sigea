@@ -2,22 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Perfil;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class UserStoreRequest extends FormRequest
+class UserStoreExterno extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return Auth::user()->id_perfil == Perfil::ADMIN;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -30,7 +18,6 @@ class UserStoreRequest extends FormRequest
             'email' => ['required', 'max:200', 'unique:users,email'],
             'password' => ['required', 'min:6'],
             'confirmacao' => ['required', 'min:6'],
-            'id_perfil' => ['required']
         ];
     }
 
@@ -50,8 +37,6 @@ class UserStoreRequest extends FormRequest
             'confirmacao.min' => 'Minímo 6 caracteres',
             'email.required' => 'O email é obrigatório.',
             'email.unique' => 'E-mail já está vinculado a um existente',
-            'id_perfil.required' => 'O Perfil é obrigatório.',
         ];
     }
-
 }

@@ -25,6 +25,9 @@ class Topico extends Model implements Auditable
         'updated_at'
     ];
 
+    const ATIVO = 1;
+    const INATIVO = 0;
+
     protected $table = 'topicos';
 
     public function cad_usuario()

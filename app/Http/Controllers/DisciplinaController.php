@@ -24,12 +24,11 @@ class DisciplinaController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            $periodos = Periodo::where('ativo', '=', 1)->get();
-
-            $disciplinas = Disciplina::where('ativo', '=', 1)
-                            ->with('topicos')->get();
+            $periodos = Periodo::where('ativo', '=', Periodo::ATIVO)->get();
+            $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->with('topicos')->get();
 
             return view('adm.disciplinas.index', compact('disciplinas', 'periodos'));
+
         } catch (\Exception $ex) {
             // $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro ao listas as disciplinas');
@@ -48,7 +47,7 @@ class DisciplinaController extends Controller
                 return redirect()->back()->with('erro', 'Acesso negado.');
             }
 
-            $periodos = Periodo::where('ativo', '=', 1)->get();
+            $periodos = Periodo::where('ativo', '=', Periodo::ATIVO)->get();
 
             return view('adm.disciplinas.create', compact('periodos'));
         } catch (\Exception $ex) {
@@ -155,7 +154,7 @@ class DisciplinaController extends Controller
             $d->dataInativado = Carbon::now();
             $d->inativadoPorUsuario = auth()->user()->id;
             $d->motivoInativado = $request->motivo;
-            $d->ativo = 0;
+            $d->ativo = Disciplina::INATIVO;
             $d->save();
 
             //tópicos

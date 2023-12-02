@@ -21,7 +21,7 @@ Route::post('/logout', 'Auth\LogoutController@logout')->name('logout');
 
 //Cadastrar novo usuário
 Route::get('/cadastrar', 'UserController@create')->name('registrar_usuario');
-Route::post('/store', 'UserController@store')->name('salvar_usuario');
+Route::post('/store', 'UserController@storeExterno')->name('salvar_usuario_externo');
 
 //perfil
 Route::get('/perfil', ['middleware' => 'auth', 'uses' => 'PerfilController@index'])->name('perfil');

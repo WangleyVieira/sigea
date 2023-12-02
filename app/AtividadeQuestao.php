@@ -20,6 +20,9 @@ class AtividadeQuestao extends Model implements Auditable
         'updated_at'
     ];
 
+    const ATIVO = 1;
+    const INATIVO = 0;
+
     protected $table = 'atividade_questaos';
 
     public function cad_usuario()

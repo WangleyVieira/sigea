@@ -12,7 +12,7 @@
     }
 </style>
 @include('errors.alerts')
-@include('errors.errors')
+{{-- @include('errors.errors') --}}
 
 <div id="accordion">
     <div class="card">
@@ -23,7 +23,7 @@
             </button>
             </h5>
         </div>
-        <div id="collapse" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+        <div id="collapse" class="collapse show" aria-labelledby="heading" data-parent="#accordion">
             <div class="card-body">
                 <form action="{{ route('acesso_externo.questoes.store') }}" id="formQuestao" method="POST" class="form_prevent_multiple_submits">
                     @csrf
@@ -31,30 +31,45 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="id_disciplina">Disciplinas</label>
-                            <select name="id_disciplina"  id="id_disciplina" class="form-control select2">
+                            <select name="id_disciplina"  id="id_disciplina" class="form-control select2 @error('id_disciplina') is-invalid @enderror">
                                 <option value="" selected disabled>-- Selecione a disciplina --</option>
                                 @foreach ($disciplinas as $disciplina)
-                                    <option value="{{ $disciplina->id }}">{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option>
+                                    <option value="{{ $disciplina->id }}" {{ $disciplina->id == old('id_disciplina') ? 'selected' : '' }}>{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option>
                                 @endforeach
                             </select>
+                            @error('id_disciplina')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-6">
                             <label for="id_topico">Selecione o Tópico</label>
-                            <select name="id_topico" id="id_topico" class="form-control select2">
+                            <select name="id_topico" id="id_topico" class="form-control select2 @error('id_topico') is-invalid @enderror">
                                 <option value="" selected disabled>-- Selecione --</option>
                             </select>
+                            @error('id_topico')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-4">
                             <label for="codigo_questao">Código da Questão (Letras e Números)</label>
-                            <input type="text" name="codigo_questao" id="codigo_questao" class="form-control">
+                            <input type="text" name="codigo_questao" id="codigo_questao" class="form-control @error('codigo_questao') is-invalid @enderror" value="{{ old('codigo_questao') }}">
+                            @error('codigo_questao')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-4">
                             <label for="titulo_questao">Título da questão</label>
-                            <input type="text" name="titulo_questao" id="titulo_questao" class="form-control">
+                            <input type="text" name="titulo_questao" id="titulo_questao" class="form-control @error('titulo_questao') is-invalid @enderror" value="{{ old('titulo_questao') }}">
+                            @error('titulo_questao')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-4">
                             <label for="resposta">Resposta</label>
-                            <input type="text" name="resposta" id="resposta" class="form-control" placeholder="Digite a resposta da questão" >
+                            <input type="text" name="resposta" id="resposta" class="form-control @error('resposta') is-invalid @enderror" placeholder="Digite a resposta da questão" value="{{ old('resposta') }}">
+                            @error('resposta')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="mb-2 row">
@@ -66,7 +81,10 @@
                             <li>Seguir o modelo conforme no campo abaixo</li>
                         </ul>
                         {{-- <br> --}}
-                            <textarea class="form-control" name="descricao" rows="4" placeholder="Digite sua pergunta?"></textarea>
+                            <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" rows="4" placeholder="Digite sua pergunta?">{{ old('descricao') }}</textarea>
+                            @error('descricao')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="row">
@@ -264,49 +282,49 @@
 </div>
 
 
-<script src="{{asset('../js/jquery.validate.js')}}"></script>
+{{-- <script src="{{asset('../js/jquery.validate.js')}}"></script> --}}
 
 <script>
 
-    $("#formQuestao").validate({
-        rules: {
-            descricao:{
-                required:true,
-                maxlength:1200,
-            },
-            codigo_questao:{
-                required:true,
-                maxlength:255,
-            },
-            titulo_questao:{
-                required:true,
-                maxlength:255,
-            },
-            resposta:{
-                required:true,
-                maxlength:1200,
-            },
-        },
+    // $("#formQuestao").validate({
+    //     rules: {
+    //         descricao:{
+    //             required:true,
+    //             maxlength:1200,
+    //         },
+    //         codigo_questao:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //         titulo_questao:{
+    //             required:true,
+    //             maxlength:255,
+    //         },
+    //         resposta:{
+    //             required:true,
+    //             maxlength:1200,
+    //         },
+    //     },
 
-        messages: {
-            descricao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            codigo_questao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            titulo_questao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            respota:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-        }
-    });
+    //     messages: {
+    //         descricao:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         codigo_questao:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         titulo_questao:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //         respota:{
+    //             required:"Campo obrigatório",
+    //             maxlength:"Máximo de 255 caracteres"
+    //         },
+    //     }
+    // });
 
 
     $(document).ready(function() {

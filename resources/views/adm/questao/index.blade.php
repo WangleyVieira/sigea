@@ -40,7 +40,7 @@
                             <select name="id_disciplina"  id="id_disciplina" class="form-control select2 @error('id_disciplina') is-invalid @enderror">
                                 <option value="" selected disabled>-- Selecione a disciplina --</option>
                                 @foreach ($disciplinas as $disciplina)
-                                    <option value="{{ $disciplina->id }}">{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option>
+                                    <option value="{{ $disciplina->id }}" >{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option>
                                     {{-- <option value="{{ $disciplina->id }}" {{ $disciplina->id == old('id_disciplina') ? 'selected' : '' }}>{{ $disciplina->nome }} - {{ $disciplina->codigo }}</option> --}}
                                 @endforeach
                             </select>

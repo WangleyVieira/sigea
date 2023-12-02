@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreExterno;
 use App\Http\Requests\UserStoreRequest;
 use App\Perfil;
 use App\User;
@@ -44,15 +45,6 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         try {
-            $verificacaoEmail = User::where('email', '=', $request->email)
-                ->select('name', 'email')
-                ->first();
-
-            //verifica se existe um email cadastrado
-            if($verificacaoEmail){
-                return redirect()->back()->with('erro', 'E-mail cadastrado no sistema.');
-            }
-
             $novoUsuario = new User();
 
             if($request->password != null){
@@ -90,6 +82,41 @@ class UserController extends Controller
             }
             //se existe usuário autenticado, redireciona a tela de login
             return redirect()->route('adm.usuario.listagem_usuarios')->with('success', 'Cadastro realizado com sucesso.');
+
+        }
+        catch (\Exception $ex) {
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+        }
+    }
+
+    public function storeExterno(UserStoreExterno $request)
+    {
+        try {
+
+            $novoUsuario = new User();
+
+            if($request->password != null){
+                //verificação de senhas
+                if($request->password != $request->confirmacao){
+                    return redirect()->back()->with('erro', 'Senhas não conferem.');
+                }
+
+                $tamanhoSenha = strlen($request->password);
+                if($tamanhoSenha < 6){
+                    return redirect()->back()->with('erro', 'Senha fraca! Insira uma no minímo 6 caracteres.');
+                }
+
+                $novoUsuario->password = Hash::make($request->password);
+            }
+
+            $novoUsuario->name = $request->nome;
+            $novoUsuario->email = $request->email;
+            $novoUsuario->id_perfil = Perfil::USUARIO_EXTERNO;
+            $novoUsuario->ativo = User::ATIVO;
+            $novoUsuario->save();
+
+            return redirect()->route('login')->with('success', 'Cadastro realizado com sucesso.');
 
         }
         catch (\Exception $ex) {

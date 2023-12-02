@@ -64,26 +64,38 @@ rel="stylesheet"
             </div>
 
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form action="{{route('salvar_usuario')}}" method="POST" id="form" class="form_prevent_multiple_submits">
+                <form action="{{route('salvar_usuario_externo')}}" method="POST" id="form" class="form_prevent_multiple_submits">
                     @csrf
                     @method('POST')
-                    @include('errors.alerts')
-                    @include('errors.errors')
+                    {{-- @include('errors.alerts')
+                    @include('errors.errors') --}}
                     <div class="mb-3">
                         <label for="text">Nome</label>
-                        <input type="text" name="nome" id="nome" class="form-control form-control-lg" placeholder="Informe seu nome">
+                        <input type="text" name="nome" id="nome" class="form-control form-control-lg @error('nome') is-invalid @enderror" placeholder="Informe seu nome" value="{{ old('nome') }}">
+                        @error('nome')
+                            <div class="invalid-feedback">{{ $message }}</div><br>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="email">E-mail</label>
-                        <input type="text" name="email" id="email" class="form-control form-control-lg" placeholder="Informe e-mail">
+                        <input type="text" name="email" id="email" class="form-control form-control-lg @error('email') is-invalid @enderror" placeholder="Informe e-mail" value="{{ old('email') }}">
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div><br>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="password">Senha</label>
-                        <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="Informe a senha">
+                        <input type="password" name="password" id="password" class="form-control form-control-lg @error('password') is-invalid @enderror" placeholder="Informe a senha">
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div><br>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="password">Confirme novamente a senha</label>
-                        <input type="password" name="confirmacao" id="confirmacao" class="form-control form-control-lg" placeholder="Confirme novamente a senha">
+                        <input type="password" name="confirmacao" id="confirmacao" class="form-control form-control-lg @error('confirmacao') is-invalid @enderror" placeholder="Confirme novamente a senha">
+                        @error('confirmacao')
+                            <div class="invalid-feedback">{{ $message }}</div><br>
+                        @enderror
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="btn btn-lg btn-outline-primary" style="width: 100%">Cadastrar</button>

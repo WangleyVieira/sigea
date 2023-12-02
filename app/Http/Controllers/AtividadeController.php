@@ -191,8 +191,8 @@ class AtividadeController extends Controller
             return redirect()->route('adm.atividades.index')->with('success', 'Atividade atualizado com sucesso.');
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
