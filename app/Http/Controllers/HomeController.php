@@ -15,9 +15,7 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
+            
             //realiza a model e realiza a contagem (count)
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->count();
             $topicos = Topico::where('ativo', '=', Topico::ATIVO)->count();

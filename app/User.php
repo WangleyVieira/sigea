@@ -51,6 +51,15 @@ class User extends Authenticatable
     public function perfil()
     {
         return $this->belongsTo(Perfil::class, 'id_perfil');
+    }
 
+    public function isAdmin()
+    {
+        return $this->id_perfil == Perfil::ADMIN;
+    }
+
+    public function isUserExterno()
+    {
+        return $this->id_perfil == Perfil::USUARIO_EXTERNO;
     }
 }

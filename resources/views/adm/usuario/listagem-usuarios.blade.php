@@ -31,51 +31,53 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($usuarios as $usuario)
-                        <tr>
-                            <td> {{ $usuario->name }}</td>
-                            <td> {{ $usuario->email }}</td>
-                            <td> {{ $usuario->perfil->descricao }}</td>
-                            <td> {{ $usuario->created_at != null && $usuario->created_at != "" ? $usuario->created_at->format('d/m/Y H:i:s') : '-' }} </td>
-                            <td> {{ $usuario->updated_at != null && $usuario->updated_at != "" ? $usuario->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
-                            <td>
-                                <a href="{{ route('adm.usuario.edit', $usuario->id) }}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
-                            </td>
-                            <td>
-                                <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $usuario->id }}"><i class="fas fa-trash"></i></a>
-                            </td>
+                    @can('listarUsuarios')
+                        @foreach ($usuarios as $usuario)
+                            <tr>
+                                <td> {{ $usuario->name }}</td>
+                                <td> {{ $usuario->email }}</td>
+                                <td> {{ $usuario->perfil->descricao }}</td>
+                                <td> {{ $usuario->created_at != null && $usuario->created_at != "" ? $usuario->created_at->format('d/m/Y H:i:s') : '-' }} </td>
+                                <td> {{ $usuario->updated_at != null && $usuario->updated_at != "" ? $usuario->updated_at->format('d/m/Y H:i:s') : '-' }} </td>
+                                <td>
+                                    <a href="{{ route('adm.usuario.edit', $usuario->id) }}" class="btn btn-outline-warning"><i class="fas fa-pen"></i></a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-danger" data-toggle="modal" data-target="#dangerModal{{ $usuario->id }}"><i class="fas fa-trash"></i></a>
+                                </td>
 
-                             {{-- modal de excluir --}}
-                             <div class="modal fade" id="dangerModal{{ $usuario->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
+                                {{-- modal de excluir --}}
+                                <div class="modal fade" id="dangerModal{{ $usuario->id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
 
-                                        <form action="{{ route('adm.usuario.destroy', $usuario->id) }}" method="POST" id="delete_form">
-                                            @csrf
-                                            @method('POST')
-                                            <div class="modal-header" style="background-color: rgb(218, 105, 105)">
-                                                <h5 class="modal-title">Tem certeza que deseja excluir a usuário <strong>{{ $usuario->name }}</strong> ?</b></h5>
-                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <label for="motivo" class="form-label">Motivo</label>
-                                                        <input type="text" class="form-control" name="motivo" id="" required>
+                                            <form action="{{ route('adm.usuario.destroy', $usuario->id) }}" method="POST" id="delete_form">
+                                                @csrf
+                                                @method('POST')
+                                                <div class="modal-header" style="background-color: rgb(218, 105, 105)">
+                                                    <h5 class="modal-title">Tem certeza que deseja excluir a usuário <strong>{{ $usuario->name }}</strong> ?</b></h5>
+                                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label for="motivo" class="form-label">Motivo</label>
+                                                            <input type="text" class="form-control" name="motivo" id="" required>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                                                <button type="submit" class="btn btn-danger">Excluir</button>
-                                            </div>
-                                        </form>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                                </div>
+                                            </form>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </tr>
-                    @endforeach
+                            </tr>
+                        @endforeach
+                    @endcan
                 </tbody>
             </table>
         </div>
@@ -100,15 +102,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($usuarios_inativos as $ui)
-                        <tr>
-                            <td> {{ $ui->name }}</td>
-                            <td> {{ $ui->email }}</td>
-                            <td> {{ $ui->perfil->descricao }}</td>
-                            <td> {{ $ui->created_at != null && $ui->created_at != "" ? $ui->created_at->format('d/m/Y H:i:s') : '-' }} </td>
-                            <td> {{  date('d/m/Y', strtotime( $ui->dataInativado != "" && $ui->dataInativado != null ? $ui->dataInativado : ' - '))}} </td>
-                        </tr>
-                    @endforeach
+                    @can('listarUsuarios')
+                        @foreach ($usuarios_inativos as $ui)
+                            <tr>
+                                <td> {{ $ui->name }}</td>
+                                <td> {{ $ui->email }}</td>
+                                <td> {{ $ui->perfil->descricao }}</td>
+                                <td> {{ $ui->created_at != null && $ui->created_at != "" ? $ui->created_at->format('d/m/Y H:i:s') : '-' }} </td>
+                                <td> {{  date('d/m/Y', strtotime( $ui->dataInativado != "" && $ui->dataInativado != null ? $ui->dataInativado : ' - '))}} </td>
+                            </tr>
+                        @endforeach
+                    @endcan
                 </tbody>
             </table>
         </div>

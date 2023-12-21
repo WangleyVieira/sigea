@@ -32,7 +32,7 @@ Route::post('/perfil/{id}', ['middleware' => 'auth', 'uses' => 'PerfilController
 
 
 //Acesso ADM
-Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], function(){
+Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => ['auth', 'acessoAdm']], function(){
 
     Route::get('/dashboard', 'HomeController@index')->name('index_adm');
 
@@ -109,7 +109,7 @@ Route::group(['prefix' => '/adm', 'as' => 'adm.', 'middleware' => 'auth'], funct
 });
 
 // Acesso Usuário externo
-Route::group(['prefix' => '/acesso-externo', 'as' => 'acesso_externo.', 'middleware' => 'auth'], function(){
+Route::group(['prefix' => '/acesso-externo', 'as' => 'acesso_externo.', 'middleware' => ['auth', 'acessoExterno']], function(){
 
     Route::group(['prefix' => '/questoes', 'as' => 'questoes.'], function(){
         Route::get('', 'QuestaoExternoController@index')->name('index_externo');

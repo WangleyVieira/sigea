@@ -5,7 +5,7 @@
 @section('content')
 
 @include('errors.alerts')
-@include('errors.errors')
+{{-- @include('errors.errors') --}}
 
     <div class="col-12 col-lg-12">
         <div class="card">
@@ -20,11 +20,17 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label class="form-label">Nome</label>
-                            <input type="text" class="form-control" value="{{ $user->name }}" name="nome">
+                            <input type="text" class="form-control @error('nome') is-invalid @enderror" value="{{ $user->name }}" name="nome">
+                            @error('nome')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-label">Email</label>
-                            <input type="text" class="form-control" value="{{ $user->email }}" name="email">
+                            <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ $user->email }}" name="email">
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="row">

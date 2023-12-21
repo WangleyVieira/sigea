@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PerfilUpdateRequest;
 use App\Perfil;
 use App\User;
 use Illuminate\Http\Request;
@@ -81,51 +82,9 @@ class PerfilController extends Controller
      * @param  \App\Perfil  $perfil
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PerfilUpdateRequest $request, $id)
     {
         try {
-            //validacao dos campos
-            $input = [
-                'name' => $request->nome,
-                'email' => $request->email,
-                // 'password' => $request->password,
-                // 'confirmacao' =>$request->confirmacao
-            ];
-
-            $regras = [
-                'name' => 'required|max:255',
-                'email' => 'required|max:255',
-                // 'password' => 'required|min:6',
-                // 'confirmacao' => 'required|min:6'
-            ];
-
-            $mensagens = [
-                'name.required' => 'O nome é obrigatório.',
-                'name.max' => 'Máximo 255 caracteres.',
-
-                'email.required' => 'O email é obrigatório.',
-                'email.max' => 'Máximo 255 caracteres',
-
-                // 'password.required' => 'Asenha é obrigatória.',
-                // 'password.min' => 'Minímo 6 caracteres',
-
-                // 'confirmacao.required' => 'Confirmação é obrigatória',
-                // 'confirmacao.min' => 'Minímo 6 caracteres',
-            ];
-
-            $validaCampos = Validator::make($input, $regras, $mensagens);
-            $validaCampos->validate();
-
-             $verificacao_user = User::where('email', '=', $request->email)
-                ->select('id', 'name', 'email')
-                ->first();
-
-            //verifica se existe um email cadastrado
-            if($verificacao_user){
-                if($verificacao_user->id != $id){
-                    return redirect()->back()->with('erro', 'Existe e-mail cadastrado no sistema.');
-                }
-            }
 
             $user = User::find($id);
             $user->name = $request->nome;
@@ -150,15 +109,10 @@ class PerfilController extends Controller
             return redirect()->back()->with('success', 'Cadastro alterado com sucesso.');
 
         }
-        catch (ValidationException $e ) {
-            $message = $e->errors();
-            return redirect()->back()
-                ->withErrors($message)
-                ->withInput();
-        }
+
         catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 

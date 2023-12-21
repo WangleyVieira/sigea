@@ -71,11 +71,13 @@ rel="stylesheet"
                     @include('errors.errors')
                     <div class="mb-3">
                         <label for="email">E-mail</label>
-                        <input type="text" name="email" id="email" class="form-control form-control-lg" placeholder="Digite seu e-mail">
+                        <input type="text" name="email" id="email" class="form-control form-control-lg" placeholder="Digite seu e-mail" value="{{ old('email') }}">
                     </div>
                     <div class="mb-3">
                         <label for="password">Senha</label>
-                        <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="Digite sua senha">
+                        <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="Digite sua senha" value="{{ old('password') }}">
+                        <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()">
+                        <label for="showPassword">Mostrar Senha</label>
                     </div>
                     <div class="mt-3">
                         <button type="submit" class="btn btn-lg btn-outline-success" style="width: 100%">Entrar</button>
@@ -99,5 +101,19 @@ rel="stylesheet"
 <script src="{{ url('js/bootstrap.js') }}"></script>
 
 </body>
+
+<script>
+    function togglePasswordVisibility() {
+      var passwordInput = document.getElementById('password');
+      var showPasswordCheckbox = document.getElementById('showPassword');
+
+      if (showPasswordCheckbox.checked) {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    }
+</script>
+
 
 </html>

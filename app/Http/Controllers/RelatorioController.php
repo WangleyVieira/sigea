@@ -19,9 +19,6 @@ class RelatorioController extends Controller
     public function disciplinas()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $periodos = Periodo::where('ativo', '=', Periodo::ATIVO)->get();
             $disciplinas = Disciplina::orderBy('nome', 'ASC')->where('ativo', '=', Disciplina::ATIVO)->get();
@@ -37,7 +34,8 @@ class RelatorioController extends Controller
 
             return $mpdf->Output('Relatório disciplinas - ' .$dataFormatada. '.pdf', 'I');
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             // $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu ao exibir o relatório da disciplina');
         }
@@ -46,9 +44,6 @@ class RelatorioController extends Controller
     public function topicos()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $topicos = Topico::orderBy('id_disciplina', 'ASC')->where('ativo', '=', Topico::ATIVO)->get();
 
@@ -63,7 +58,8 @@ class RelatorioController extends Controller
 
             return $mpdf->Output('Relatório tópicos - ' .$dataFormatada. '.pdf', 'I');
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             $ex->getMessage();
             // return redirect()->back()->with('erro', 'Ocorreu ao exibir o relatório da disciplina');
         }
@@ -72,9 +68,6 @@ class RelatorioController extends Controller
     public function relatorioGeral()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $periodos = Periodo::where('ativo', '=', Periodo::ATIVO)->get();
 
@@ -103,7 +96,8 @@ class RelatorioController extends Controller
 
             return $mpdf->Output('Relatório Geral - ' .$dataFormatada. '.pdf', 'I');
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu ao exibir o relatório da disciplina');
         }

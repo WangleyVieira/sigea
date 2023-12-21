@@ -30,10 +30,7 @@ class UserController extends Controller
     public function createUser()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-
+            
             return view('adm.usuario.create-user');
 
         } catch (\Exception $ex) {
@@ -128,9 +125,6 @@ class UserController extends Controller
     public function listagemUsuarios()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
             //usuários ativos
             $usuarios = User::where('ativo', '=', 1)->get();
 
@@ -140,18 +134,14 @@ class UserController extends Controller
             return view('adm.usuario.listagem-usuarios', compact('usuarios', 'usuarios_inativos'));
 
         } catch (\Exception $ex) {
-            // return $ex->getMessage();
-            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+            return $ex->getMessage();
+            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 
     public function edit($id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-
             $user = User::find($id);
             $perfils = Perfil::where('ativo', '=', 1)->get();
 
@@ -215,10 +205,6 @@ class UserController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-
             $usuario = User::find($id);
 
             if(auth()->user()->id == $usuario->id) {

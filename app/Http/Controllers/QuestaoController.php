@@ -25,10 +25,7 @@ class QuestaoController extends Controller
     public function index()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-
+           
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
             $topicos = Topico::where('ativo', '=', Topico::ATIVO)->get();
             $questoes = Questao::where('cadastradoPorUsuario', '!=', Auth::user()->id)->where('ativo', '=', Questao::ATIVO)->get();
@@ -38,7 +35,8 @@ class QuestaoController extends Controller
 
             return view('adm.questao.index', compact('questoes', 'disciplinas', 'topicos', 'minhasQuestoes'));
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
@@ -47,13 +45,15 @@ class QuestaoController extends Controller
     public function buscaTopico(Request $request, $id)
     {
         try {
+
             if($request->ajax()){
                 $topicos = Topico::where('id_disciplina', '=', $id)->where('ativo', '=', Topico::ATIVO)->get();
 
                 return response()->json($topicos);
             }
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
@@ -67,9 +67,7 @@ class QuestaoController extends Controller
     public function create()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
+
             // $disciplinas = Disciplina::where('ativo', '=', 1)->with('topicos')->get();
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
             $topicos = Topico::where('ativo', '=', Topico::ATIVO)->get();
@@ -91,6 +89,7 @@ class QuestaoController extends Controller
     public function store(QuestaoStoreRequest $request)
     {
         try {
+
             $novaQuestao = new Questao();
             $novaQuestao->descricao = $request->descricao;
             $novaQuestao->id_topico = $request->id_topico;
@@ -131,9 +130,6 @@ class QuestaoController extends Controller
     public function edit($id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $questao = Questao::find($id);
             // $disciplinas = Disciplina::where('ativo', '=', 1)->get();
@@ -159,6 +155,7 @@ class QuestaoController extends Controller
     public function update(QuestaoUpdateRequest $request, $id)
     {
         try {
+
             $questao = Questao::find($id);
             $questao->descricao = $request->descricao;
             // $questao->id_topico = $request->id_topico;
@@ -186,9 +183,6 @@ class QuestaoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $questao = Questao::find($request->id);
             $questao->dataInativado = Carbon::now();

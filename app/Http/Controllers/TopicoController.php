@@ -19,9 +19,6 @@ class TopicoController extends Controller
     public function index()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $disciplinas = Disciplina::with('topicos')->where('ativo', '=', Disciplina::ATIVO)->get();
 
@@ -52,6 +49,7 @@ class TopicoController extends Controller
     public function store(TopicoStoreRequest $request)
     {
         try {
+
             $novoTopico = new Topico();
             $novoTopico->descricao = $request->descricao;
             $novoTopico->id_disciplina = $request->id_disciplina;
@@ -99,9 +97,6 @@ class TopicoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $top = Topico::find($id);
             $top->descricao = $request->topico;
@@ -125,9 +120,6 @@ class TopicoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $top = Topico::find($id);
             $top->inativadoPorUsuario = auth()->user()->id;

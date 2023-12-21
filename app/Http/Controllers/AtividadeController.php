@@ -22,14 +22,6 @@ class AtividadeController extends Controller
     public function index()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
-            // $atividades = Disciplina::where('ativo', '=', 1)
-            //     ->with('atividades')
-            //     ->with('questoes')
-            //     ->get();
-
             $atividadesExternas = Atividade::where('ativo', '=', 1)->where('cadastradoPorUsuario', '!=', auth()->user()->id)->get();
             $minhasAtividades = Atividade::where('ativo', '=', 1)->where('cadastradoPorUsuario', '=', auth()->user()->id)->get();
 
@@ -49,9 +41,6 @@ class AtividadeController extends Controller
     public function create()
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $questoes = Questao::where('ativo', '=', 1)->get();
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
@@ -120,9 +109,6 @@ class AtividadeController extends Controller
     public function edit(Request $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividade = Atividade::find($id);
             $disciplinas = Disciplina::where('ativo', '=', 1)->get();
@@ -156,9 +142,6 @@ class AtividadeController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividadeAtualizar = Atividade::find($id);
             $atividadeAtualizar->descricao = $request->descricao_atividade;
@@ -205,9 +188,6 @@ class AtividadeController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividade = Atividade::find($id);
             $atividade->motivoInativado = $request->motivo;
@@ -227,9 +207,6 @@ class AtividadeController extends Controller
     public function pdfAtividade($id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividade = Atividade::find($id);
             $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
@@ -276,9 +253,6 @@ class AtividadeController extends Controller
     public function gabarito($id)
     {
         try {
-            if(auth()->user()->id_perfil != 1){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividade = Atividade::find($id);
             $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();

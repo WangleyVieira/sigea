@@ -21,9 +21,6 @@ class AtividadeExternoController extends Controller
     public function index()
     {
         try {
-            if(auth()->user()->id_perfil != 2){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividades = Atividade::where('cadastradoPorUsuario', '!=', auth()->user()->id)->where('ativo', '=', 1)->get();
             $minhasAtividades = Atividade::where('cadastradoPorUsuario', '=', auth()->user()->id)->where('ativo', '=', 1)->get();
@@ -44,12 +41,9 @@ class AtividadeExternoController extends Controller
     public function create()
     {
         try {
-            if(auth()->user()->id_perfil != 2){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
-            $questoes = Questao::where('ativo', '=', 1)->get();
-            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            $questoes = Questao::where('ativo', '=', Questao::ATIVO)->get();
+            $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
 
             return view('usuario-externo.atividade-externo.create', compact('disciplinas', 'questoes'));
 
@@ -68,9 +62,6 @@ class AtividadeExternoController extends Controller
     public function store(Request $request)
     {
         try {
-            if(auth()->user()->id_perfil != 2){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             if($request->id_disciplina == null){
                 return redirect()->back()->with('erro', 'Selecione a disciplina para cadastrar a atividade.');
@@ -100,7 +91,8 @@ class AtividadeExternoController extends Controller
 
             return redirect()->route('acesso_externo.atividades.index')->with('success', 'Cadastro realizado com sucesso.');
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
@@ -116,14 +108,11 @@ class AtividadeExternoController extends Controller
     public function edit($id)
     {
         try {
-            if(auth()->user()->id_perfil != 2){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividade = Atividade::find($id);
-            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
-            $questaoAtv = Questao::where('id_disciplina', '=', $atividade->id_disciplina)->where('ativo', '=', 1)->get();
+            $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', AtividadeQuestao::ATIVO)->get();
+            $questaoAtv = Questao::where('id_disciplina', '=', $atividade->id_disciplina)->where('ativo', '=', Questao::ATIVO)->get();
 
             $questoesArray = array();
 
@@ -152,9 +141,6 @@ class AtividadeExternoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 2){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividadeAtualizar = Atividade::find($id);
             $atividadeAtualizar->descricao = $request->descricao_atividade;
@@ -169,7 +155,7 @@ class AtividadeExternoController extends Controller
 
                 for ($i = 0; $i < Count($questoesAtualizar); $i++) {
 
-                    $atv = Questao::where('id', '=', $questoesAtualizar[$i])->where('ativo', '=', 1)->first();
+                    $atv = Questao::where('id', '=', $questoesAtualizar[$i])->where('ativo', '=', Questao::ATIVO)->first();
 
                     if($atv){
                         //se não for questao desta atividade, adiciona
@@ -186,7 +172,8 @@ class AtividadeExternoController extends Controller
 
             return redirect()->route('acesso_externo.atividades.index')->with('success', 'Atividade atualizado com sucesso.');
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
@@ -201,9 +188,6 @@ class AtividadeExternoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            if(auth()->user()->id_perfil != 2){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividade = Atividade::find($id);
             $atividade->motivoInativado = $request->motivo;
@@ -229,12 +213,9 @@ class AtividadeExternoController extends Controller
     public function pdfAtividade($id)
     {
         try {
-            if(auth()->user()->id_perfil != 2){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividade = Atividade::find($id);
-            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', AtividadeQuestao::ATIVO)->get();
             $questaoAtv = Questao::where('ativo', '=', 1)->get();
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
@@ -249,7 +230,8 @@ class AtividadeExternoController extends Controller
 
             return $mpdf->Output('Atividade - ' .$atividade->titulo_atividade. ' - ' .$dataFormatada. '.pdf', 'I');
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
@@ -258,12 +240,9 @@ class AtividadeExternoController extends Controller
     public function gabarito($id)
     {
         try {
-            if(auth()->user()->id_perfil != 2){
-                return redirect()->back()->with('erro', 'Acesso negado.');
-            }
 
             $atividade = Atividade::find($id);
-            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', AtividadeQuestao::ATIVO)->get();
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 
@@ -274,7 +253,8 @@ class AtividadeExternoController extends Controller
 
             return $mpdf->Output('Resposta - ' .$atividade->titulo_atividade . '-' .$dataFormatada. '.pdf', 'I');
 
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
