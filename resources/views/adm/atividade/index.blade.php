@@ -5,7 +5,7 @@
 @section('content')
 
 @include('errors.alerts')
-@include('errors.errors')
+{{-- @include('errors.errors') --}}
 
 {{-- <div class="header">
     <h1 class="mt-4">Listagem de atividades</h1>

@@ -264,38 +264,6 @@
 
 <script>
 
-    /*$("#formDisciplina").validate({
-        rules: {
-            disciplina:{
-                required:true,
-                maxlength:255,
-            },
-            codigo:{
-                required:true,
-                maxlength:255,
-            },
-            id_periodo:{
-                required:true,
-                maxlength:255,
-            },
-        },
-
-        messages: {
-            disciplina:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            codigo:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            id_periodo:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-        }
-    });*/
-
     $(document).ready(function() {
 
         $('.select2').select2({

@@ -11,8 +11,8 @@
         text-transform: uppercase;
     }
 </style>
-{{-- @include('errors.alerts')
-@include('errors.errors') --}}
+@include('errors.alerts')
+{{-- @include('errors.errors') --}}
 
 {{-- <div class="header">
     <h1 class="mt-4">Questões cadastradas</h1>
@@ -303,47 +303,6 @@
 <script src="{{asset('../js/jquery.validate.js')}}"></script>
 
 <script>
-    /*
-    $("#formQuestao").validate({
-        rules: {
-            descricao:{
-                required:true,
-                maxlength:1200,
-            },
-            codigo_questao:{
-                required:true,
-                maxlength:255,
-            },
-            titulo_questao:{
-                required:true,
-                maxlength:255,
-            },
-            resposta:{
-                required:true,
-                maxlength:1200,
-            },
-        },
-
-        messages: {
-            descricao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            codigo_questao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            titulo_questao:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-            resposta:{
-                required:"Campo obrigatório",
-                maxlength:"Máximo de 255 caracteres"
-            },
-        }
-    });
-    */
 
     $(document).ready(function() {
 

@@ -109,7 +109,7 @@ class AtividadeController extends Controller
     {
         try {
 
-            $atividade = Atividade::find($id);
+            $atividade = Atividade::findOrFail($id);
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
             $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', AtividadeQuestao::ATIVO)->get();
             $questaoAtv = Questao::where('id_disciplina', '=', $atividade->id_disciplina)->where('ativo', '=', Questao::ATIVO)->get();
@@ -126,8 +126,8 @@ class AtividadeController extends Controller
             return view('adm.atividade.edit', compact('atividade', 'disciplinas', 'atividadeQuestoes', 'questoesArray'));
 
         } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
 
@@ -142,12 +142,13 @@ class AtividadeController extends Controller
     {
         try {
 
-            $atividadeAtualizar = Atividade::find($id);
-            $atividadeAtualizar->descricao = $request->descricao_atividade;
-            $atividadeAtualizar->titulo_atividade = $request->titulo_atividade;
-            $atividadeAtualizar->alteradoPorUsuario = auth()->user()->id;
-            $atividadeAtualizar->ativo = 1;
-            $atividadeAtualizar->save();
+            $atividadeAtualizar = Atividade::findOrFail($id);
+            $atividadeAtualizar->update([
+                'descricao' => $request->descricao_atividade,
+                'titulo_atividade' => $request->titulo_atividade,
+                'alteradoPorUsuario' => Auth::user()->id,
+                'ativo' => Atividade::ATIVO
+            ]);
 
             $questoesAtualizar = $request->id_questao;
 
@@ -160,11 +161,11 @@ class AtividadeController extends Controller
                     if($atv){
                         //se não for questao desta atividade, adiciona
                         if($atv->pertencenteAtividade($id) == 0){
-                            $questaoAtividadeAtualizar = new AtividadeQuestao();
-                            $questaoAtividadeAtualizar->id_atividade = $atividadeAtualizar->id;
-                            $questaoAtividadeAtualizar->id_questao = $questoesAtualizar[$i];
-                            $questaoAtividadeAtualizar->ativo = 1;
-                            $questaoAtividadeAtualizar->save();
+                            AtividadeQuestao::create([
+                                'id_atividade' => $atividadeAtualizar->id,
+                                'id_questao' => $questoesAtualizar[$i],
+                                'ativo' => AtividadeQuestao::ATIVO,
+                            ]);
                         }
                     }
                 }
@@ -188,12 +189,13 @@ class AtividadeController extends Controller
     {
         try {
 
-            $atividade = Atividade::find($id);
-            $atividade->motivoInativado = $request->motivo;
-            $atividade->inativadoPorUsuario = auth()->user()->id;
-            $atividade->dataInativado = Carbon::now();
-            $atividade->ativo = 0;
-            $atividade->save();
+            $atividade = Atividade::findOrFail($id);
+            $atividade->update([
+                'motivoInativado' => $request->motivo,
+                'inativadoPorUsuario' => Auth::user()->id,
+                'dataInativado' => Carbon::now(),
+                'ativo' => Atividade::INATIVO
+            ]);
 
             return redirect()->route('adm.atividades.index')->with('success', 'Atividade excluído com sucesso.');
 
