@@ -5,7 +5,7 @@
 @section('content')
 
 @include('errors.alerts')
-@include('errors.errors')
+{{-- @include('errors.errors') --}}
 
 {{-- <div class="header">
     <h1 class="mt-4">Usuários ativos</h1>
@@ -31,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @can('listarUsuarios')
+                    {{-- @can('listarUserExterno') --}}
                         @foreach ($usuarios as $usuario)
                             <tr>
                                 <td> {{ $usuario->name }}</td>
@@ -77,7 +77,7 @@
                                 </div>
                             </tr>
                         @endforeach
-                    @endcan
+                    {{-- @endcan --}}
                 </tbody>
             </table>
         </div>
@@ -102,7 +102,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @can('listarUsuarios')
+                    {{-- @can('listarUsuarios') --}}
                         @foreach ($usuarios_inativos as $ui)
                             <tr>
                                 <td> {{ $ui->name }}</td>
@@ -112,7 +112,7 @@
                                 <td> {{  date('d/m/Y', strtotime( $ui->dataInativado != "" && $ui->dataInativado != null ? $ui->dataInativado : ' - '))}} </td>
                             </tr>
                         @endforeach
-                    @endcan
+                    {{-- @endcan --}}
                 </tbody>
             </table>
         </div>

@@ -20,8 +20,16 @@ class UserPolicy
         //
     }
 
-    public function listarUsuarios(User $user, Perfil $perfil)
+    /**
+     * Determine if the given user can list users.
+     *
+     * @param  \App\User  $user
+     * @return bool
+     */
+    public function listarUserExterno(User $user)
     {
-        return $user->id_perfil == $perfil->id;
+        if ($user->isUserExterno()) {
+            return true;
+        }
     }
 }

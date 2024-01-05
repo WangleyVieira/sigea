@@ -30,7 +30,7 @@ class UserController extends Controller
     public function createUser()
     {
         try {
-            
+
             return view('adm.usuario.create-user');
 
         } catch (\Exception $ex) {
@@ -126,10 +126,10 @@ class UserController extends Controller
     {
         try {
             //usuários ativos
-            $usuarios = User::where('ativo', '=', 1)->get();
+            $usuarios = User::where('ativo', '=', User::ATIVO)->get();
 
             //usuarios inativos
-            $usuarios_inativos = User::where('ativo', '=', 0)->get();
+            $usuarios_inativos = User::where('ativo', '=', User::INATIVO)->get();
 
             return view('adm.usuario.listagem-usuarios', compact('usuarios', 'usuarios_inativos'));
 
@@ -156,16 +156,6 @@ class UserController extends Controller
     public function update(UserStoreRequest $request, $id)
     {
         try {
-             $verificacao_user = User::where('email', '=', $request->email)
-                ->select('id', 'name', 'email')
-                ->first();
-
-            //verifica se existe um email cadastrado
-            if($verificacao_user){
-                if($verificacao_user->id != $id){
-                    return redirect()->back()->with('erro', 'Existe e-mail cadastrado no sistema.');
-                }
-            }
 
             $user = User::find($id);
             $user->name = $request->nome;

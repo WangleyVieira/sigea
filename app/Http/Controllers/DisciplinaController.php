@@ -9,6 +9,7 @@ use App\Periodo;
 use App\Topico;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DisciplinaController extends Controller
 {
@@ -47,8 +48,8 @@ class DisciplinaController extends Controller
 
         }
         catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+            // return $ex->getMessage();
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 
@@ -61,14 +62,11 @@ class DisciplinaController extends Controller
     public function store(DisciplinaStoreRequest $request)
     {
         try {
-            
-            $novaDisciplina = new Disciplina();
-            $novaDisciplina->nome = $request->disciplina;
-            $novaDisciplina->codigo = $request->codigo;
-            $novaDisciplina->id_periodo = $request->id_periodo;
-            $novaDisciplina->cadastradoPorUsuario = auth()->user()->id;
-            $novaDisciplina->ativo = Disciplina::ATIVO;
-            $novaDisciplina->save();
+
+            Disciplina::create($request->validated() + [
+                'cadastradoPorUsuario' => Auth::user()->id,
+                'ativo' => Disciplina::ATIVO
+            ]);
 
             return redirect()->route('adm.disciplinas.index')->with('success', 'Disciplina cadastrado com sucesso.');
 

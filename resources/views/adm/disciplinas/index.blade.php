@@ -13,8 +13,8 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-{{-- @include('errors.alerts')
-@include('errors.errors') --}}
+@include('errors.alerts')
+{{-- @include('errors.errors') --}}
 
 {{-- <div class="header">
     <h1 class="mt-4">Disciplinas cadastradas</h1>

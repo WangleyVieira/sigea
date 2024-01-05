@@ -10,6 +10,7 @@ use App\Questao;
 use App\Topico;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
 
 class AtividadeController extends Controller
@@ -22,8 +23,8 @@ class AtividadeController extends Controller
     public function index()
     {
         try {
-            $atividadesExternas = Atividade::where('ativo', '=', 1)->where('cadastradoPorUsuario', '!=', auth()->user()->id)->get();
-            $minhasAtividades = Atividade::where('ativo', '=', 1)->where('cadastradoPorUsuario', '=', auth()->user()->id)->get();
+            $atividadesExternas = Atividade::where('ativo', '=', Atividade::ATIVO)->where('cadastradoPorUsuario', '!=', auth()->user()->id)->get();
+            $minhasAtividades = Atividade::where('ativo', '=', Atividade::ATIVO)->where('cadastradoPorUsuario', '=', auth()->user()->id)->get();
 
             return view('adm.atividade.index', compact('atividadesExternas', 'minhasAtividades'));
 
@@ -42,8 +43,8 @@ class AtividadeController extends Controller
     {
         try {
 
-            $questoes = Questao::where('ativo', '=', 1)->get();
-            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
+            $questoes = Questao::where('ativo', '=', Questao::ATIVO)->get();
+            $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
 
             return view('adm.atividade.create', compact('disciplinas', 'questoes'));
 
@@ -63,22 +64,20 @@ class AtividadeController extends Controller
     {
         try {
 
-            $atividadeCadastrada = new Atividade();
-            $atividadeCadastrada->id_disciplina = $request->id_disciplina;
-            $atividadeCadastrada->descricao = $request->descricao_atividade;
-            $atividadeCadastrada->titulo_atividade = $request->titulo_atividade;
-            $atividadeCadastrada->cadastradoPorUsuario = auth()->user()->id;
-            $atividadeCadastrada->ativo = 1;
-            $atividadeCadastrada->save();
+            $atividadeCadastrada = Atividade::create($request->validated() + [
+                'cadastradoPorUsuario' => Auth::user()->id,
+                'ativo' => Atividade::ATIVO
+            ]);
 
             $questoesVincular = $request->id_questao;
 
             for ($i = 0; $i < Count($questoesVincular); $i++) {
-                $vincularQuestaoAtividade = new AtividadeQuestao();
-                $vincularQuestaoAtividade->id_atividade = $atividadeCadastrada->id;
-                $vincularQuestaoAtividade->id_questao = $questoesVincular[$i];
-                $vincularQuestaoAtividade->ativo = 1;
-                $vincularQuestaoAtividade->save();
+
+                AtividadeQuestao::create([
+                    'id_atividade' => $atividadeCadastrada->id,
+                    'id_questao' => $questoesVincular[$i],
+                    'ativo' => AtividadeQuestao::ATIVO
+                ]);
             }
 
             return redirect()->route('adm.atividades.index')->with('success', 'Cadastro realizado com sucesso.');
@@ -111,9 +110,9 @@ class AtividadeController extends Controller
         try {
 
             $atividade = Atividade::find($id);
-            $disciplinas = Disciplina::where('ativo', '=', 1)->get();
-            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
-            $questaoAtv = Questao::where('id_disciplina', '=', $atividade->id_disciplina)->where('ativo', '=', 1)->get();
+            $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', AtividadeQuestao::ATIVO)->get();
+            $questaoAtv = Questao::where('id_disciplina', '=', $atividade->id_disciplina)->where('ativo', '=', Questao::ATIVO)->get();
 
             $questoesArray = array();
 
@@ -156,7 +155,7 @@ class AtividadeController extends Controller
 
                 for ($i = 0; $i < Count($questoesAtualizar); $i++) {
 
-                    $atv = Questao::where('id', '=', $questoesAtualizar[$i])->where('ativo', '=', 1)->first();
+                    $atv = Questao::where('id', '=', $questoesAtualizar[$i])->where('ativo', '=', Questao::ATIVO)->first();
 
                     if($atv){
                         //se não for questao desta atividade, adiciona
@@ -209,7 +208,7 @@ class AtividadeController extends Controller
         try {
 
             $atividade = Atividade::find($id);
-            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', AtividadeQuestao::ATIVO)->get();
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 
@@ -255,7 +254,7 @@ class AtividadeController extends Controller
         try {
 
             $atividade = Atividade::find($id);
-            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', 1)->get();
+            $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', AtividadeQuestao::ATIVO)->get();
 
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
 
