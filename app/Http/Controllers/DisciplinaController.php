@@ -6,10 +6,13 @@ use App\CurricularEletiva;
 use App\Disciplina;
 use App\Http\Requests\DisciplinaStoreRequest;
 use App\Periodo;
+use App\Questao;
 use App\Topico;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Mpdf\Tag\Toc;
 
 class DisciplinaController extends Controller
 {
@@ -113,12 +116,14 @@ class DisciplinaController extends Controller
                 return redirect()->back()->with('erro', 'Campos disciplina, código e período são obrigatórios.');
             }
 
-            $disciplinaAlterada = Disciplina::find($id);
-            $disciplinaAlterada->nome = $request->disciplina;
-            $disciplinaAlterada->codigo = $request->codigo;
-            $disciplinaAlterada->id_periodo = $request->id_periodo;
-            $disciplinaAlterada->alteradoPorUsuario = auth()->user()->id;
-            $disciplinaAlterada->save();
+            $disciplinaAlterada = Disciplina::findOrFail($id);
+
+            $disciplinaAlterada->update([
+                'nome' => $request->disciplina,
+                'codigo' => $request->codigo,
+                'id_periodo' => $request->id_periodo,
+                'alteradoPorUsuario' => Auth::user()->id,
+            ]);
 
             return redirect()->back()->with('success', 'Disciplina alterada com sucesso');
 
@@ -137,37 +142,52 @@ class DisciplinaController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
+            // Inicie a transação
+            DB::beginTransaction();
 
-            //disciplina
-            $d = Disciplina::find($id);
-            $d->dataInativado = Carbon::now();
-            $d->inativadoPorUsuario = auth()->user()->id;
-            $d->motivoInativado = $request->motivo;
-            $d->ativo = Disciplina::INATIVO;
-            $d->save();
+            // Atualize o primeiro registro
+            $d = Disciplina::findOrFail($id);
+            $d->update([
+                'dataInativado' => Carbon::now(),
+                'inativadoPorUsuario' => Auth::user()->id,
+                'motivoInativado' => $request->motivo,
+                'ativo' => Disciplina::INATIVO
+            ]);
 
-            //tópicos
-            foreach ($d->topicos as $top) {
-                $top->dataInativado = Carbon::now();
-                $top->inativadoPorUsuario = auth()->user()->id;
-                $top->motivoInativado = 'Desvinculado da disciplina';
-                $top->ativo = 0;
-                $top->save();
+            // Atualize o segundo registro
+            $topicos = Topico::where('id_disciplina', '=', $d->id)->where('ativo', '=', Topico::ATIVO)->get();
+            foreach ($topicos as $top) {
+                $top->update([
+                    'dataInativado' => Carbon::now(),
+                    'inativadoPorUsuario' => Auth::user()->id,
+                    'motivoInativado' => 'Desvinculado da disciplina',
+                    'ativo' => Topico::INATIVO
+                ]);
             }
 
-            //questões
-            foreach ($d->questoes as $questao) {
-                $questao->dataInativado = Carbon::now();
-                $questao->inativadoPorUsuario = auth()->user()->id;
-                $questao->ativo = 0;
-                $questao->motivoInativado = 'Desvinculado da disciplina e tópico';
-                $questao->save();
+            // Atualize o terceiro registro
+            $questoes = Questao::where('id_disciplina', '=', $d->id)->where('ativo', '=', Questao::ATIVO)->get();
+            foreach ($questoes as $questao) {
+                $questao->update([
+                    'dataInativado' => Carbon::now(),
+                    'inativadoPorUsuario' => Auth::user()->id,
+                    'motivoInativado' => 'Desvinculado da disciplina',
+                    'ativo' => Questao::INATIVO
+                ]);
             }
 
+            // Commit da transação se todas as operações foram bem-sucedidas
+            DB::commit();
+
+            // Redirecione ou retorne uma resposta de sucesso
             return redirect()->back()->with('success', 'Disciplina excluído com sucesso.');
 
-        } catch (\Exception $ex) {
-            // $ex->getMessage();
+        }
+        catch (\Exception $ex) {
+            // Se algo der errado, reverta as alterações (rollback) na transação
+            DB::rollback();
+
+            // Trate a exceção ou redirecione para uma página de erro
             return redirect()->back()->with('erro', 'Ocorreu ao excluir ao excluir a disciplina.');
         }
     }
