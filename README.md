@@ -39,7 +39,7 @@ Antes de começar, certifique-se de ter os seguintes requisitos atendidos:
    ```
 
 2. **Instale as dependências:**
-  Ou usando yarn:
+
     ```bash
     composer install
    ```
