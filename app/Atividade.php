@@ -35,27 +35,16 @@ class Atividade extends Model implements Auditable
     {
         return $this->belongsTo(User::class, 'cadastradoPorUsuario');
     }
+
     public function alt_usuario()
     {
         return $this->belongsTo(User::class, 'alteradoPorUsuario');
     }
+
     public function questoes()
     {
         return $this->belongsTo(Questao::class, 'id_topico', 'id');
     }
-
-    // public function temAtividade(Questao $questao)
-    // {
-    //     $temSim = AtividadeQuestao::where('id_questao', '=', $this->id)
-    //         ->where('id_atividade', '=', $questao->id)
-    //         ->where('ativo', '=', 1)
-    //         ->first();
-
-    //     if(!$temSim){
-    //         return false;
-    //     }
-    //     return true;
-    // }
 
     public function disciplina()
     {

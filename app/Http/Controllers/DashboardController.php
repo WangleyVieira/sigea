@@ -15,12 +15,11 @@ class DashboardController extends Controller
     public function index()
     {
         try {
-            //realiza a model e realiza a contagem (count)
-            $disciplinas = Disciplina::where('ativo', '=', 1)->count();
-            $topicos = Topico::where('ativo', '=', 1)->count();
-            $usuarios = User::where('ativo', '=', 1)->count();
-            $questoes = Questao::where('ativo', '=', 1)->count();
-            $atividades = Atividade::where('ativo', '=', 1)->count();
+            $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->count();
+            $topicos = Topico::where('ativo', '=', Topico::ATIVO)->count();
+            $usuarios = User::where('ativo', '=', User::ATIVO)->count();
+            $questoes = Questao::where('ativo', '=', Questao::ATIVO)->count();
+            $atividades = Atividade::where('ativo', '=', Atividade::ATIVO)->count();
 
             return view('home', compact('disciplinas', 'topicos', 'usuarios', 'questoes', 'atividades'));
 

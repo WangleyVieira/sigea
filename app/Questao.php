@@ -63,8 +63,8 @@ class Questao extends Model implements Auditable
     {
         $ehPertencente = AtividadeQuestao::where('id_atividade', '=', $id_atividade)
             ->where('id_questao', '=', $this->id)
-            ->where('ativo', '=', 1)
-            ->first();
+            ->where('ativo', '=', AtividadeQuestao::ATIVO)
+        ->first();
 
         if(!$ehPertencente){
             return false;
@@ -75,8 +75,8 @@ class Questao extends Model implements Auditable
     public function ehpertencenteDisciplina()
     {
         $ehPertencente = Disciplina::where('id', '=', $this->id_disciplina)
-            ->where('ativo', '=', 1)
-            ->first();
+            ->where('ativo', '=', Disciplina::ATIVO)
+        ->first();
 
         if(!$ehPertencente){
             return true;

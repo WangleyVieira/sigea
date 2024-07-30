@@ -10,29 +10,28 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
 
-    public function index() {
-
+    public function index()
+    {
         try {
-            // return view('auth.login');
             return view('auth.login2');
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex) {
             // $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro ao logar no sistema.');
         }
     }
 
-    public function autenticacao(Request $request) {
-
+    public function autenticacao(Request $request)
+    {
         if (!Auth::attempt($request->only(['email', 'password']))) {
-
             return redirect()->back()->withErrors('E-mail ou senha de usuário com dados incorretos');
         };
 
         $usuario = User::where('email', '=', $request->email)
             ->select('id', 'email', 'id_perfil', 'ativo')
-            ->where('ativo', '=', 1)
-            ->first();
-
+            ->where('ativo', User::ATIVO)
+        ->first();
+        
         if($usuario != null){
             //Se o usuário perfil é 1, redireciona para rota adm
             if($usuario->id_perfil == 1){

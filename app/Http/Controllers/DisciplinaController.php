@@ -24,7 +24,6 @@ class DisciplinaController extends Controller
     public function index()
     {
         try {
-
             $periodos = Periodo::where('ativo', '=', Periodo::ATIVO)->get();
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->with('topicos')->get();
 
@@ -44,7 +43,6 @@ class DisciplinaController extends Controller
     public function create()
     {
         try {
-
             $periodos = Periodo::where('ativo', '=', Periodo::ATIVO)->get();
 
             return view('adm.disciplinas.create', compact('periodos'));
@@ -77,28 +75,6 @@ class DisciplinaController extends Controller
             // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Disciplina  $disciplina
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Disciplina $disciplina)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Disciplina  $disciplina
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Disciplina $disciplina)
-    {
-        //
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\AtividadeQuestao;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +22,7 @@ class CreateAtividadeQuestaosTable extends Migration
 
             $table->bigInteger('id_questao')->unsigned()->nullable();
             $table->foreign('id_questao')->references('id')->on('questaos');
-            $table->boolean('ativo');
+            $table->boolean('ativo')->default(AtividadeQuestao::ATIVO);
             $table->timestamps();
         });
     }

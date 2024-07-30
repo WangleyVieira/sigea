@@ -19,14 +19,10 @@ class RelatorioController extends Controller
     public function disciplinas()
     {
         try {
-
             $periodos = Periodo::where('ativo', '=', Periodo::ATIVO)->get();
             $disciplinas = Disciplina::orderBy('nome', 'ASC')->where('ativo', '=', Disciplina::ATIVO)->get();
-
             $contador = Count($disciplinas);
-
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
-
             $now = Carbon::now();
             $dataFormatada = $now->format('d/m/Y H:i:s');
             $html = view('adm.relatorio.disciplina.index', compact('periodos', 'disciplinas', 'contador'));
@@ -44,13 +40,9 @@ class RelatorioController extends Controller
     public function topicos()
     {
         try {
-
             $topicos = Topico::orderBy('id_disciplina', 'ASC')->where('ativo', '=', Topico::ATIVO)->get();
-
             $contador = Count($topicos);
-
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
-
             $now = Carbon::now();
             $dataFormatada = $now->format('d/m/Y H:i:s');
             $html = view('adm.relatorio.topicos.index', compact('topicos', 'contador'));
@@ -68,15 +60,12 @@ class RelatorioController extends Controller
     public function relatorioGeral()
     {
         try {
-
             $periodos = Periodo::where('ativo', '=', Periodo::ATIVO)->get();
-
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->orderBy('nome', 'ASC')->with('topicos')->get();
             $questoes = Questao::where('ativo', '=', Questao::ATIVO)->get();
             $topicos = Topico::where('ativo', '=', Topico::ATIVO)->get();
             $atividades = Atividade::where('ativo', '=', Atividade::ATIVO)->get();
             $usuarios = User::where('ativo', '=', User::ATIVO)->get();
-            // dd($disciplinas[0]->topicos[0]);
 
             $contador = Count($disciplinas);
             $contadorTopicos = Count($topicos);
@@ -89,9 +78,9 @@ class RelatorioController extends Controller
             $now = Carbon::now();
             $dataFormatada = $now->format('d/m/Y H:i:s');
             $html = view('adm.relatorio.geral.index', compact('periodos', 'disciplinas', 'contador',
-                        'contadorTopicos', 'questoes', 'atividades', 'contadorAtividades', 'contadorQuestoes',
-                        'usuarios', 'contadorUsuarios'
-                    ));
+                'contadorTopicos', 'questoes', 'atividades', 'contadorAtividades', 'contadorQuestoes',
+                'usuarios', 'contadorUsuarios'
+            ));
             $mpdf->WriteHTML($html);
 
             return $mpdf->Output('Relatório Geral - ' .$dataFormatada. '.pdf', 'I');

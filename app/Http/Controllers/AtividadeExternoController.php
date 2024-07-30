@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Atividade;
-use App\AtividadeExterno;
 use App\AtividadeQuestao;
 use App\Disciplina;
 use App\Questao;
@@ -21,14 +20,11 @@ class AtividadeExternoController extends Controller
     public function index()
     {
         try {
-
             $atividades = Atividade::where('cadastradoPorUsuario', '!=', auth()->user()->id)->where('ativo', '=', 1)->get();
             $minhasAtividades = Atividade::where('cadastradoPorUsuario', '=', auth()->user()->id)->where('ativo', '=', 1)->get();
-
             return view('usuario-externo.atividade-externo.index', compact('atividades', 'minhasAtividades'));
-
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
@@ -41,14 +37,11 @@ class AtividadeExternoController extends Controller
     public function create()
     {
         try {
-
             $questoes = Questao::where('ativo', '=', Questao::ATIVO)->get();
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
-
             return view('usuario-externo.atividade-externo.create', compact('disciplinas', 'questoes'));
-
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
@@ -62,7 +55,6 @@ class AtividadeExternoController extends Controller
     public function store(Request $request)
     {
         try {
-
             if($request->id_disciplina == null){
                 return redirect()->back()->with('erro', 'Selecione a disciplina para cadastrar a atividade.');
             }
@@ -80,7 +72,6 @@ class AtividadeExternoController extends Controller
             $atividadeCadastrada->save();
 
             $questoesVincular = $request->id_questao;
-
             for ($i = 0; $i < Count($questoesVincular); $i++) {
                 $vincularQuestaoAtividade = new AtividadeQuestao();
                 $vincularQuestaoAtividade->id_atividade = $atividadeCadastrada->id;
@@ -108,25 +99,21 @@ class AtividadeExternoController extends Controller
     public function edit($id)
     {
         try {
-
             $atividade = Atividade::find($id);
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
             $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', AtividadeQuestao::ATIVO)->get();
             $questaoAtv = Questao::where('id_disciplina', '=', $atividade->id_disciplina)->where('ativo', '=', Questao::ATIVO)->get();
-
             $questoesArray = array();
-
             foreach($questaoAtv as $q){
                 //verifica se a questão é pertencente a atividade
                 if($q->pertencenteAtividade($atividade->id) == false){
                     array_push($questoesArray, $q);
                 }
             }
-
             return view('usuario-externo.atividade-externo.edit', compact('atividade', 'disciplinas', 'atividadeQuestoes', 'questoesArray'));
 
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
@@ -141,40 +128,30 @@ class AtividadeExternoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-
             $atividadeAtualizar = Atividade::find($id);
             $atividadeAtualizar->descricao = $request->descricao_atividade;
             $atividadeAtualizar->titulo_atividade = $request->titulo_atividade;
             $atividadeAtualizar->alteradoPorUsuario = auth()->user()->id;
             $atividadeAtualizar->ativo = 1;
             $atividadeAtualizar->save();
-
             $questoesAtualizar = $request->id_questao;
-
             if($questoesAtualizar != null){
-
                 for ($i = 0; $i < Count($questoesAtualizar); $i++) {
-
                     $atv = Questao::where('id', '=', $questoesAtualizar[$i])->where('ativo', '=', Questao::ATIVO)->first();
-
                     if($atv){
                         //se não for questao desta atividade, adiciona
                         if($atv->pertencenteAtividade($id) == 0){
-                            $questaoAtividadeAtualizar = new AtividadeQuestao();
-                            $questaoAtividadeAtualizar->id_atividade = $atividadeAtualizar->id;
-                            $questaoAtividadeAtualizar->id_questao = $questoesAtualizar[$i];
-                            $questaoAtividadeAtualizar->ativo = 1;
-                            $questaoAtividadeAtualizar->save();
+                            Atividade::create([
+                                'id_atividade' => $atividadeAtualizar->id,
+                                'id_questao' => $questoesAtualizar[$i]
+                            ]);
                         }
                     }
                 }
             }
-
             return redirect()->route('acesso_externo.atividades.index')->with('success', 'Atividade atualizado com sucesso.');
-
         }
         catch (\Exception $ex) {
-            // return $ex->getMessage();
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com Adm.');
         }
     }
@@ -188,19 +165,12 @@ class AtividadeExternoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-
             $atividade = Atividade::find($id);
             $atividade->motivoInativado = $request->motivo;
             $atividade->inativadoPorUsuario = auth()->user()->id;
             $atividade->dataInativado = Carbon::now();
             $atividade->ativo = 0;
             $atividade->save();
-
-            // desativando somente a questão vinculada a atividade
-            // $atvQuestao = AtividadeQuestao::find($atividade->id);
-            // $atvQuestao->id_questao = $request->id_questao;
-            // $atvQuestao->ativo = 0;
-            // $atvQuestao->save();
 
             return redirect()->route('acesso_externo.atividades.index')->with('success', 'Atividade excluído com sucesso.');
 
@@ -217,12 +187,7 @@ class AtividadeExternoController extends Controller
             $atividade = Atividade::find($id);
             $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', AtividadeQuestao::ATIVO)->get();
             $questaoAtv = Questao::where('ativo', '=', 1)->get();
-
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
-
-            // Define a default page size/format by array - page will be 190mm wide x 236mm height
-            // $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 297]]);
-
             $now = Carbon::now();
             $dataFormatada = $now->format('d/m/Y H:i:s');
             $html = view('usuario-externo.atividade-externo.pdf-atividade', compact('atividade', 'atividadeQuestoes', 'questaoAtv'));
@@ -240,12 +205,9 @@ class AtividadeExternoController extends Controller
     public function gabarito($id)
     {
         try {
-
             $atividade = Atividade::find($id);
             $atividadeQuestoes = AtividadeQuestao::where('id_atividade', '=', $atividade->id)->where('ativo', '=', AtividadeQuestao::ATIVO)->get();
-
             $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
-
             $now = Carbon::now();
             $dataFormatada = $now->format('d/m/Y H:i:s');
             $html = view('usuario-externo.atividade-externo.gabarito', compact('atividade', 'atividadeQuestoes'));

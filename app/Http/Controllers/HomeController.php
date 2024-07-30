@@ -15,8 +15,6 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            
-            //realiza a model e realiza a contagem (count)
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->count();
             $topicos = Topico::where('ativo', '=', Topico::ATIVO)->count();
             $usuarios = User::where('ativo', '=', User::ATIVO)->count();
@@ -31,18 +29,5 @@ class HomeController extends Controller
             return redirect()->back()->with('erro', 'Ocorreu um erro ao logar no sistema.');
         }
     }
-
-    //acesso usuário externo
-    // public function indexExterno()
-    // {
-    //     try {
-    //         if(auth()->user()->id_perfil != 2){
-    //             return redirect()->back()->with('erro', 'Acesso negado.');
-    //         }
-
-    //     } catch (\Exception $ex) {
-    //         // $ex->getMessage();
-    //         return redirect()->back()->with('erro', 'Ocorreu um erro ao logar no sistema.');
-    //     }
-    // }
+    
 }

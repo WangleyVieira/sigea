@@ -1,5 +1,6 @@
 <?php
 
+use App\Periodo;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,7 +25,7 @@ class CreatePeriodosTable extends Migration
             $table->foreign('inativadoPorUsuario')->references('id')->on('users');
             $table->date('dataInativado')->nullable();
             $table->text('motivoInativado')->nullable();
-            $table->boolean('ativo');
+            $table->boolean('ativo')->default(Periodo::ATIVO);
             $table->timestamps();
         });
     }

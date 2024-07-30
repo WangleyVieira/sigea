@@ -43,17 +43,17 @@ class Disciplina extends Model implements Auditable
 
     public function topicos()
     {
-        return $this->hasMany(Topico::class, 'id_disciplina', 'id')->where('ativo', '=', 1);
+        return $this->hasMany(Topico::class, 'id_disciplina', 'id')->where('ativo', '=', Topico::ATIVO);
     }
 
     public function questoes()
     {
-        return $this->hasMany(Questao::class, 'id_disciplina', 'id')->where('ativo', '=', 1);
+        return $this->hasMany(Questao::class, 'id_disciplina', 'id')->where('ativo', '=', Questao::ATIVO);
     }
 
     public function atividades()
     {
-        return $this->hasMany(Atividade::class, 'id_disciplina', 'id')->where('ativo', '=', 1);
+        return $this->hasMany(Atividade::class, 'id_disciplina', 'id')->where('ativo', '=', Atividade::ATIVO);
     }
 
 }

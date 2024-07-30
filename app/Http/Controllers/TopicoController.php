@@ -19,25 +19,13 @@ class TopicoController extends Controller
     public function index()
     {
         try {
-
             $disciplinas = Disciplina::with('topicos')->where('ativo', '=', Disciplina::ATIVO)->get();
-
             return view('adm.topico.index', compact('disciplinas'));
 
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -49,42 +37,14 @@ class TopicoController extends Controller
     public function store(TopicoStoreRequest $request)
     {
         try {
-
-            $novoTopico = new Topico();
-            $novoTopico->descricao = $request->descricao;
-            $novoTopico->id_disciplina = $request->id_disciplina;
-            $novoTopico->cadastradoPorUsuario = Auth::user()->id;
-            $novoTopico->ativo = Topico::ATIVO;
-            $novoTopico->save();
-
+            Topico::create($request->validated() + [
+                'cadastradoPorUsuario' => Auth::user()->id
+            ]);
             return redirect()->back()->with('success', 'Tópico cadastrado com sucesso.');
-
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Topico  $topico
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Topico $topico)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Topico  $topico
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Topico $topico)
-    {
-        //
     }
 
     /**
@@ -97,16 +57,15 @@ class TopicoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-
             $top = Topico::find($id);
-            $top->descricao = $request->topico;
-            $top->alteradoPorUsuario = Auth::user()->id;
-            $top->save();
-
+            $top->update([
+                'descricao' => $request->topico,
+                'alteradoPorUsuario' => Auth::user()->id
+            ]);
             return redirect()->back()->with('success', 'Tópico alterado com sucesso.');
 
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
@@ -120,18 +79,16 @@ class TopicoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-
             $top = Topico::find($id);
-            $top->inativadoPorUsuario = auth()->user()->id;
-            $top->dataInativado = Carbon::now();
-            $top->ativo = Topico::INATIVO;
-            $top->motivoInativado = $request->motivo;
-            $top->save();
-
+            $top->update([
+                'inativadoPorUsuario' => auth()->user()->id,
+                'dataInativado' => Carbon::now(),
+                'ativo' => Topico::INATIVO,
+                'motivoInativado' => $request->motivo
+            ]);
             return redirect()->back()->with('success', 'Tópico excluído com sucesso');
-
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro ao excluir o tópico.');
         }
     }

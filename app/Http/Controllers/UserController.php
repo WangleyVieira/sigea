@@ -18,11 +18,9 @@ class UserController extends Controller
     public function create()
     {
         try {
-
             return view('adm.usuario.create');
-
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
@@ -30,11 +28,10 @@ class UserController extends Controller
     public function createUser()
     {
         try {
-
             return view('adm.usuario.create-user');
 
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
@@ -90,9 +87,7 @@ class UserController extends Controller
     public function storeExterno(UserStoreExterno $request)
     {
         try {
-
             $novoUsuario = new User();
-
             if($request->password != null){
                 //verificação de senhas
                 if($request->password != $request->confirmacao){
@@ -125,17 +120,12 @@ class UserController extends Controller
     public function listagemUsuarios()
     {
         try {
-            //usuários ativos
             $usuarios = User::where('ativo', '=', User::ATIVO)->get();
-
-            //usuarios inativos
             $usuarios_inativos = User::where('ativo', '=', User::INATIVO)->get();
-
             return view('adm.usuario.listagem-usuarios', compact('usuarios', 'usuarios_inativos'));
-
-        } catch (\Exception $ex) {
-            return $ex->getMessage();
-            // return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
+        }
+         catch (\Exception $ex) {
+            return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
 
@@ -144,11 +134,9 @@ class UserController extends Controller
         try {
             $user = User::find($id);
             $perfils = Perfil::where('ativo', '=', 1)->get();
-
             return view('adm.usuario.edit', compact('user', 'perfils'));
-
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }
@@ -156,7 +144,6 @@ class UserController extends Controller
     public function update(UserStoreRequest $request, $id)
     {
         try {
-
             $user = User::find($id);
             $user->name = $request->nome;
             $user->email = $request->email;
@@ -209,8 +196,8 @@ class UserController extends Controller
 
             return redirect()->back()->with('success', 'Usuário excluído com sucesso');
 
-        } catch (\Exception $ex) {
-            // return $ex->getMessage();
+        }
+        catch (\Exception $ex) {
             return redirect()->back()->with('erro', 'Ocorreu um erro, entre em contato com o adm.');
         }
     }

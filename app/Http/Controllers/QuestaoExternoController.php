@@ -24,7 +24,6 @@ class QuestaoExternoController extends Controller
     public function index()
     {
         try {
-
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
             $topicos = Topico::where('ativo', '=', Topico::ATIVO)->get();
             $questoes = Questao::where('cadastradoPorUsuario', '!=', Auth::user()->id)->where('ativo', '=', Questao::ATIVO)->get();
@@ -40,16 +39,6 @@ class QuestaoExternoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -58,7 +47,6 @@ class QuestaoExternoController extends Controller
     public function store(QuestaoStoreRequest $request)
     {
         try {
-
            $novaQuestao = new Questao();
            $novaQuestao->descricao = $request->descricao;
            $novaQuestao->id_topico = $request->id_topico;
@@ -88,7 +76,6 @@ class QuestaoExternoController extends Controller
     public function edit($id)
     {
         try {
-
             $questao = Questao::find($id);
             $disciplinas = Disciplina::where('ativo', '=', Disciplina::ATIVO)->get();
             $topicos = Topico::where('ativo', '=', Topico::ATIVO)->get();
@@ -110,13 +97,9 @@ class QuestaoExternoController extends Controller
     public function update(QuestaoUpdateRequest $request, $id)
     {
         try {
-
             $questao = Questao::find($id);
             $questao->descricao = $request->descricao;
-            // $questao->id_topico = $request->id_topico;
             $questao->resposta = $request->resposta;
-            // $questao->codigo_questao = strtoupper($request->codigo_questao);
-            // $questao->id_disciplina = $request->id_disciplina;
             $questao->titulo_questao = $request->titulo_questao;
             $questao->alteradoPorUsuario = Auth::user()->id;
             $questao->save();
@@ -138,7 +121,6 @@ class QuestaoExternoController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-
             $questao = Questao::find($request->id);
             $questao->dataInativado = Carbon::now();
             $questao->inativadoPorUsuario = auth()->user()->id;
