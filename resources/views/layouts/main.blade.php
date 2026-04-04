@@ -1,13 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"><link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="shortcut icon" href="{{ asset('img/icone.png') }}">
 
     <title>@yield('title')</title>
@@ -22,21 +19,52 @@
     <script src="{{ asset('js/jquery.js') }}"></script>
 
 </head>
-@if (auth()->user()->id_perfil == 2)
-    <style>
+<body>
+<style>
+        body { margin: 0; }
+        .sidebar, .sidebar-nav, .sidebar-content {
+            background-color: #0e5a2d;
+        }
 
-        .sidebar, .sidebar-nav, .sidebar-content{
-            /* background-color: rgb(12, 71, 12); */
-            background-color: rgb(13, 83, 13);
+        .sidebar hr {
+            border-color: rgba(255, 255, 255, 0.22);
         }
-        .navbar{
-            background-color: rgb(148, 206, 148);
+
+        .sidebar .sidebar-brand {
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 0.3px;
         }
-        #footer{
-            background-color: rgb(148, 206, 148);
+
+        .sidebar .sidebar-link {
+            color: rgba(240, 255, 245, 0.9);
+            border-left: 3px solid transparent;
+            background-color: transparent;
+            transition: color .2s ease, border-color .2s ease;
         }
-    </style>
-@endif
+
+        .sidebar .sidebar-link i {
+            color: rgba(227, 255, 236, 0.92);
+        }
+
+        .sidebar .sidebar-link:hover,
+        .sidebar .sidebar-dropdown .sidebar-link:hover {
+            background-color: transparent;
+            color: #ffffff;
+            border-left-color: rgba(201, 247, 217, 0.55);
+        }
+
+        .sidebar .sidebar-item.active > .sidebar-link,
+        .sidebar .sidebar-dropdown .sidebar-item.active > .sidebar-link {
+            background-color: transparent;
+            color: #ffffff;
+            border-left-color: #9af0ba;
+            font-weight: 700;
+        }.sidebar .sidebar-item.active > .sidebar-link i,
+        .sidebar .sidebar-dropdown .sidebar-item.active > .sidebar-link i {
+            color: #d6ffe5;
+        }
+</style>
 
 <div class="wrapper">
     <nav id="sidebar" class="sidebar">
@@ -166,10 +194,6 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav navbar-align">
-
-                    <a href="#">
-                        <span class="glyphicon glyphicon-log-out"></span>
-                    </a>
                     @if (Auth::guest())
                         <li>
                             <a class="btn btn-primary" style="color: white" href="{{ route('login') }}"
@@ -236,9 +260,8 @@
 <script src="{{ url('js/functions.js') }}"></script>
 <script src="{{ url('js/prevent_multiple_submits.js') }}"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.0/r-2.2.9/rr-1.2.8/datatables.min.js"></script>
-<script src="{{asset('select2-4.1.0/dist/js/select2.min.js')}}"></script>
-<script src="{{ asset('js/datatables.js') }}"></script>
-<script src="{{ asset('js/datatables.min.js') }}"></script>
+<script src="{{asset('select2-4.1.0/dist/js/select2.min.js')}}"></script><script src="{{ asset('js/datatables.min.js') }}"></script>
 <script src="{{asset('jquery-mask/src/jquery.mask.js')}}"></script>
 @yield('scripts')
 </html>
+

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -9,56 +9,57 @@
     <title>RELATÓRIO GERAL</title>
 
     <style>
-        html {
-            font-size: 0.895rem;
-            /* font-size:1.0rem; */
-            font-family: 'Times New Roman', Times, serif;
-        }
+    body {
+        font-family: DejaVu Sans, sans-serif;
+        font-size: 11px;
+        color: #1f2937;
+        line-height: 1.4;
+    }
 
-        h4 {
-            text-align: center;
-        }
+    h2, h3, h4 {
+        margin: 0 0 6px;
+        color: #0f5a2d;
+    }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            border: 1px solid black;
-            text-align: center;
-        }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #dbe5de;
+        text-align: left;
+        margin-bottom: 10px;
+    }
 
-        td {
-            padding: 2px;
-            border: 1px solid black;
-        }
+    td, th {
+        padding: 6px 8px;
+        border: 1px solid #dbe5de;
+        vertical-align: top;
+    }
 
-        th {
-            border: 1px solid black;
-        }
+    p {
+        margin: 4px 0;
+    }
 
-        p {
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-            /* font-weight: bold; */
-            font-size: 16px;
-            line-height: 20px;
-            margin: 10px 0px;
-        }
-        .titulo{
-            font-weight: bold;
-        }
+    .titulo {
+        font-weight: 700;
+        background: #f4f9f6;
+        color: #0f5a2d;
+    }
 
-        .span-header {
-            font-family: 'Times New Roman', Times, serif;
-            font-weight: bold;
-            font-size: 16px;
-        }
+    .span-header {
+        display: block;
+        font-weight: 700;
+        font-size: 15px;
+        color: #0f5a2d;
+        text-align: center;
+    }
 
-        .span-footer {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 14px;
-        }
-
-    </style>
+    #titulo {
+        border: 1px solid #d1e7d8;
+        background: #f2fbf5;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+</style>
 </head>
 <body>
     <header>
@@ -68,7 +69,7 @@
                     <table id="titulo" style="font-size: 1.2rem">
                         <tr>
                             <td>
-                                RELATÓRIO GERAL
+                                RELATÃ“RIO GERAL
                             </td>
                         </tr>
                     </table>
@@ -81,7 +82,7 @@
             <br>
 
             <div style="margin-top: 5px;">
-                <h2>Relação</h2>
+                <h2>RelaÃ§Ã£o</h2>
                 <h3>Total de Disciplinas ativas: {{ $contador }}</h3>
                 <h3>Total de Tópicos vinculados a Disciplina ativas: {{ $contadorTopicos }}</h3>
                 @if (Count($disciplinas) == 0)
@@ -110,8 +111,8 @@
             <br><br>
             <hr>
             <div style="margin-top: 5px;">
-                <h2>Relações de Questões</h2>
-                <h3>Total de questões ativas: {{ $contadorQuestoes }}</h3>
+                <h2>RelaÃ§Ãµes de QuestÃµes</h2>
+                <h3>Total de questÃµes ativas: {{ $contadorQuestoes }}</h3>
                     @if (Count($questoes) == 0)
                         <div><p>Sem cadastros</p></div>
                     @else
@@ -129,14 +130,14 @@
                                 </tr>
                                 <tr>
                                     <td colspan="4">
-                                        Descrição:
-                                        <p>{{ $questao->descricao != "" && $questao->descricao != null ? $questao->descricao : 'Não cadastrado' }}</p>
+                                        DescriÃ§Ã£o:
+                                        <div>{!! $questao->descricao != "" && $questao->descricao != null ? $questao->descricao : 'NÃ£o cadastrado' !!}</div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="4">
                                         Resposta:
-                                        <p>{{ $questao->resposta != "" && $questao->resposta != null ? $questao->resposta : 'Não cadastrado' }}</p>
+                                        <div>{!! $questao->resposta != "" && $questao->resposta != null ? $questao->resposta : 'NÃ£o cadastrado' !!}</div>
                                     </td>
                                 </tr>
                             </table>
@@ -146,7 +147,7 @@
             <br>
             <hr>
             <div style="margin-top: 5px;">
-                <h2>Relações de Atividades</h2>
+                <h2>RelaÃ§Ãµes de Atividades</h2>
                 <h3>Total de atividades ativas: {{ $contadorAtividades }}</h3>
                 @if (Count($atividades) == 0)
                     <div><p>Sem cadastros</p></div>
@@ -160,11 +161,11 @@
 
                             </tr>
                             <tr>
-                                <td colspan="3">Descrição da atividade: {{ $atividade->descricao }}</td>
+                                <td colspan="3">DescriÃ§Ã£o da atividade: {{ $atividade->descricao }}</td>
 
                             </tr>
                             <tr>
-                                <td colspan="3">Título da atividade: {{ $atividade->titulo_atividade }}</td>
+                                <td colspan="3">TÃ­tulo da atividade: {{ $atividade->titulo_atividade }}</td>
 
                             </tr>
                             <tr>
@@ -179,13 +180,13 @@
             <br>
             <hr>
             <div style="margin-top: 5px;">
-                <h2>Relações de Usuários</h2>
-                <h3>Total de usuários ativas: {{ $contadorUsuarios }}</h3>
+                <h2>RelaÃ§Ãµes de UsuÃ¡rios</h2>
+                <h3>Total de usuÃ¡rios ativas: {{ $contadorUsuarios }}</h3>
                     @foreach ($usuarios as $usuario)
                         <br>
                         <table style="text-align: left">
                             <tr>
-                                <td class="titulo" colspan="2">Usuário: {{ mb_strtoupper($usuario->name, 'UTF-8') }}</td>
+                                <td class="titulo" colspan="2">UsuÃ¡rio: {{ mb_strtoupper($usuario->name, 'UTF-8') }}</td>
                             </tr>
                             <tr>
                                 <td colspan="2">E-mail: {{ $usuario->email }}</td>
@@ -206,11 +207,13 @@
         {{-- <div style="text-align: center">
             <br><br><br>
             <span>__________________________________</span><br>
-            <span>Responsável pela listagem</span>
+            <span>ResponsÃ¡vel pela listagem</span>
         </div> --}}
     </main>
 </body>
 
 </html>
+
+
 
 

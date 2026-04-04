@@ -5,7 +5,7 @@
 @section('content')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<script src="https://cdn.tiny.cloud/1/gtdwd51t47mdkyks6pppuhqf941qu0bqu4sxkjz9qzirr20j/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 <style>
     .error{
             color:red
@@ -73,7 +73,7 @@
                             <li>Não é necessário ordenação e não ordenação de pergunta</li>
                             <li>Seguir o modelo conforme no campo abaixo</li>
                         </ul>
-                        <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" rows="2" > {{ $questao->descricao }} </textarea>
+                        <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao" rows="4">{!! old('descricao', $questao->descricao) !!}</textarea>
                         @error('descricao')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -137,6 +137,9 @@
     // });
 
     $(document).ready(function() {
+        if (document.getElementById('descricao')) {
+            CKEDITOR.replace('descricao', { versionCheck: false });
+        }
 
         $('.select2').select2({
             language: {
@@ -173,3 +176,5 @@
 </script>
 
 @endsection
+
+

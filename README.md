@@ -1,111 +1,159 @@
+﻿# SIGEA - Sistema de Geração de Atividades
 
-## Sobre o SIGEA (SISTEMA DE GERAÇÃO DE ATIVIDADES)
-Desenvolvimento do sistema web SIGEA - Sistema de Geração de Atividades do curso Superior de Tecnologia em Sistemas para Internet do IFMS. No SIGEA os docentes podem cadastrar e compartilhar as questões no sistema de acordo com a disciplina e os tópicos relacionados no PPC (Projeto Pedagógico do Curso), e também as atividades vinculadas a uma disciplina. O sistema oferece a geração de PDFs para as atividades, além de diversos relatórios de gestão para o administrador do sistema. A implementação do sistema se dá através da Linguagem de Programação PHP junto com o Framework Laravel e com o Banco de Dados Relacional PostgreSQL.
+Aplicacao web para cadastro, organização e compartilhamento de questões e atividades academicas.
 
-## Tela de Login
+O SIGEA foi desenvolvido para apoiar o curso Superior de Tecnologia em Sistemas para Internet do IFMS, permitindo que docentes organizem questões por disciplina/topico e gerem atividades com impressao em PDF.
 
-![Login](public/img/readme/login.JPG)
+## Visao Geral
 
+- Cadastro e manutenção de disciplinas e topicos
+- Cadastro e compartilhamento de questões
+- Montagem de atividades a partir de questões
+- Geração de PDF de atividade e gabarito
+- Relatorios gerenciais (administrador)
+- Controle de acesso por perfil de usuario
 
-## Dashboard administrador
+## Perfis de Usuario
 
-![Dashboard](public/img/readme/dashboard-sigea.JPG)
+- `Administrador`
+  - Gerencia usuarios, disciplinas, topicos, questões, atividades e relatórios
+- `Usuario externo`
+  - Pode cadastrar questões e atividades dentro das permissões do perfil
 
-## Índice
+## Tecnologias
 
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação](#instalação)
-- [Configuração](#configuração)
-- [Executando o Projeto](#executando-o-projeto)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
+- PHP `^7.2.5`
+- Laravel `^7.0`
+- PostgreSQL (recomendado para este projeto)
+- mPDF (geracao de PDF)
+- Bootstrap + jQuery
 
-## Pré-requisitos
+## Requisitos
 
-Antes de começar, certifique-se de ter os seguintes requisitos atendidos:
-
-- PHP (versão 7.3 ou superior)
+- PHP 7.2+ (recomendado PHP 7.4)
 - Composer
-- PostGres
-- Git
+- PostgreSQL
+- Extensoes PHP comuns do Laravel (`mbstring`, `openssl`, `pdo`, `tokenizer`, `xml`, etc.)
 
-## Instalação
+## Instalacao
 
-1. **Clone o repositório:**
-    ```bash
-    git clone https://github.com/WangleyVieira/sigea.git
-    cd sigea
-   ```
+1. Clone o repositorio:
 
-2. **Instale as dependências:**
+```bash
+git clone https://github.com/WangleyVieira/sigea.git
+cd sigea
+```
 
-    ```bash
-    composer install
-   ```
+2. Instale as dependências PHP:
 
-## Configuração
+```bash
+composer install
+```
 
-1. **Copie o arquivo de configuração .env.example para .env:**
+3. Copie o arquivo de ambiente:
 
-   ```bash
-    cp .env.example .env
-   ```
-2. **Gere a chave da aplicação:**
+```bash
+cp .env.example .env
+```
 
-   ```bash
-    php artisan key:generate
-   ```
-3. **Configure as informações do banco de dados no arquivo .env:**
+No Windows (PowerShell):
 
-   ```bash
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=sigea
-    DB_USERNAME=seu_usuario
-    DB_PASSWORD=sua_senha
-   ```
-4. **Execute as migrações e as seeders para criar as tabelas no banco de dados:**
+```powershell
+Copy-Item .env.example .env
+```
 
-   ```bash
-    php artisan migrate:fresh --seed
-   ```
+4. Gere a chave da aplicacao:
+
+```bash
+php artisan key:generate
+```
+
+## Configuracao do Banco
+
+Edite o arquivo `.env` com as credenciais do seu banco.
+
+### Exemplo com PostgreSQL (recomendado)
+
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=sigea
+DB_USERNAME=postgres
+DB_PASSWORD=sua_senha
+```
+
+### Exemplo com MySQL (alternativo)
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sigea
+DB_USERNAME=root
+DB_PASSWORD=sua_senha
+```
+
+## Migracoes e Seeds
+
+Execute as migrações com dados iniciais:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Isso cria perfis, usuario administrador padrao, periodos, disciplinas e topicos iniciais.
 
 ## Executando o Projeto
-Para iniciar o servidor de desenvolvimento, utilize o seguinte comando:
+
+Inicie o servidor local:
 
 ```bash
-  php artisan serve
+php artisan serve
 ```
 
-O projeto estará disponível no endereço http://localhost:8000.
+A aplicacao ficara disponivel em:
 
-## Tecnologias Utilizadas
+- `http://127.0.0.1:8000`
+- `http://localhost:8000`
 
-- Laravel 7
-- PHP
-- Composer
-- PostGres
+## Acesso Inicial (seed)
 
-## Contribuição
+A seed cria um usuario administrador:
 
-Contribuições são bem-vindas! Para contribuir, siga os passos abaixo:
+- Email: `sigea@estudante.edu.com.br`
+- Senha: `sigea2022@`
 
-1. Fork o repositório.
-2. Crie uma nova branch com a sua feature: git checkout -b minha-feature
-3. Commit suas mudanças: git commit -m 'feat: Minha nova feature'
-4. Push para a branch: git push origin minha-feature
-5. Abra um Pull Request.
+Arquivo de referencia: `database/seeds/UserTableSeeder.php`
 
-## Licença
+## Comandos Uteis
 
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo LICENSE para mais detalhes.
-
-SIGEA desenvolvido por Wangley Vieira
+Limpar caches:
 
 ```bash
-Esse guia cobre todos os aspectos necessários para configurar e executar o projeto SIGEA utilizando Laravel 7, desde a clonagem do repositório até a instalação das dependências, configuração e execução do servidor de desenvolvimento. Além disso, inclui informações sobre tecnologias utilizadas, como contribuir e a licença do projeto.
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
 ```
 
+Rodar testes (quando aplicavel):
 
+```bash
+php artisan test
+```
+
+## Contribuicao
+
+1. Faça um fork
+2. Crie uma branch: `git checkout -b feat/minha-melhoria`
+3. Commit: `git commit -m "feat: minha melhoria"`
+4. Push: `git push origin feat/minha-melhoria`
+5. Abra um Pull Request
+
+## Licenca
+
+Este projeto esta sob a licenca MIT.
+
+## Autor
+
+SIGEA desenvolvido por Wangley Vieira.

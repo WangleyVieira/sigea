@@ -62,10 +62,11 @@
             <p style="text-align: center">Sem respostas vinculadas</p>
         @else
             @foreach ($atividadeQuestoes as $atvQuestao)
-                <p class="descricao"> {{ $atvQuestao->lista_questoes->descricao }} </p>
-                <p class="resposta"> {{ $atvQuestao->lista_questoes->resposta }} </p>
+                <div class="descricao">{!! $atvQuestao->lista_questoes->descricao !!}</div>
+                <div class="resposta">{!! $atvQuestao->lista_questoes->resposta !!}</div>
             @endforeach
         @endif
 
     </body>
 </html>
+

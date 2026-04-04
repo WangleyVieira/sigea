@@ -16,7 +16,7 @@
                 text-align: center;
             }
 
-            p {
+            .questao-descricao {
             font-family: 'Times New Roman', Times, serif;
             /* font-style: italic; */
             font-weight: bold;
@@ -50,9 +50,10 @@
             <p style="text-align: center">Sem questões vinculadas</p>
         @else
             @foreach ($atividadeQuestoes as $atvQuestao)
-                <p> {{ $atvQuestao->lista_questoes->descricao }} </p>
+                <div class="questao-descricao">{!! $atvQuestao->lista_questoes->descricao !!}</div>
             @endforeach
         @endif
 
     </body>
 </html>
+

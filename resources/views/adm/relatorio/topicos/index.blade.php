@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -9,56 +9,57 @@
     <title>RELATÓRIO TÓPICOS</title>
 
     <style>
-        html {
-            font-size: 0.895rem;
-            /* font-size:1.0rem; */
-            font-family: 'Times New Roman', Times, serif;
-        }
+    body {
+        font-family: DejaVu Sans, sans-serif;
+        font-size: 11px;
+        color: #1f2937;
+        line-height: 1.4;
+    }
 
-        h4 {
-            text-align: center;
-        }
+    h2, h3, h4 {
+        margin: 0 0 6px;
+        color: #0f5a2d;
+    }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            border: 1px solid black;
-            text-align: center;
-        }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #dbe5de;
+        text-align: left;
+        margin-bottom: 10px;
+    }
 
-        td {
-            padding: 2px;
-            border: 1px solid black;
-        }
+    td, th {
+        padding: 6px 8px;
+        border: 1px solid #dbe5de;
+        vertical-align: top;
+    }
 
-        th {
-            border: 1px solid black;
-        }
+    p {
+        margin: 4px 0;
+    }
 
-        p {
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-            /* font-weight: bold; */
-            font-size: 16px;
-            line-height: 20px;
-            margin: 10px 0px;
-        }
-        .titulo{
-            font-weight: bold;
-        }
+    .titulo {
+        font-weight: 700;
+        background: #f4f9f6;
+        color: #0f5a2d;
+    }
 
-        .span-header {
-            font-family: 'Times New Roman', Times, serif;
-            font-weight: bold;
-            font-size: 16px;
-        }
+    .span-header {
+        display: block;
+        font-weight: 700;
+        font-size: 15px;
+        color: #0f5a2d;
+        text-align: center;
+    }
 
-        .span-footer {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 14px;
-        }
-
-    </style>
+    #titulo {
+        border: 1px solid #d1e7d8;
+        background: #f2fbf5;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+</style>
 
 </head>
 
@@ -93,7 +94,7 @@
                         <table style="text-align: left">
                             <tr>
                                 {{-- <td>Descricao: {{ $top->descricao != "" && $top->descricao != null ? $top->descricao : 'Não cadastrado' }}</td> --}}
-                                <td>Descricao: {{ mb_strtoupper($top->descricao != "" && $top->descricao != null ? $top->descricao : 'Não cadastrado', 'UTF-8') }}</td>
+                                <td>Descrição: {{ mb_strtoupper($top->descricao != "" && $top->descricao != null ? $top->descricao : 'Não cadastrado', 'UTF-8') }}</td>
                                 <td>Disciplina vinculada: {{ mb_strtoupper($top->disciplina->nome, 'UTF-8') }}</td>
                             </tr>
                         </table>
@@ -106,11 +107,12 @@
         {{-- <div style="text-align: center">
             <br><br><br>
             <span>__________________________________</span><br>
-            <span>Responsável pela listagem</span>
+            <span>ResponsÃ¡vel pela listagem</span>
         </div> --}}
     </main>
 </body>
 
 </html>
+
 
 

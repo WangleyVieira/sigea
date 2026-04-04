@@ -88,7 +88,7 @@
                             <li>Seguir o modelo conforme no campo abaixo</li>
                         </ul>
                         {{-- <br> --}}
-                            <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" rows="4" placeholder="Digite sua pergunta?">{{ old('descricao') }}</textarea>
+                            <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao" rows="4" placeholder="Digite sua pergunta?">{!! old('descricao') !!}</textarea>
                             @error('descricao')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -135,7 +135,7 @@
                             @foreach ($minhasQuestoes as $mQ)
                                 <tr>
                                     <td> {{ $mQ->codigo_questao }}</td>
-                                    <td> {{ $mQ->descricao }}</td>
+                                    <td> {{ \Illuminate\Support\Str::limit(strip_tags($mQ->descricao), 120) }}</td>
                                     <td> {{ $mQ->titulo_questao }}</td>
                                     <td>
                                         {{-- <a href="{{ route('adm.questoes.visualizar', $mQ->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fa fa-eye"></i></a> --}}
@@ -199,14 +199,14 @@
                                                     Descrição:
                                                 </p>
 
-                                                {{ $mQ->descricao }}
+                                                {!! $mQ->descricao !!}
 
                                                 <hr>
 
                                                 <p style="font-weight: bold;">
                                                     Resposta:
                                                 </p>
-                                                {{ $mQ->resposta }}
+                                                {!! $mQ->resposta !!}
 
                                             </div>
                                             <div class="modal-footer">
@@ -250,7 +250,7 @@
                             @foreach ($questoes as $questao)
                                 <tr>
                                     <td> {{ $questao->codigo_questao }}</td>
-                                    <td> {{ $questao->descricao }}</td>
+                                    <td> {{ \Illuminate\Support\Str::limit(strip_tags($questao->descricao), 120) }}</td>
                                     <td> {{ $questao->titulo_questao }}</td>
                                     <td>
                                         {{-- <a href="{{ route('adm.questoes.visualizar_questao_externa', $questao->id) }}" class="btn btn-outline-secondary" target="_blank"><i class="fas fa-file-pdf"></i></a> --}}
@@ -278,10 +278,10 @@
                                                     Descrição:
                                                 </p>
 
-                                                {{ $questao->descricao }}
+                                                {!! $questao->descricao !!}
 
                                                 <hr>
-                                                <p>Resposta: {{ $questao->resposta }}</p>
+                                                <p>Resposta: {!! $questao->resposta !!}</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
@@ -301,10 +301,14 @@
 
 
 <script src="{{asset('../js/jquery.validate.js')}}"></script>
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 
 <script>
 
     $(document).ready(function() {
+        if (document.getElementById('descricao')) {
+            CKEDITOR.replace('descricao', { versionCheck: false });
+        }
 
         $('#datatable-responsive').dataTable({
             "oLanguage": {
@@ -376,3 +380,5 @@
 
 
 @endsection
+
+
