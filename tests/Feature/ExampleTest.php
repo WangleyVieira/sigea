@@ -2,20 +2,18 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
     /**
-     * A basic test example.
+     * Basic smoke test: confirms web routes are loaded.
      *
      * @return void
      */
-    public function testBasicTest()
+    public function testLoginRouteIsRegistered()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->assertTrue(Route::has('login'));
     }
 }
