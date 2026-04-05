@@ -1,10 +1,21 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"><link rel="preconnect" href="https://fonts.gstatic.com">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<script id="sigea_theme_preload">
+    (function () {
+        try {
+            var theme = localStorage.getItem('sigea_theme');
+            if (theme === 'dark') {
+                document.documentElement.classList.add('theme-dark');
+            }
+        } catch (e) {}
+    })();
+</script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="shortcut icon" href="{{ asset('img/icone.png') }}">
 
     <title>@yield('title')</title>
@@ -13,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app-theme.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.0/r-2.2.9/rr-1.2.8/datatables.min.css"/>
     <link href="{{asset('select2-4.1.0/dist/css/select2.min.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('select2-bootstrap/dist/select2-bootstrap.css')}}"/>
@@ -20,52 +32,6 @@
 
 </head>
 <body>
-<style>
-        body { margin: 0; }
-        .sidebar, .sidebar-nav, .sidebar-content {
-            background-color: #0e5a2d;
-        }
-
-        .sidebar hr {
-            border-color: rgba(255, 255, 255, 0.22);
-        }
-
-        .sidebar .sidebar-brand {
-            color: #ffffff;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
-
-        .sidebar .sidebar-link {
-            color: rgba(240, 255, 245, 0.9);
-            border-left: 3px solid transparent;
-            background-color: transparent;
-            transition: color .2s ease, border-color .2s ease;
-        }
-
-        .sidebar .sidebar-link i {
-            color: rgba(227, 255, 236, 0.92);
-        }
-
-        .sidebar .sidebar-link:hover,
-        .sidebar .sidebar-dropdown .sidebar-link:hover {
-            background-color: transparent;
-            color: #ffffff;
-            border-left-color: rgba(201, 247, 217, 0.55);
-        }
-
-        .sidebar .sidebar-item.active > .sidebar-link,
-        .sidebar .sidebar-dropdown .sidebar-item.active > .sidebar-link {
-            background-color: transparent;
-            color: #ffffff;
-            border-left-color: #9af0ba;
-            font-weight: 700;
-        }.sidebar .sidebar-item.active > .sidebar-link i,
-        .sidebar .sidebar-dropdown .sidebar-item.active > .sidebar-link i {
-            color: #d6ffe5;
-        }
-</style>
-
 <div class="wrapper">
     <nav id="sidebar" class="sidebar">
         <div class="sidebar-content js-simplebar">
@@ -77,7 +43,7 @@
 
             <ul class="sidebar-nav">
                 {{-- <li class="sidebar-header">
-                    Páginas
+                    P�ginas
                 </li> --}}
                 @if (auth()->user()->id_perfil == 1)
                     <li class="sidebar-item {{ Route::current()->uri == 'adm/dashboard' ? 'active' : null }}">
@@ -117,7 +83,7 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item {{ Route::current()->uri == 'adm/questoes' ? 'active' : null }}">
+                    <li class="sidebar-item {{ Request::is('adm/questoes*') ? 'active' : null }}">
                         <a href="{{ route('adm.questoes.index') }}" class="sidebar-link">
                             <i class="fas fa-book"></i>
                             Questões
@@ -194,6 +160,12 @@
 
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav navbar-align">
+                    <li class="nav-item d-flex align-items-center mr-2">
+                        <button type="button" id="themeToggle" class="theme-toggle-btn" aria-label="Alternar tema" title="Alternar tema">
+                            <i class="fas fa-moon theme-icon theme-icon-moon"></i>
+                            <i class="fas fa-sun theme-icon theme-icon-sun"></i>
+                        </button>
+                    </li>
                     @if (Auth::guest())
                         <li>
                             <a class="btn btn-primary" style="color: white" href="{{ route('login') }}"
@@ -262,6 +234,47 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.0/r-2.2.9/rr-1.2.8/datatables.min.js"></script>
 <script src="{{asset('select2-4.1.0/dist/js/select2.min.js')}}"></script><script src="{{ asset('js/datatables.min.js') }}"></script>
 <script src="{{asset('jquery-mask/src/jquery.mask.js')}}"></script>
+<script>
+    (function () {
+        var storageKey = 'sigea_theme';
+        var root = document.documentElement;
+        var btn = document.getElementById('themeToggle');
+
+        function applyTheme(theme) {
+            var dark = theme === 'dark';
+            root.classList.toggle('theme-dark', dark);
+            if (btn) {
+                btn.setAttribute('title', dark ? 'Tema claro' : 'Tema escuro');
+                btn.setAttribute('aria-label', dark ? 'Ativar tema claro' : 'Ativar tema escuro');
+            }
+        }
+
+        var savedTheme = localStorage.getItem(storageKey);
+        applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+
+        if (btn) {
+            btn.addEventListener('click', function () {
+                var next = root.classList.contains('theme-dark') ? 'light' : 'dark';
+                localStorage.setItem(storageKey, next);
+                applyTheme(next);
+            });
+        }
+    })();
+</script>
 @yield('scripts')
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
