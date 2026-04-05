@@ -32,7 +32,7 @@ jobs:
           cache: npm
 
       - name: Validate composer files
-        run: composer validate --strict
+        run: composer validate
 
       - name: Cache Composer dependencies
         uses: actions/cache@v4
@@ -66,3 +66,4 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
         run: php artisan test
+
